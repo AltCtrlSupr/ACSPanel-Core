@@ -93,6 +93,7 @@ class EntitySubscriber implements EventSubscriber
         }
         if ($entity instanceof FosUser){
             $this->setFosUserUserValue($entity);
+            $this->setGidAndUidValues($entity);
         }
     }
 
@@ -115,7 +116,10 @@ class EntitySubscriber implements EventSubscriber
             $this->createUserInDatabase($entity);
             $this->setUserValue($entity);
         }
-
+        if ($entity instanceof FosUser){
+            $this->incrementUidSetting($entity);
+            $this->incrementGidSetting($entity);
+        }
     }
 
     public function preUpdate(LifecycleEventArgs $args)
@@ -327,6 +331,28 @@ class EntitySubscriber implements EventSubscriber
                 }
             }
         }
+    }
+
+    public function setGidAndUidValues($entity)
+    {
+        $usertools = $this->container->get('acs.user.tools');
+
+        $entity->setUid($usertools->getAvailableUid());
+        $entity->setGid($usertools->getAvailableGid());
+    }
+
+    public function incrementUidSetting($entity)
+    {
+        $setting_manager = $this->container->get('acs.setting_manager');
+
+        return $setting_manager->setInternalSetting('last_used_uid',$entity->getUid());
+    }
+
+   public function incrementGidSetting($entity)
+    {
+        $setting_manager = $this->container->get('acs.setting_manager');
+
+        return $setting_manager->setInternalSetting('last_used_gid',$entity->getGid());
     }
 
 }
