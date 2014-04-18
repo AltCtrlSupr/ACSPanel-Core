@@ -3,8 +3,86 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "f7e741c3a8259665ed700552ea1acef2",
+    "hash": "6da6c21fe6920e3c48f3c60be746cb25",
     "packages": [
+        {
+            "name": "acs/acspanel",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/AltCtrlSupr/acspanel.git",
+                "reference": "f85c58dffa1997ce1b6dbcf8962e736b1e224c25"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/AltCtrlSupr/acspanel/zipball/f85c58dffa1997ce1b6dbcf8962e736b1e224c25",
+                "reference": "f85c58dffa1997ce1b6dbcf8962e736b1e224c25",
+                "shasum": ""
+            },
+            "require": {
+                "acs/panelsettings": "dev-master",
+                "acs/panelwordpress": "dev-master",
+                "craue/formflow-bundle": "dev-master",
+                "doctrine/doctrine-bundle": "~1.2",
+                "doctrine/doctrine-fixtures-bundle": "dev-master",
+                "doctrine/orm": "~2.2,>=2.2.3",
+                "friendsofsymfony/user-bundle": "*",
+                "gregwar/form-bundle": "dev-master",
+                "incenteev/composer-parameter-handler": "~2.0",
+                "jms/di-extra-bundle": "dev-master",
+                "jms/security-extra-bundle": "dev-master",
+                "jms/serializer-bundle": "dev-master",
+                "knplabs/knp-menu-bundle": "dev-master",
+                "knplabs/knp-paginator-bundle": "dev-master",
+                "liip/theme-bundle": "dev-master",
+                "php": ">=5.3.3",
+                "sensio/distribution-bundle": "~2.3",
+                "sensio/framework-extra-bundle": "~3.0",
+                "sensio/generator-bundle": "~2.3",
+                "stof/doctrine-extensions-bundle": "dev-master",
+                "symfony/assetic-bundle": "~2.3",
+                "symfony/event-dispatcher": "2.3.*",
+                "symfony/monolog-bundle": "~2.4",
+                "symfony/swiftmailer-bundle": "~2.3",
+                "symfony/symfony": "~2.4",
+                "twig/extensions": "~1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*",
+                "raulfraile/ladybug": "~1.0",
+                "raulfraile/ladybug-bundle": "~1.0.0"
+            },
+            "type": "project",
+            "extra": {
+                "incenteev-parameters": {
+                    "file": "app/main/config/parameters.yml"
+                },
+                "symfony-app-dir": "app",
+                "symfony-web-dir": "web",
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Genar Trias",
+                    "email": "genar@acs.li",
+                    "homepage": "http://genar.me/"
+                },
+                {
+                    "name": "Martí Cardús",
+                    "email": "marti@acs.li"
+                }
+            ],
+            "description": "The server administration tool written in Symfony2",
+            "time": "2014-04-17 11:40:53"
+        },
         {
             "name": "acs/panelsettings",
             "version": "dev-master",
@@ -490,12 +568,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "32817aac490eeba4c39bd7670ec2f6182e496fc5"
+                "reference": "aa2ed45ade6582a24e4f72f674f6989873d72112"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/32817aac490eeba4c39bd7670ec2f6182e496fc5",
-                "reference": "32817aac490eeba4c39bd7670ec2f6182e496fc5",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/aa2ed45ade6582a24e4f72f674f6989873d72112",
+                "reference": "aa2ed45ade6582a24e4f72f674f6989873d72112",
                 "shasum": ""
             },
             "require": {
@@ -553,7 +631,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2014-04-13 08:32:58"
+            "time": "2014-04-18 00:20:39"
         },
         {
             "name": "doctrine/doctrine-bundle",
@@ -913,12 +991,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "841bdd5ca52d2849b8091c56f99e201d169e1639"
+                "reference": "38b683838648b549aad0e38ce88c70b6393755b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/841bdd5ca52d2849b8091c56f99e201d169e1639",
-                "reference": "841bdd5ca52d2849b8091c56f99e201d169e1639",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/38b683838648b549aad0e38ce88c70b6393755b3",
+                "reference": "38b683838648b549aad0e38ce88c70b6393755b3",
                 "shasum": ""
             },
             "require": {
@@ -957,7 +1035,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -982,7 +1060,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2014-04-17 04:39:26"
+            "time": "2014-04-18 05:21:27"
         },
         {
             "name": "friendsofsymfony/user-bundle",
@@ -3802,14 +3880,9 @@
     "stability-flags": {
         "jms/security-extra-bundle": 20,
         "stof/doctrine-extensions-bundle": 20,
-        "knplabs/knp-menu-bundle": 20,
         "jms/di-extra-bundle": 20,
-        "liip/theme-bundle": 20,
-        "craue/formflow-bundle": 20,
-        "gregwar/form-bundle": 20,
-        "knplabs/knp-paginator-bundle": 20,
-        "doctrine/doctrine-fixtures-bundle": 20,
         "jms/serializer-bundle": 20,
+        "acs/acspanel": 20,
         "acs/panelsettings": 20,
         "acs/panelwordpress": 20
     },
