@@ -91,6 +91,6 @@ ACS\ACSPanelBundle\Entity\FosUser:
 
     lifecycleCallbacks:
       prePersist: [ ]
-      postPersist: [ incrementGidSetting ]
+      postPersist: [ ]
       preUpdate: []
 
