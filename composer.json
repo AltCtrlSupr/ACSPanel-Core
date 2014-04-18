@@ -55,6 +55,9 @@
         "bin-dir": "bin"
     },
     "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": { "ACS\\ACSPanelBundle\\": "" }
+    },
     "extra": {
         "incenteev-parameters": {
             "file": "app/main/config/parameters.yml"
