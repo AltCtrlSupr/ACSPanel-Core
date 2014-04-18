@@ -56,9 +56,8 @@
     },
     "minimum-stability": "dev",
     "autoload": {
-        "psr-0": { "ACS\\ACSPanelBundle\\": "" }
+        "psr-4": { "ACS\\ACSPanelBundle\\": "" }
     },
-    "target-dir": "acs/acspanel-core",
     "extra": {
         "incenteev-parameters": {
             "file": "app/main/config/parameters.yml"
