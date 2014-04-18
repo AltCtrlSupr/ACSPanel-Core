@@ -4,7 +4,7 @@
     "description": "ACSPanel core bundle. It integrates all other bundles into full stack Symfony2 Server Administration solution.",
     "keywords": ["symfony","symfony2","acspanel","distribution","server","administration","sysadmin"],
     "licence": "GPLv3",
-    "homepage": "acspanel.acs.li",
+    "homepage": "http://acspanel.acs.li",
     "authors": [
         {
             "name": "Martí Cardús",
