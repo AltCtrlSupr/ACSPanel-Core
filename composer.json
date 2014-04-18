@@ -1,0 +1,43 @@
+{
+    "name": "acs/acspanel-core",
+    "type": "symfony-bundle",
+    "description": "ACSPanel core bundle. It integrates all other bundles into full stack Symfony2 Server Administration solution.",
+    "keywords": ["symfony","symfony2","acspanel","distribution","server","administration","sysadmin"],
+    "licence": "GPLv3",
+    "homepage": "acspanel.acs.li",
+    "authors": [
+        {
+            "name": "Martí Cardús",
+            "email": "marti@acs.li"
+        },
+        {
+            "name": "Genar Trias",
+            "email": "genar@acs.li",
+            "homepage": "http://genar.me/"
+        }
+    ],
+    "require": {
+        "php":                            ">=5.3.3",
+        "symfony/assetic-bundle": "~2.3",
+        "friendsofsymfony/user-bundle":   "2.0.*@dev",
+        "friendsofsymfony/user-bundle": "*",
+        "knplabs/knp-menu-bundle": "dev-master",
+        "liip/theme-bundle": "dev-master",
+        "craue/formflow-bundle": "dev-master",
+        "gregwar/form-bundle": "dev-master",
+        "knplabs/knp-paginator-bundle": "dev-master",
+        "doctrine/doctrine-fixtures-bundle": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*",
+        "raulfraile/ladybug-bundle": "~1.0.0",
+        "raulfraile/ladybug": "~1.0"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-0": { "ACS\\ACSPanelBundle\\": "" }
+    },
+    "target-dir": "ACS/ACSPanelBundle"
+}
