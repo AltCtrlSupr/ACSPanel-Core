@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 
-class CommonTestCase extends WebTestCase
+abstract class CommonTestCase extends WebTestCase
 {
     public $client;
 

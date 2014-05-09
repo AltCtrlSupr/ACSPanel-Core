@@ -7,9 +7,6 @@ class DatabaseUserControllerTest extends CommonTestCase
     public function testCompleteScenario()
     {
         // Create a new client to browse the application
-        $crawler = $this->requestWithAuth('superadmin', 'GET', '/' );
-
-        $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
         /*
         $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
 
