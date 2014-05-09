@@ -52,7 +52,8 @@ class CommonTestCase extends WebTestCase
 
     protected function createAuthorizedClient($username)
     {
-        $container = $this->client->getContainer();
+        $client = $this->client;
+        $container = $client->getContainer();
 
         $session = $container->get('session');
         /** @var $userManager \FOS\UserBundle\Doctrine\UserManager */
