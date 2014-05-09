@@ -15,6 +15,8 @@ class HttpdHostControllerTest extends CommonTestCase
         $crawler = $this->client->request('GET', '/httpdhost/');
         $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
 
+        $crawler = $this->client->request('GET', '/httpdhost/new');
+        $this->assertTrue($crawler->filter('select#acs_acspanelbundle_httpdhosttype_domain')->count() > 0);
         /*
         $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
 
