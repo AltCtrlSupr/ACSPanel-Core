@@ -1,6 +1,4 @@
 <?php
-
-
 namespace ACS\ACSPanelBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
@@ -639,19 +637,7 @@ class FosUser extends BaseUser
      */
     public function getHomedir()
     {
-        global $kernel;
-
-        if ('AppCache' == get_class($kernel)) {
-            $kernel = $kernel->getKernel();
-        }
-
-        $settings_manager = $kernel->getContainer()->get('acs.setting_manager');
-        $homebase = $settings_manager->getSystemSetting('home_base');
-        if($homebase){
-            return $homebase.$this->getUsername();
-        }
-
-        return null;
+        return $this->getUsername();
 
     }
 

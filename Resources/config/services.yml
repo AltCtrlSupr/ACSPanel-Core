@@ -74,6 +74,10 @@ services:
     kernel_subscriber:
         class: ACS\ACSPanelBundle\Event\Subscribers\KernelSubscriber
         arguments: ['@event_dispatcher', '@router', '@session']
+        calls:
+            - [ setSecurity, ['@security.context'] ]
+            - [ setSettingsManager, ['@acs.setting_manager'] ]
+            - [ setActiveTheme, ['@liip_theme.active_theme'] ]
         tags:
             - {name: kernel.event_subscriber}
 

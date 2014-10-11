@@ -48,9 +48,6 @@ class DnsDomainType extends AbstractType
             ->add('master')
             ->add('service')
         ;
-
-        //if($security->isGranted('ROLE_ADMIN'))
-            //$builder->add('user');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

@@ -330,7 +330,6 @@ class FtpdUser
         return $this->service;
     }
 
-
     /**
      * Set quota
      *
@@ -357,43 +356,6 @@ class FtpdUser
     public function __toString()
     {
         return $this->getUserName();
-    }
-
-    /**
-     * @ORM\PrePersist
-     * It sets the uid and gid of the ftpduser getting from creator and/or if it's available
-     */
-    public function setGidAndUidValues()
-    {
-        // we set the same gid of the owner
-        $this->setGid($this->getUser()->getGid());
-
-        // we check for the existence in database of the uid
-        global $kernel;
-
-        if ('AppCache' == get_class($kernel)) {
-            $kernel = $kernel->getKernel();
-        }
-
-        $usertools = $kernel->getContainer()->get('acs.user.tools');
-
-        $this->setUid($usertools->getAvailableUid());
-
-    }
-
-    /**
-     * @ORM\PostPersist
-     */
-    public function incrementUidSetting()
-    {
-        global $kernel;
-
-        if ('AppCache' == get_class($kernel)) {
-            $kernel = $kernel->getKernel();
-        }
-        $setting_manager = $kernel->getContainer()->get('acs.setting_manager');
-
-        return $setting_manager->setInternalSetting('last_used_uid',$this->getUid());
     }
 
     public function userCanSee($security)

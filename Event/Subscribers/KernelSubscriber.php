@@ -12,10 +12,31 @@ class KernelSubscriber implements EventSubscriberInterface
 {
     private $router;
 
+    private $security;
+
+    private $settings_manager;
+
+    private $active_theme;
+
     public function __construct($event_dispatcher, Router $router, $session)
     {
         $this->router = $router;
         $this->session = $session;
+    }
+
+    public function setActiveTheme($active_theme)
+    {
+        $this->active_theme = $active_theme;
+    }
+
+    public function setSecurity($security)
+    {
+        $this->security = $security;
+    }
+
+    public function setSettingsManager($manager)
+    {
+        $this->setting_manager = $manager;
     }
 
     static public function getSubscribedEvents()
@@ -43,17 +64,8 @@ class KernelSubscriber implements EventSubscriberInterface
     {
         $request = $event->getRequest();
 
-        global $kernel;
-
-        if ('AppCache' == get_class($kernel)) {
-            $kernel = $kernel->getKernel();
-        }
-
-        if(!$kernel)
-            return;
-
-        $settings_manager = $kernel->getContainer()->get('acs.setting_manager');
-        $security = $kernel->getContainer()->get('security.context');
+        $settings_manager = $this->setting_manager;
+        $security = $this->security;
 
         $user = null;
         if($security->getToken()){
@@ -65,11 +77,6 @@ class KernelSubscriber implements EventSubscriberInterface
 
             if($language){
                 $request->setLocale($language);
-                /*if ($locale = $request->attributes->get('_locale')) {
-                    $request->getSession()->set('_locale', $locale);
-                } else {
-                    $request->setLocale($request->getSession()->get('_locale', $this->defaultLocale));
-                }*/
             }
 
         }
@@ -78,22 +85,9 @@ class KernelSubscriber implements EventSubscriberInterface
 
     public function switchUserTheme(GetResponseEvent $event)
     {
-        global $kernel;
-
-        if ('AppCache' == get_class($kernel)) {
-            $kernel = $kernel->getKernel();
-        }
-
-        if(!$kernel)
-            return;
-
-        $container = $kernel->getContainer();
-
-        $activeTheme = $container->get('liip_theme.active_theme');
-
-
-        $settings_manager = $kernel->getContainer()->get('acs.setting_manager');
-        $security = $kernel->getContainer()->get('security.context');
+        $activeTheme = $this->active_theme;
+        $settings_manager = $this->setting_manager;
+        $security = $this->security;
 
         $user = null;
         if($security->getToken()){
@@ -111,17 +105,7 @@ class KernelSubscriber implements EventSubscriberInterface
 
     public function forcePasswordUpdate(GetResponseEvent $event)
     {
-        global $kernel;
-
-        if ('AppCache' == get_class($kernel)) {
-            $kernel = $kernel->getKernel();
-        }
-
-        if(!$kernel)
-            return;
-
-        $container = $kernel->getContainer();
-        $security = $kernel->getContainer()->get('security.context');
+        $security = $this->security;
 
         $user = null;
         if($security->getToken()){

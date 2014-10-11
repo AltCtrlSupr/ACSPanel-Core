@@ -69,6 +69,8 @@ class EntitySubscriber implements EventSubscriber
         }
         if ($entity instanceof FtpdUser){
             $this->setUserValue($entity);
+            $usertools = $this->container->get('acs.user.tools');
+            $this->setUid($usertools->getAvailableUid());
         }
         if ($entity instanceof HttpdHost){
             $this->setUserValue($entity);
@@ -78,6 +80,11 @@ class EntitySubscriber implements EventSubscriber
         }
         if ($entity instanceof MailDomain){
             $this->setUserValue($entity);
+            $settings_manager = $this->continer->get('acs.setting_manager');
+            $mail_domain_transport = $settings_manager->getSystemSetting('mail_domain_transport');
+            if($mail_domain_transport){
+                $entity->setTransport($mail_domain_transport);
+            }
         }
         if ($entity instanceof MailWBList){
             $this->setUserValue($entity);
@@ -119,6 +126,11 @@ class EntitySubscriber implements EventSubscriber
         if ($entity instanceof FosUser){
             $this->incrementUidSetting($entity);
             $this->incrementGidSetting($entity);
+        }
+
+        if ($entity instanceof FtpdUser){
+            $setting_manager = $this->container->get('acs.setting_manager');
+            $setting_manager->setInternalSetting('last_used_uid',$entity->getUid());
         }
     }
 
