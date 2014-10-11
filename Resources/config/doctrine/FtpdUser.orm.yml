@@ -90,7 +90,6 @@ ACS\ACSPanelBundle\Entity\FtpdUser:
             gedmo:
                 - versioned
     lifecycleCallbacks:
-      prePersist: [ setCreatedAtValue, setGidAndUidValues ]
-      postPersist: [ incrementUidSetting ]
+      prePersist: [ setCreatedAtValue ]
       preUpdate: [ setUpdatedAtValue ]
 
