@@ -56,7 +56,7 @@ class EntitySubscriber implements EventSubscriber
         $entityManager = $args->getEntityManager();
 
         if ($entity instanceof DB){
-            $this->crateDatabase($entity);
+            $this->createDatabase($entity);
             $this->setCreatedAtValue($entity);
             $this->setUserValue($entity);
         }
@@ -224,7 +224,7 @@ class EntitySubscriber implements EventSubscriber
     {
         if(!$entity->getCreatedAt())
         {
-            $entity->createdAt = new \DateTime();
+            $entity->setCreatedAt( new \DateTime());
         }
     }
 
@@ -238,6 +238,10 @@ class EntitySubscriber implements EventSubscriber
         $admin_user = '';
         $admin_password = '';
 
+        $settings = array();
+        if(!$entity->getService())
+            return;
+
         $settings = $entity->getService()->getSettings();
 
         foreach ($settings as $setting){
@@ -246,6 +250,7 @@ class EntitySubscriber implements EventSubscriber
             if($setting->getSettingKey() == 'admin_password')
                 $admin_password = $setting->getValue();
         }
+
         $server_ip = $entity->getService()->getIp();
 
         $config = new \Doctrine\DBAL\Configuration();

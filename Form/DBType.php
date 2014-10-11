@@ -10,19 +10,18 @@ use Doctrine\ORM\EntityRepository;
 class DBType extends AbstractType
 {
     public $container;
-    public $em;
 
-    public function __construct($container, $em){
+    public function __construct($container){
         $this->container = $container;
-        $this->em = $em;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $container = $this->container;
+        $em = $container->get('doctrine.orm.entity_manager');
         $service = $container->get('security.context');
 
-        $db_services = $this->em->getRepository('ACS\ACSPanelBundle\Entity\ServiceType')->getDbServiceTypes();
+        $db_services = $em->getRepository('ACS\ACSPanelBundle\Entity\ServiceType')->getDbServiceTypes();
 
         $builder
             ->add('name')
@@ -46,9 +45,6 @@ class DBType extends AbstractType
                 'by_reference' => false,
             ))
         ;
-
-        if($service->isGranted('ROLE_SUPER_ADMIN'))
-            $builder->add('user');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
