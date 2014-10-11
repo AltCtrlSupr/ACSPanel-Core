@@ -66,7 +66,6 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
 
         $this->addReference('user-reseller',$userReseller);
 
-
         $user = $usermanager->createUser();
         $user->setUsername('center2');
         $user->setEmail('center2@admin');

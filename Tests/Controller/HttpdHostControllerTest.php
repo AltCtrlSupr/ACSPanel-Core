@@ -16,7 +16,7 @@ class HttpdHostControllerTest extends CommonTestCase
         $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
 
         $crawler = $this->client->request('GET', '/httpdhost/new');
-        $this->assertTrue($crawler->filter('select#acs_acspanelbundle_httpdhosttype_domain')->count() > 0);
+        $this->assertTrue($crawler->filter('.error-msg:contains(No tienes suficientes recursos para crear HttpdHost)')->count() > 0);
         /*
         $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
 

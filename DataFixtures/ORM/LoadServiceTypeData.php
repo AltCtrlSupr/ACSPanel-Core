@@ -92,16 +92,15 @@ class LoadServiceTypeData implements FixtureInterface
 
         $dovecot_type = new ServiceType();
         $dovecot_type->setName('Dovecot (IMAP/POP3)');
-        $dovecot_type->steParentType($mail_type);
+        $dovecot_type->setParentType($mail_type);
         $manager->persist($dovecot_type);
         $manager->flush();
 
         $postfix_type = new ServiceType();
         $postfix_type->setName('Postfix (SMTP)');
-        $postfix_type->steParentType($mail_type);
+        $postfix_type->setParentType($mail_type);
         $manager->persist($postfix_type);
         $manager->flush();
     }
 }
-
 
