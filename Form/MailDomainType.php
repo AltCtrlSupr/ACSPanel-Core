@@ -48,7 +48,7 @@ class MailDomainType extends AbstractType
             ->add('backupmx', null, array('label' => 'maildomain.form.backupmx'))
             ->add('service', null, array(
                 'label' => 'maildomain.form.service',
-                'query_builder' => function(EntityRepository $er) use ($child_ids, $superadmin){
+                'query_builder' => function(EntityRepository $er) use ($superadmin){
                     $query = $er->createQueryBuilder('s')
                         ->select('s')
                         ->innerJoin('s.type','t')
