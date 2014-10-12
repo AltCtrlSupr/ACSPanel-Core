@@ -163,6 +163,8 @@ class EntitySubscriber implements EventSubscriber
     {
         $admin_user = '';
         $admin_password = '';
+        if(!$entity->getDb()->getService())
+            return;
         $settings = $entity->getDb()->getService()->getSettings();
         foreach ($settings as $setting){
             if($setting->getSettingKey() == 'admin_user')
