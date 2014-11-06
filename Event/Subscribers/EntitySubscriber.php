@@ -186,9 +186,9 @@ class EntitySubscriber implements EventSubscriber
 
         $conn = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
 
-        $sql = "CREATE USER '".$this->getUsername()."'@'%' IDENTIFIED BY '".$this->getPassword()."'";
+        $sql = "CREATE USER '".$entity->getUsername()."'@'%' IDENTIFIED BY '".$entity->getPassword()."'";
         $conn->executeQuery($sql);
-        $sql = "GRANT ALL PRIVILEGES ON `".$this->getDb()."`.* TO '".$this->getUsername()."'@'%'";
+        $sql = "GRANT ALL PRIVILEGES ON `".$entity->getDb()."`.* TO '".$entity->getUsername()."'@'%'";
         $conn->executeQuery($sql);
         $sql = "FLUSH PRIVILEGES";
         $conn->executeQuery($sql);
@@ -265,7 +265,7 @@ class EntitySubscriber implements EventSubscriber
         );
         $conn = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
 
-        $sql = "CREATE DATABASE IF NOT EXISTS ".$this->getName()." DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
+        $sql = "CREATE DATABASE IF NOT EXISTS ".$entity->getName()." DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
         $conn->executeQuery($sql);
 
         return $this;
