@@ -38,14 +38,6 @@ ACSACSPanelBundle_ipaddress:
     resource: "@ACSACSPanelBundle/Resources/config/routing/ipaddress.yml"
     prefix:   /ipaddress
 
-ACSACSPanelBundle_users:
-    resource: "@ACSACSPanelBundle/Resources/config/routing/fosuser.yml"
-    prefix:   /users
-
-ACSACSPanelBundle_groups:
-    resource: "@ACSACSPanelBundle/Resources/config/routing/fosgroup.yml"
-    prefix:   /groups
-
 ACSACSPanelBundle_plans:
     resource: "@ACSACSPanelBundle/Resources/config/routing/plan.yml"
     prefix:   /plans
@@ -94,3 +86,6 @@ ACSACSPanelBundle_mailwblist:
     resource: "@ACSACSPanelBundle/Resources/config/routing/mailwblist.yml"
     prefix:   /mailwblist
 
+ACSACSPanelBundle_groups:
+    resource: "@ACSACSPanelBundle/Resources/config/routing/fosgroup.yml"
+    prefix:   /groups

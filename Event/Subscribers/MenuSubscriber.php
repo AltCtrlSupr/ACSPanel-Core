@@ -65,7 +65,7 @@ class MenuSubscriber implements EventSubscriberInterface
     {
         $menu = $menu_filter->getMenu();
         $menu->addChild('menu.reseller.main', array('route' => null));
-        $menu['menu.reseller.main']->addChild('menu.reseller.users', array( 'route' => 'users'));
+        //$menu['menu.reseller.main']->addChild('menu.reseller.users', array( 'route' => 'users'));
         $menu['menu.reseller.main']->addChild('menu.reseller.logs', array( 'route' => 'logs'));
     }
 
@@ -73,7 +73,7 @@ class MenuSubscriber implements EventSubscriberInterface
     {
         $menu = $menu_filter->getMenu();
         $menu->addChild('menu.admin.main', array('route' => null));
-        $menu['menu.admin.main']->addChild('menu.admin.users', array( 'route' => 'users'));
+        //$menu['menu.admin.main']->addChild('menu.admin.users', array( 'route' => 'users'));
         $menu['menu.admin.main']->addChild('menu.admin.groups', array( 'route' => 'groups'));
         $menu['menu.admin.main']->addChild('menu.admin.plans', array( 'route' => 'plans'));
         $menu['menu.admin.main']->addChild('menu.admin.servers.main', array( 'route' => null));
