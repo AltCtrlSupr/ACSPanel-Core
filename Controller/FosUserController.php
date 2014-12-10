@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * FosUser controller.
- * @deprecated  See ACSPanelUserBundle
+ * @deprecated See ACSPanelUserBundle
  *
  */
 class FosUserController extends Controller

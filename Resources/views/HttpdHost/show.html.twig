@@ -12,8 +12,8 @@
 <table class="record_properties table">
     <tbody>
         <tr>
-            <th>{% trans %}Name{% endtrans %}</th>
-            <td>{{ entity.domain }}</td>
+            <th>{% trans %}Domain{% endtrans %}</th>
+	    <td><a href="{{ path('domain_show', {'id': entity.domain.id }) }}">{{ entity.domain }}</a></td>
         </tr>
         <tr>
             <th>{% trans %}Enabled{% endtrans %}</th>
@@ -37,7 +37,7 @@
         </tr>
         <tr>
             <th>{% trans %}Configuration{% endtrans %}</th>
-            <td>{{ entity.configuration }}</td>
+	    <td><pre>{{ entity.configuration }}</pre></td>
         </tr>
         <tr>
             <th>{% trans %}Aliases{% endtrans %}</th>
