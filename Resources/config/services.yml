@@ -4,6 +4,7 @@ parameters:
     domain.tools.class: ACS\ACSPanelBundle\Modules\Domain
     user.tools.class: ACS\ACSPanelBundle\Modules\UserTools
     entity_subscriber.class: ACS\ACSPanelBundle\Event\Subscribers\EntitySubscriber
+    acspanel_core.menu_listener.class: ACS\ACSPanelBundle\Event\MenuItemListListener
 
 services:
     # Duplicate host validator
@@ -99,9 +100,21 @@ services:
         tags:
             - {name: kernel.event_subscriber}
 
+    acspanel_core.menu_listener:
+        class: %acspanel_core.menu_listener.class%
+        calls:
+            - [ setMenuBuilder, ['@acspanel_core.menu_builder'] ]
+        tags:
+            - { name: kernel.event_listener, event: theme.sidebar_setup_menu, method: onSetupMenu }
+
+    acspanel_core.menu_builder:
+        class:  ACS\ACSPanelBundle\Menu\Builder
+
+
     # DNSDomain events
     dns_subscriber:
         class: ACS\ACSPanelBundle\Event\Subscribers\DnsSubscriber
         arguments: ['@event_dispatcher']
         tags:
             - {name: kernel.event_subscriber}
+

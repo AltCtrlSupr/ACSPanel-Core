@@ -5,11 +5,13 @@ use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\GroupInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use Avanzu\AdminThemeBundle\Model\MenuItemInterface as ThemeMenuItem;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="fos_user")
  */
-class FosUser extends BaseUser
+class FosUser extends BaseUser  /* implements ThemeMenuItem */
 {
     /**
      * @ORM\Id
