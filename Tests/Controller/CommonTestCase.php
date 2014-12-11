@@ -75,4 +75,10 @@ abstract class CommonTestCase extends WebTestCase
 
         return $this->client;
     }
+
+    public function createSuperadminClient()
+    {
+        $this->client = $this->createAuthorizedClient('superadmin','1234');
+	return $this->client;
+    }
 }
