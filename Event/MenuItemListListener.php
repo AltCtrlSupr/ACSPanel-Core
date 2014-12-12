@@ -4,13 +4,14 @@ namespace ACS\ACSPanelBundle\Event;
 // ...
 
 //use Ilimit\DomainCheckBundle\Model\MenuItemModel;
+use Knp\Menu\Renderer\ListRenderer;
 use Avanzu\AdminThemeBundle\Model\MenuItemModel;
 use Avanzu\AdminThemeBundle\Event\SidebarMenuEvent;
 use Symfony\Component\HttpFoundation\Request;
 
 class MenuItemListListener {
 
-    private $menu_builder;
+    private $menu_provider;
 
     public function onSetupMenu(SidebarMenuEvent $event) {
 
@@ -31,6 +32,10 @@ class MenuItemListListener {
 	//ldd($this->menu_builder);
 	//$superadminMenu = $this->menu_builder->superadminMenu();
 	//ldd($superadminMenu);
+	//
+	//
+
+	//ldd($this->menu_provider->get('root'));
 
         $menuItems[] = new MenuItemModel('domain_index','Dominis', 'domain', $earg, 'fa fa-dashboard');
         $menuItems[] = new MenuItemModel('csv_upload','Importar CSV', 'httpdhost', $earg, 'fa fa-dashboard');
@@ -55,9 +60,9 @@ class MenuItemListListener {
         return $items;
     }
 
-    public function setMenuBuilder($builder)
+    public function setMenuProvider($provider)
     {
-	    $this->menu_builder = $builder;
+	    $this->menu_provider = $provider;
     }
 }
 

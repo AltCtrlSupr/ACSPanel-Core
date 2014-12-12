@@ -103,7 +103,7 @@ services:
     acspanel_core.menu_listener:
         class: %acspanel_core.menu_listener.class%
         calls:
-            - [ setMenuBuilder, ['@acspanel_core.menu_builder'] ]
+            - [ setMenuProvider, ['@knp_menu.menu_provider'] ]
         tags:
             - { name: kernel.event_listener, event: theme.sidebar_setup_menu, method: onSetupMenu }
 
