@@ -110,7 +110,7 @@ class MenuSubscriber implements EventSubscriberInterface
     public function mailItems(FilterMenuEvent $menu_filter)
     {
         $menu = $menu_filter->getMenu();
-        $menu->addChild('menu.mail.main', array( 'route' => null));
+        $menu->addChild('menu.mail.main', array( 'route' => null, 'extras' => array('icon' => 'fa-inbox' )));
         $menu['menu.mail.main']->addChild('menu.mail.domain', array( 'route' => 'maildomain'));
         $menu['menu.mail.main']->addChild('menu.mail.mailbox', array( 'route' => 'mailmailbox'));
         $menu['menu.mail.main']->addChild('menu.mail.alias', array( 'route' => 'mailalias'));
@@ -121,13 +121,13 @@ class MenuSubscriber implements EventSubscriberInterface
     public function databaseItems(FilterMenuEvent $menu_filter)
     {
         $menu = $menu_filter->getMenu();
-        $menu->addChild('menu.database.main', array( 'route' => 'db'));
+        $menu->addChild('menu.database.main', array( 'route' => 'db', 'extras' => array('icon' => 'fa-database') ));
     }
 
     public function ftpItems(FilterMenuEvent $menu_filter)
     {
         $menu = $menu_filter->getMenu();
-        $menu->addChild('menu.ftp.main', array( 'route' => 'ftpduser'));
+        $menu->addChild('menu.ftp.main', array( 'route' => 'ftpduser', 'extras' => array('icon' => 'fa-cloud-upload')));
     }
 
 
@@ -135,6 +135,6 @@ class MenuSubscriber implements EventSubscriberInterface
     public function logoutItems(FilterMenuEvent $menu_filter)
     {
         $menu = $menu_filter->getMenu();
-        $menu->addChild('menu.logout.main', array( 'route' => 'fos_user_security_logout'));
+        $menu->addChild('menu.logout.main', array( 'route' => 'fos_user_security_logout', 'extras' => array('icon' => 'fa-sign-out' )));
     }
 }

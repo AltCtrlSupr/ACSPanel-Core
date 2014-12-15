@@ -265,69 +265,6 @@ class FosUserController extends Controller
         ));
     }
 
-    /**
-     * Edits an existing FosUser entity.
-     *
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ACSACSPanelBundle:FosUser')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find FosUser entity.');
-        }
-
-
-        $originalPlans = array();
-
-        // Create an array of the current Tag objects in the database
-        foreach ($entity->getPuser() as $plan) {
-            $originalPlans[] = $plan;
-        }
-
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new FosUserType(), $entity, array(
-            'em' => $this->getDoctrine()->getEntityManager(),
-        ));
-
-        $editForm->bind($request);
-
-        if ($editForm->isValid()) {
-            // filter $originalPlans to contain tags no longer present
-            foreach ($entity->getPuser() as $plan) {
-                foreach ($originalPlans as $key => $toDel) {
-                    if ($toDel->getId() === $plan->getId()) {
-                        unset($originalPlans[$key]);
-                    }
-                }
-            }
-
-            // remove the relationship between the tag and the Task
-            foreach ($originalPlans as $plan) {
-                // if it were a ManyToOne relationship, remove the relationship like this
-                $plan->setPuser(null);
-
-                // if you wanted to delete the Tag entirely, you can also do that
-                $em->remove($plan);
-            }
-
-            $em->persist($entity);
-            $em->flush();
-
-
-            return $this->redirect($this->generateUrl('users_edit', array('id' => $id)));
-        }
-
-        return $this->render('ACSACSPanelBundle:FosUser:edit.html.twig', array(
-            'search_action' => 'user_search',
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
 
     /**
      * Deletes a FosUser entity.

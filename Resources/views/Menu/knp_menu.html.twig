@@ -69,7 +69,8 @@
         {%- if item.uri is not empty and (not matcher.isCurrent(item) or options.currentAsLink) %}
         {{ block('linkElement') }}
         {%- else %}
-        {{ block('spanElement') }}
+        {{ block('linkElement') }}
+        {# block('spanElement') #}
         {%- endif %}
 {# render the list of children#}
         {%- set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : [] %}
@@ -80,8 +81,11 @@
 {% endif %}
 {% endblock %}
 
-{% block linkElement %}{% import _self as knp_menu %}<a href="{{ item.uri }}"{{ knp_menu.attributes(item.linkAttributes) }}>{{ block('label') }}</a>{% endblock %}
+{% block linkElement %}{% import _self as knp_menu %}
+    {%- set attributes = item.attributes %}
+    <a href="{{ item.uri }}"{{ knp_menu.attributes(item.linkAttributes) }}>{% if item.getExtra('icon') != '' %}<i class="fa {{ item.getExtra('icon') }}"></i>{% endif %} {{ block('label') }}</a>
+{% endblock %}
 
-{% block spanElement %}{% import _self as knp_menu %}<span{{ knp_menu.attributes(item.labelAttributes) }}>{{ block('label') }}</span>{% endblock %}
+{% block spanElement %}{% import _self as knp_menu %}<span{{ knp_menu.attributes(item.labelAttributes) }}>{% if item.getExtra('icon') != '' %}<i class="fa {{ item.getExtra('icon') }}"></i>{% endif %}{{ block('label') }}{% endblock %}
 
 {% block label %}{{ item.label|trans(item.getExtra('translation_params', {}), item.getExtra('translation_domain', 'messages')) }}{% endblock %}
