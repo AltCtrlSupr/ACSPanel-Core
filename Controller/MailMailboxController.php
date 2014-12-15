@@ -32,13 +32,6 @@ class MailMailboxController extends Controller
             $entities = $em->getRepository('ACSACSPanelBundle:MailMailbox')->findByUser($this->get('security.context')->getToken()->getUser());
         }
 
-
-        $paginator  = $this->get('knp_paginator');
-        $entities = $paginator->paginate(
-            $entities,
-            $this->get('request')->query->get('page', 1)/*page number*/
-        );
-
         return $this->render('ACSACSPanelBundle:MailMailbox:index.html.twig', array(
             'entities' => $entities,
             'search_action' => 'mailmailbox_search',
@@ -276,13 +269,6 @@ class MailMailboxController extends Controller
             ->getQuery();
 
         $entities = $query->execute();
-
-        $paginator  = $this->get('knp_paginator');
-        $entities = $paginator->paginate(
-            $entities,
-            $this->get('request')->query->get('page', 1)/*page number*/,
-            6
-        );
 
         return $this->render('ACSACSPanelBundle:MailMailbox:index.html.twig', array(
             'entities' => $entities,

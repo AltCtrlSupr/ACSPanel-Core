@@ -35,12 +35,6 @@ class DnsRecordController extends Controller
         $entities = $em->getRepository('ACSACSPanelBundle:DnsRecord')->findByUsers($this->get('security.context')->getToken()->getUser()->getIdChildIds());
 
 
-        $paginator  = $this->get('knp_paginator');
-        $entities = $paginator->paginate(
-            $entities,
-            $this->get('request')->query->get('page', 1)/*page number*/
-        );
-
         return $this->render('ACSACSPanelBundle:DnsRecord:index.html.twig', array(
             'entities' => $entities,
         ));

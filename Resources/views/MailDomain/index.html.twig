@@ -14,7 +14,7 @@
 
 {% block body %}
 
-<table class="records_list table table-striped table-bordered">
+<table class="records_list table table-striped table-bordered datatable">
     <thead>
         <tr>
             <th>Domain</th>
@@ -79,8 +79,4 @@
         </a>
     </li>
 </ul>
-{# display navigation #}
-<div class="navigation">
-    {{ knp_pagination_render(entities) }}
-</div>
 {% endblock %}

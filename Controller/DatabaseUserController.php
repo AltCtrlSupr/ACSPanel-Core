@@ -12,8 +12,6 @@ use ACS\ACSPanelBundle\Form\DatabaseUserType;
  *
  * DatabaseUser controller.
  *
- * @todo Check if we can remove
- *
  */
 class DatabaseUserController extends Controller
 {
@@ -26,13 +24,6 @@ class DatabaseUserController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('ACSACSPanelBundle:DatabaseUser')->findAll();
-
-
-        $paginator  = $this->get('knp_paginator');
-        $entities = $paginator->paginate(
-            $entities,
-            $this->get('request')->query->get('page', 1)/*page number*/
-        );
 
         return $this->render('ACSACSPanelBundle:DatabaseUser:index.html.twig', array(
             'entities' => $entities,

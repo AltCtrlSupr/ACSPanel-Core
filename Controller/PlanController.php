@@ -25,13 +25,6 @@ class PlanController extends Controller
 
         $entities = $em->getRepository('ACSACSPanelBundle:Plan')->findAll();
 
-
-        $paginator  = $this->get('knp_paginator');
-        $entities = $paginator->paginate(
-            $entities,
-            $this->get('request')->query->get('page', 1)/*page number*/
-        );
-
         return $this->render('ACSACSPanelBundle:Plan:index.html.twig', array(
             'entities' => $entities,
         ));

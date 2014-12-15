@@ -22,13 +22,6 @@ class MailLogrcvdController extends Controller
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('ACSACSPanelBundle:MailLogrcvd')->findByUsers($this->get('security.context')->getToken()->getUser()->getIdChildIds());
 
-
-        $paginator  = $this->get('knp_paginator');
-        $entities = $paginator->paginate(
-            $entities,
-            $this->get('request')->query->get('page', 1)/*page number*/
-        );
-
         return $this->render('ACSACSPanelBundle:MailLogrcvd:index.html.twig', array(
             'entities' => $entities,
         ));
