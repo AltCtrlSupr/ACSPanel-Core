@@ -110,7 +110,7 @@ class MenuSubscriber implements EventSubscriberInterface
     public function mailItems(FilterMenuEvent $menu_filter)
     {
         $menu = $menu_filter->getMenu();
-        $menu->addChild('menu.mail.main', array( 'route' => null, 'extras' => array('icon' => 'fa-inbox' )));
+        $menu->addChild('menu.mail.main', array( 'route' => null, 'extras' => array('icon' => 'fa-inbox') ));
         $menu['menu.mail.main']->addChild('menu.mail.domain', array( 'route' => 'maildomain'));
         $menu['menu.mail.main']->addChild('menu.mail.mailbox', array( 'route' => 'mailmailbox'));
         $menu['menu.mail.main']->addChild('menu.mail.alias', array( 'route' => 'mailalias'));
