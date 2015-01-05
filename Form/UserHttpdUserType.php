@@ -13,7 +13,7 @@ class UserHttpdUserType extends HttpdUserType
         $builder
             ->add('name')
             ->add('password','password')
-            ->add('protected_dir')
+            ->add('protected_dir',null, array('required' => false))
             //->add('createdAt')
             //->add('updatedAt')
             ->add('httpd_host')

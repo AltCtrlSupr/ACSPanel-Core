@@ -14,6 +14,8 @@ class HttpdUserControllerTest extends CommonTestCase
         $crawler = $client->request('GET', '/httpduser/new');
         $this->assertTrue(200 === $client->getResponse()->getStatusCode());
 
+
+	ldd($crawler->html());
 	// Form should accept empty protected dir
         $form = $crawler->selectButton('Create')->form(array(
             'acs_acspanelbundle_httpdusertype[name]' => 'httpd_test',

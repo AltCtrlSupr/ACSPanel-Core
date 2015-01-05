@@ -9,6 +9,7 @@ use ACS\ACSPanelBundle\Entity\DB;
 use ACS\ACSPanelBundle\Entity\DatabaseUser;
 use ACS\ACSPanelBundle\Entity\Domain;
 use ACS\ACSPanelBundle\Entity\HttpdHost;
+use ACS\ACSPanelBundle\Entity\HttpdUser;
 use ACS\ACSPanelBundle\Entity\FtpdUser;
 use ACS\ACSPanelBundle\Entity\IpAddress;
 use ACS\ACSPanelBundle\Entity\MailDomain;
@@ -74,6 +75,9 @@ class EntitySubscriber implements EventSubscriber
         }
         if ($entity instanceof HttpdHost){
             $this->setUserValue($entity);
+        }
+        if ($entity instanceof HttpdUser){
+            $this->setProtectedDir($entity);
         }
         if ($entity instanceof IpAddress){
             $this->setUserValue($entity);
@@ -287,6 +291,18 @@ class EntitySubscriber implements EventSubscriber
 
         $user = $service->getToken()->getUser();
         return $entity->setUser($user);
+    }
+
+    public function setProtectedDir($entity)
+    {
+        $settings = $this->container->get('acs.setting_manager');
+        $service = $this->container->get('security.context');
+
+        $user = $service->getToken()->getUser();
+	if(!$entity->getProtectedDir())
+		return $entity->setProtectedDir($settings->getSystemSetting('home_base').$user->getUsername().'/web/'.$entity->getHttpdHost()->getDomain()->getDomain().'/httpdocs');
+	else
+		return $entity;
     }
 
     public function removeDatabase($entity)
