@@ -65,16 +65,14 @@ class MenuSubscriber implements EventSubscriberInterface
     {
         $menu = $menu_filter->getMenu();
         $menu->addChild('menu.reseller.main', array('route' => null));
-        //$menu['menu.reseller.main']->addChild('menu.reseller.users', array( 'route' => 'users'));
-        $menu['menu.reseller.main']->addChild('menu.reseller.logs', array( 'route' => 'logs'));
+        $menu['menu.reseller.main']->addChild('menu.reseller.logs', array( 'route' => 'logs', 'extras' => array('icon' => 'fa-archive')));
     }
 
     public function adminItems(FilterMenuEvent $menu_filter)
     {
         $menu = $menu_filter->getMenu();
         $menu->addChild('menu.admin.main', array('route' => null));
-        //$menu['menu.admin.main']->addChild('menu.admin.users', array( 'route' => 'users'));
-        $menu['menu.admin.main']->addChild('menu.admin.groups', array( 'route' => 'groups'));
+        $menu['menu.admin.main']->addChild('menu.admin.groups', array( 'route' => 'groups', 'extras' => array('icon' => 'fa-group')));
         $menu['menu.admin.main']->addChild('menu.admin.plans', array( 'route' => 'plans'));
         $menu['menu.admin.main']->addChild('menu.admin.servers.main', array( 'route' => null));
         $menu['menu.admin.main']['menu.admin.servers.main']->addChild('menu.admin.servers.servers', array( 'route' => 'server'));
@@ -96,7 +94,6 @@ class MenuSubscriber implements EventSubscriberInterface
         $menu->addChild('menu.httpd.newhosting', array( 'route' => 'acs_acspanel_register_host'));
         $menu->addChild('menu.httpd.main', array( 'route' => null, 'extras' => array('icon' => 'fa-globe' )));
         $menu['menu.httpd.main']->addChild('menu.httpd.hosts', array( 'route' => 'httpdhost'));
-#        $menu['HTTPD']->addChild('Alias', array( 'route' => 'httpdalias'));
         $menu['menu.httpd.main']->addChild('menu.httpd.users', array( 'route' => 'httpduser'));
     }
 
