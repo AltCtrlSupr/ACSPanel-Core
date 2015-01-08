@@ -69,11 +69,6 @@ class HttpdHost
     private $updatedAt;
 
     /**
-     * @var ACS\ACSPanelBundle\Entity\FosUser
-     */
-    private $user;
-
-    /**
      * @var \ACS\ACSPanelBundle\Entity\Service
      */
     private $service;
@@ -330,29 +325,6 @@ class HttpdHost
     }
 
     /**
-     * Set user
-     *
-     * @param ACS\ACSPanelBundle\Entity\FosUser $user
-     * @return HttpdHost
-     */
-    public function setUser(\ACS\ACSPanelBundle\Entity\FosUser $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return ACS\ACSPanelBundle\Entity\FosUser
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
      * @ORM\PrePersist
      */
     public function setCreatedAtValue()
@@ -443,31 +415,8 @@ class HttpdHost
      */
     public function __construct()
     {
-        $this->user = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    /**
-     * Add user
-     *
-     * @param \ACS\ACSPanelBundle\Entity\FosUser $user
-     * @return HttpdHost
-     */
-    public function addUser(\ACS\ACSPanelBundle\Entity\FosUser $user)
-    {
-        $this->user[] = $user;
-
-        return $this;
-    }
-
-    /**
-     * Remove user
-     *
-     * @param \ACS\ACSPanelBundle\Entity\FosUser $user
-     */
-    public function removeUser(\ACS\ACSPanelBundle\Entity\FosUser $user)
-    {
-        $this->user->removeElement($user);
-    }
     /**
      * @var \ACS\ACSPanelBundle\Entity\Service
      */

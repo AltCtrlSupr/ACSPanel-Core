@@ -110,11 +110,9 @@ services:
     acspanel_core.menu_builder:
         class:  ACS\ACSPanelBundle\Menu\Builder
 
-
     # DNSDomain events
     dns_subscriber:
         class: ACS\ACSPanelBundle\Event\Subscribers\DnsSubscriber
         arguments: ['@event_dispatcher']
         tags:
             - {name: kernel.event_subscriber}
-

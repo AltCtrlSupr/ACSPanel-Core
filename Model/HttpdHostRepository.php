@@ -7,6 +7,7 @@
 namespace ACS\ACSPanelBundle\Model;
 
 use Doctrine\ORM\EntityRepository;
+
 use ACS\ACSPanelBundle\Entity\FosUser;
 
 class HttpdHostRepository extends EntityRepository
@@ -22,6 +23,7 @@ class HttpdHostRepository extends EntityRepository
         $query = $this->_em->createQuery('SELECT h FROM ACS\ACSPanelBundle\Entity\HttpdHost h INNER JOIN h.domain d WHERE d.user IN (?1)')->setParameter(1, $user);
         return $query->getResult();
     }
+
 }
 
 ?>
