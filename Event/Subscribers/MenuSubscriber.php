@@ -19,6 +19,7 @@ class MenuSubscriber implements EventSubscriberInterface
                 array('mailItems', 40),
                 array('databaseItems', 30),
                 array('ftpItems', 20),
+                array('settingsItems', 10),
                 array('logoutItems', -9000),
             ),
             'menu.reseller.after.items'     => array(
@@ -31,6 +32,7 @@ class MenuSubscriber implements EventSubscriberInterface
                 array('mailItems', 40),
                 array('databaseItems', 30),
                 array('ftpItems', 20),
+                array('settingsItems', 10),
                 array('logoutItems', -9000),
             ),
             'menu.user.after.items'     => array(
@@ -42,6 +44,7 @@ class MenuSubscriber implements EventSubscriberInterface
                 array('mailItems', 40),
                 array('databaseItems', 30),
                 array('ftpItems', 20),
+                array('settingsItems', 10),
                 array('logoutItems', -9000),
             )
 
@@ -127,11 +130,16 @@ class MenuSubscriber implements EventSubscriberInterface
         $menu->addChild('menu.ftp.main', array( 'route' => 'ftpduser', 'extras' => array('icon' => 'fa-cloud-upload')));
     }
 
-
-
     public function logoutItems(FilterMenuEvent $menu_filter)
     {
         $menu = $menu_filter->getMenu();
         $menu->addChild('menu.logout.main', array( 'route' => 'fos_user_security_logout', 'extras' => array('icon' => 'fa-sign-out' )));
     }
+
+    public function settingsItems(FilterMenuEvent $menu_filter)
+    {
+        $menu = $menu_filter->getMenu();
+        $menu->addChild('menu.settings.main', array( 'route' => 'settings', 'extras' => array('icon' => 'fa-gear')));
+    }
+
 }
