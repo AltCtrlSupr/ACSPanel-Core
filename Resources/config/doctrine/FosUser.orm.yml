@@ -1,4 +1,4 @@
-ACS\ACSPanelBundle\Entity\FosUser:
+ACS\ACSPanelUsersBundle\Entity\FosUser:
     type: entity
     table: fos_user
     fields:

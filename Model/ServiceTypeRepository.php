@@ -7,7 +7,6 @@
 namespace ACS\ACSPanelBundle\Model;
 
 use Doctrine\ORM\EntityRepository;
-use ACS\ACSPanelBundle\Entity\FosUser;
 
 class ServiceTypeRepository extends EntityRepository
 {
@@ -52,5 +51,3 @@ class ServiceTypeRepository extends EntityRepository
 
 
 }
-
-?>

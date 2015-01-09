@@ -17,7 +17,7 @@ use ACS\ACSPanelBundle\Entity\MailWBList;
 use ACS\ACSPanelBundle\Entity\PanelSetting;
 use ACS\ACSPanelBundle\Entity\Server;
 use ACS\ACSPanelBundle\Entity\Service;
-use ACS\ACSPanelBundle\Entity\FosUser;
+use ACS\ACSPanelUsersBundle\Entity\FosUser;
 
 class EntitySubscriber implements EventSubscriber
 {

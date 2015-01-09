@@ -7,7 +7,7 @@
 namespace ACS\ACSPanelBundle\Model;
 
 use Doctrine\ORM\EntityRepository;
-use ACS\ACSPanelBundle\Entity\FosUser;
+use ACS\ACSPanelUsersBundle\Entity\FosUser;
 
 class HttpdUserRepository extends EntityRepository
 {
@@ -22,5 +22,3 @@ class HttpdUserRepository extends EntityRepository
         return $query->getResult();
     }
 }
-
-?>

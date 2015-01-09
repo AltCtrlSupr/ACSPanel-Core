@@ -21,7 +21,7 @@ class UserPlan
     private $uplans;
 
     /**
-     * @var \ACS\ACSPanelBundle\Entity\FosUser
+     * @var \ACS\ACSPanelUsersBundle\Entity\FosUser
      */
     private $puser;
 
@@ -78,7 +78,7 @@ class UserPlan
      * @param \ACS\ACSPanelBundle\Entity\FosUser $puser
      * @return UserPlan
      */
-    public function setPuser(\ACS\ACSPanelBundle\Entity\FosUser $puser = null)
+    public function setPuser(\ACS\ACSPanelUsersBundle\Entity\FosUser $puser = null)
     {
         $this->puser = $puser;
 

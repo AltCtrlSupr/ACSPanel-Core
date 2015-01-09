@@ -49,7 +49,7 @@ ACS\ACSPanelBundle\Entity\Domain:
             column: updated_at
     manyToOne:
         user:
-            targetEntity: FosUser
+            targetEntity: \ACS\ACSPanelUsersBundle\Entity\FosUser
             cascade: {  }
             inversedBy: domains
             joinTable: null

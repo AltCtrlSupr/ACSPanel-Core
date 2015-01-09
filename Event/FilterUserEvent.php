@@ -2,7 +2,7 @@
 namespace ACS\ACSPanelBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-use ACS\ACSPanelBundle\Entity\FosUser;
+use ACS\ACSPanelUsersBundle\Entity\FosUser;
 
 class FilterUserEvent extends Event
 {

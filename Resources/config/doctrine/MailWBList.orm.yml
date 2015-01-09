@@ -51,7 +51,7 @@ ACS\ACSPanelBundle\Entity\MailWBList:
             column: updated_at
     manyToOne:
         user:
-            targetEntity: FosUser
+            targetEntity: \ACS\ACSPanelUsersBundle\Entity\FosUser
             cascade: {  }
             inversedBy: null
             joinTable: null

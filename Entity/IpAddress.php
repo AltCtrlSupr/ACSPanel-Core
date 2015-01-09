@@ -36,7 +36,7 @@ class IpAddress
     private $updatedAt;
 
     /**
-     * @var \ACS\ACSPanelBundle\Entity\FosUser
+     * @var \ACS\ACSPanelUsersBundle\Entity\FosUser
      */
     private $user;
 
@@ -159,10 +159,10 @@ class IpAddress
     /**
      * Set user
      *
-     * @param \ACS\ACSPanelBundle\Entity\FosUser $user
+     * @param \ACS\ACSPanelUsersBundle\Entity\FosUser $user
      * @return IpAddress
      */
-    public function setUser(\ACS\ACSPanelBundle\Entity\FosUser $user = null)
+    public function setUser(\ACS\ACSPanelUsersBundle\Entity\FosUser $user = null)
     {
         $this->user = $user;
 
@@ -172,7 +172,7 @@ class IpAddress
     /**
      * Get user
      *
-     * @return \ACS\ACSPanelBundle\Entity\FosUser
+     * @return \ACS\ACSPanelUsersBundle\Entity\FosUser
      */
     public function getUser()
     {

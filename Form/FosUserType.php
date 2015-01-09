@@ -60,7 +60,7 @@ class FosUserType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'ACS\ACSPanelBundle\Entity\FosUser'
+            'data_class' => 'ACS\ACSPanelUsersBundle\Entity\FosUser'
         ));
 
         $resolver->setRequired(array(

@@ -6,7 +6,6 @@ namespace ACS\ACSPanelBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use ACS\ACSPanelBundle\Entity\FosUser;
 use ACS\ACSPanelBundle\Entity\Domain;
 use ACS\ACSPanelBundle\Entity\HttpdHost;
 use ACS\ACSPanelBundle\Entity\DnsDomain;

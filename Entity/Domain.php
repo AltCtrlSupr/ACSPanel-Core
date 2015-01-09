@@ -56,7 +56,7 @@ class Domain
     private $child_domains;
 
     /**
-     * @var \ACS\ACSPanelBundle\Entity\FosUser
+     * @var \ACS\ACSPanelUsersBundle\Entity\FosUser
      */
     private $user;
 
@@ -296,10 +296,10 @@ class Domain
     /**
      * Set user
      *
-     * @param \ACS\ACSPanelBundle\Entity\FosUser $user
+     * @param \ACS\ACSPanelUsersBundle\Entity\FosUser $user
      * @return Domain
      */
-    public function setUser(\ACS\ACSPanelBundle\Entity\FosUser $user = null)
+    public function setUser(\ACS\ACSPanelUsersBundle\Entity\FosUser $user = null)
     {
         $this->user = $user;
 
@@ -309,7 +309,7 @@ class Domain
     /**
      * Get user
      *
-     * @return \ACS\ACSPanelBundle\Entity\FosUser
+     * @return \ACS\ACSPanelUsersBundle\Entity\FosUser
      */
     public function getUser()
     {

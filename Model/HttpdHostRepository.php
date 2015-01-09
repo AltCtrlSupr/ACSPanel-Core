@@ -8,7 +8,7 @@ namespace ACS\ACSPanelBundle\Model;
 
 use Doctrine\ORM\EntityRepository;
 
-use ACS\ACSPanelBundle\Entity\FosUser;
+use ACS\ACSPanelUsersBundle\Entity\FosUser;
 
 class HttpdHostRepository extends EntityRepository
 {
@@ -25,5 +25,3 @@ class HttpdHostRepository extends EntityRepository
     }
 
 }
-
-?>

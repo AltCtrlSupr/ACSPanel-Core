@@ -145,7 +145,7 @@ class MailLogrcvd
     /**
      * Get user
      *
-     * @return \ACS\ACSPanelBundle\Entity\FosUser
+     * @return \ACS\ACSPanelUsersBundle\Entity\FosUser
      */
     public function getUser()
     {

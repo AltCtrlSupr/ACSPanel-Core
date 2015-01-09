@@ -41,7 +41,7 @@ class DatabaseUser
     private $database;
 
     /**
-     * @var \ACS\ACSPanelBundle\Entity\FosUser
+     * @var \ACS\ACSPanelUsersBundle\Entity\FosUser
      */
     private $user;
 
@@ -155,10 +155,10 @@ class DatabaseUser
     /**
      * Set user
      *
-     * @param \ACS\ACSPanelBundle\Entity\FosUser $user
+     * @param \ACS\ACSPanelUsersBundle\Entity\FosUser $user
      * @return DatabaseUser
      */
-    public function setUser(\ACS\ACSPanelBundle\Entity\FosUser $user = null)
+    public function setUser(\ACS\ACSPanelUsersBundle\Entity\FosUser $user = null)
     {
         $this->user = $user;
 
@@ -168,7 +168,7 @@ class DatabaseUser
     /**
      * Get user
      *
-     * @return \ACS\ACSPanelBundle\Entity\FosUser
+     * @return \ACS\ACSPanelUsersBundle\Entity\FosUser
      */
     public function getUser()
     {

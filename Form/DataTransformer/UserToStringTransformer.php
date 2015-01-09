@@ -4,7 +4,6 @@ namespace ACS\ACSPanelBundle\Form\DataTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Doctrine\Common\Persistence\ObjectManager;
-use ACS\ACSPanelBundle\Entity\FosUser;
 
 class UserToStringTransformer implements DataTransformerInterface
 {

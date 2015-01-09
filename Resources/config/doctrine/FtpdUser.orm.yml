@@ -73,7 +73,7 @@ ACS\ACSPanelBundle\Entity\FtpdUser:
                 on: update
     manyToOne:
         user:
-            targetEntity: FosUser
+            targetEntity: \ACS\ACSPanelUsersBundle\Entity\FosUser
             cascade: {  }
             inversedBy: null
             joinTable: null

@@ -7,7 +7,6 @@
 namespace ACS\ACSPanelBundle\Model;
 
 use Doctrine\ORM\EntityRepository;
-use ACS\ACSPanelBundle\Entity\FosUser;
 
 class MailLogrcvdRepository extends EntityRepository
 {
@@ -18,5 +17,3 @@ class MailLogrcvdRepository extends EntityRepository
     }
 
 }
-
-?>

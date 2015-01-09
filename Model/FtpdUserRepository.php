@@ -7,7 +7,6 @@
 namespace ACS\ACSPanelBundle\Model;
 
 use Doctrine\ORM\EntityRepository;
-use ACS\ACSPanelBundle\Entity\FosUser;
 
 class FtpdUserRepository extends EntityRepository
 {
@@ -17,5 +16,3 @@ class FtpdUserRepository extends EntityRepository
         return $query->getResult();
     }
 }
-
-?>

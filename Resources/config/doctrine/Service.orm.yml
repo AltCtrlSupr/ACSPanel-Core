@@ -61,7 +61,7 @@ ACS\ACSPanelBundle\Entity\Service:
 
     manyToOne:
         user:
-            targetEntity: FosUser
+            targetEntity: \ACS\ACSPanelUsersBundle\Entity\FosUser
             cascade: {  }
             mappedBy: group
             inversedBy: null

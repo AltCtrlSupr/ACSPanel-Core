@@ -42,7 +42,7 @@ class LogItem extends LogEntry
     private $created_at;
 
     /**
-     * @var \ACS\ACSPanelBundle\Entity\FosUser
+     * @var \ACS\ACSPanelUsersBundle\Entity\FosUser
      */
     private $user;
 
@@ -152,10 +152,10 @@ class LogItem extends LogEntry
     /**
      * Set user
      *
-     * @param \ACS\ACSPanelBundle\Entity\FosUser $user
+     * @param \ACS\ACSPanelUsersBundle\Entity\FosUser $user
      * @return LogItem
      */
-    public function setUser(\ACS\ACSPanelBundle\Entity\FosUser $user = null)
+    public function setUser(\ACS\ACSPanelUsersBundle\Entity\FosUser $user = null)
     {
         $this->user = $user;
 
@@ -165,7 +165,7 @@ class LogItem extends LogEntry
     /**
      * Get user
      *
-     * @return \ACS\ACSPanelBundle\Entity\FosUser
+     * @return \ACS\ACSPanelUsersBundle\Entity\FosUser
      */
     public function getUser()
     {

@@ -44,7 +44,7 @@ class RegisterHostingType extends AbstractType {
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
             'flowStep' => 0,
-            'data_class' => 'ACS\ACSPanelBundle\Entity\FosUser', // should point to your user entity
+            'data_class' => 'ACS\ACSPanelUsersBundle\Entity\FosUser', // should point to your user entity
         ));
     }
 
