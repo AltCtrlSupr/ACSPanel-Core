@@ -19,6 +19,8 @@ use ACS\ACSPanelBundle\Entity\Server;
 use ACS\ACSPanelBundle\Entity\Service;
 use ACS\ACSPanelUsersBundle\Entity\FosUser;
 
+use Symfony\Component\Security\Acl\Permission\MaskBuilder;
+
 class EntitySubscriber implements EventSubscriber
 {
 
@@ -55,6 +57,11 @@ class EntitySubscriber implements EventSubscriber
     {
         $entity = $args->getEntity();
         $entityManager = $args->getEntityManager();
+
+        if($this->getCurrentUser()){
+            $aclManager = $this->container->get('problematic.acl_manager');
+            $aclManager->addObjectPermission($entity, MaskBuilder::MASK_OWNER, $this->getCurrentUser());
+        }
 
         if ($entity instanceof DB){
             $this->createDatabase($entity);
@@ -274,6 +281,18 @@ class EntitySubscriber implements EventSubscriber
 
         return $this;
 
+    }
+
+    public function getCurrentUser()
+    {
+        $service = $this->container->get('security.context');
+
+        if(!$service->getToken())
+            return;
+
+        $user = $service->getToken()->getUser();
+
+        return $user;
     }
 
     /**
