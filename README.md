@@ -35,10 +35,6 @@ Services supported (At the moment):
 When it comes to installing the ACSPanel, you have the
 following options.
 
-### Use Debian Package(*recommended*)
-
-Coming soon
-
 ### Download from GIT repository
 
 To install ACSPanel from git repository, you have to clone the project with 
@@ -92,6 +88,10 @@ Then you are ready to create the acspanel basic schema executing the next comman
 
     php app/console doctrine:schema:create
 
+Preparing ACL tables
+   
+    php app/console init:acl
+
 You can load some basic fixtures doing next, like basic groups and admin to start using the panel:
 
     php app/main/console doctrine:fixtures:load
@@ -102,9 +102,6 @@ You should install the assets as well:
 
     php app/console assets:install --symlink
 
-(Optional) Install additional ACSPanel bundles:
-
-Coming soon.
 
 Congratulations! You're now ready to use ACSPanel.
 
