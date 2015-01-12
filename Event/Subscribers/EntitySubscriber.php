@@ -75,9 +75,6 @@ class EntitySubscriber implements EventSubscriber
             $usertools = $this->container->get('acs.user.tools');
             $this->setUid($usertools->getAvailableUid());
         }
-        if ($entity instanceof HttpdHost){
-            $this->setUserValue($entity);
-        }
         if ($entity instanceof HttpdUser){
             $this->setProtectedDir($entity);
         }

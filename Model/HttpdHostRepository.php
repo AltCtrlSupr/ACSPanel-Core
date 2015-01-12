@@ -33,7 +33,7 @@ class HttpdHostRepository extends EntityRepository
 
     public function getUserViewable($user)
     {
-		$entities_raw = $this->_em->createQuery('SELECT h,d,pd FROM ACS\ACSPanelBundle\Entity\HttpdHost h INNER JOIN h.domain d INNER JOIN d.parent_domain pd');
+		$entities_raw = $this->_em->createQuery('SELECT h,d,pd FROM ACS\ACSPanelBundle\Entity\HttpdHost h INNER JOIN h.domain d LEFT JOIN d.parent_domain pd');
 		$entities = $this->acl_filter->apply($entities_raw, ['VIEW'], $user, 'h')->getResult();
 
         return $entities;
