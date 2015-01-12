@@ -121,11 +121,6 @@ class EntitySubscriber implements EventSubscriber
         $entity = $args->getEntity();
         $entityManager = $args->getEntityManager();
 
-        if($this->getCurrentUser()){
-            $aclManager = $this->container->get('problematic.acl_manager');
-            $aclManager->addObjectPermission($entity, MaskBuilder::MASK_OWNER, $this->getCurrentUser());
-        }
-
         if ($entity instanceof DatabaseUser){
             $this->createUserInDatabase($entity);
             $this->setUserValue($entity);
@@ -277,18 +272,6 @@ class EntitySubscriber implements EventSubscriber
 
         return $this;
 
-    }
-
-    public function getCurrentUser()
-    {
-        $service = $this->container->get('security.context');
-
-        if(!$service->getToken())
-            return;
-
-        $user = $service->getToken()->getUser();
-
-        return $user;
     }
 
     public function setProtectedDir($entity)
