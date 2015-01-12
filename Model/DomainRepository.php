@@ -11,12 +11,33 @@ use ACS\ACSPanelUsersBundle\Entity\FosUser;
 
 class DomainRepository extends EntityRepository
 {
+    private $acl_filter;
+
+    public function setAclFilter($acl_filter)
+    {
+        $this->acl_filter = $acl_filter;
+    }
+
+    public function getUserViewable($user)
+    {
+		$entities_raw = $this->_em->createQuery('SELECT d FROM ACS\ACSPanelBundle\Entity\Domain d');
+		$entities = $this->acl_filter->apply($entities_raw, ['VIEW'], $user, 'd')->getResult();
+
+        return $entities;
+    }
+
+    /**
+     * @deprecated
+     */
     public function findByUser(FosUser $user)
     {
         $query = $this->_em->createQuery('SELECT d FROM ACS\ACSPanelBundle\Entity\Domain d WHERE d.user = ?1')->setParameter(1, $user->getId());
         return $query->getResult();
     }
 
+    /**
+     * @deprecated
+     */
     public function findByUsers(Array $ids)
     {
         $query = $this->_em->createQuery('SELECT d FROM ACS\ACSPanelBundle\Entity\Domain d WHERE d.user IN (?1)')->setParameter(1, $ids);

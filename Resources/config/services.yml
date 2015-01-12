@@ -127,12 +127,10 @@ services:
         calls:
             - [ setAclFilter, ['@problematic.acl.orm.filter'] ]
 
-    #app.doctrine.repository.factory:
-        #class: ACS\ACSPanelBundle\Doctrine\Repository\Factory
-        #arguments:
-            #- '@problematic.acl.orm.filter'
-            #- '@service_container'
-            #- 'app.doctrine.repository.factory.default'
-
-    #app.doctrine.repository.factory.default:
-        #class: Doctrine\ORM\Repository\DefaultRepositoryFactory 
+    domain_repository:
+        class: ACS\ACSPanelBundle\Model\DomainRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: ['ACSACSPanelBundle:Domain']
+        calls:
+            - [ setAclFilter, ['@problematic.acl.orm.filter'] ]

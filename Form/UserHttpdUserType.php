@@ -26,8 +26,6 @@ class UserHttpdUserType extends HttpdUserType
             ->add('name')
             ->add('password','password')
             ->add('protected_dir',null, array('required' => false))
-            //->add('createdAt')
-            //->add('updatedAt')
             ->add('httpd_host', 'entity', array(
                 'class' => 'ACSACSPanelBundle:HttpdHost',
                 'choices' => $user_httpd_hosts

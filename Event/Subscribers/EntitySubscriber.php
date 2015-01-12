@@ -104,10 +104,6 @@ class EntitySubscriber implements EventSubscriber
         if ($entity instanceof Service){
             $this->setUserValue($entity);
         }
-        if ($entity instanceof FosUser){
-            $this->setFosUserUserValue($entity);
-            $this->setGidAndUidValues($entity);
-        }
     }
 
     public function postRemove(LifecycleEventArgs $args)
@@ -295,23 +291,6 @@ class EntitySubscriber implements EventSubscriber
         return $user;
     }
 
-    /**
-     * @todo check for best way to get current user
-     */
-    public function setUserValue($entity)
-    {
-        if($entity->getUser())
-            return;
-
-        $service = $this->container->get('security.context');
-
-        if(!$service->getToken())
-            return;
-
-        $user = $service->getToken()->getUser();
-        return $entity->setUser($user);
-    }
-
     public function setProtectedDir($entity)
     {
         $settings = $this->container->get('acs.setting_manager');
@@ -362,51 +341,6 @@ class EntitySubscriber implements EventSubscriber
 
         return $entity;
 
-    }
-
-    public function setFosUserUserValue($entity)
-    {
-        if($entity->getParentUser())
-            return;
-
-
-        $service = $this->container->get('security.context');
-
-        if ($service) {
-            if ($service->getToken()) {
-                $user = $service->getToken()->getUser();
-                // TODO: Get system user and set if its register from register form
-                if($user != 'anon.'){
-                    return $entity->setParentUser($user);
-                }else{
-                    // $system_user = new FosUser();
-                    // $system_user->setId(1);
-                    // return $this->setParentUser($system_user);
-                }
-            }
-        }
-    }
-
-    public function setGidAndUidValues($entity)
-    {
-        $usertools = $this->container->get('acs.user.tools');
-
-        $entity->setUid($usertools->getAvailableUid());
-        $entity->setGid($usertools->getAvailableGid());
-    }
-
-    public function incrementUidSetting($entity)
-    {
-        $setting_manager = $this->container->get('acs.setting_manager');
-
-        return $setting_manager->setInternalSetting('last_used_uid',$entity->getUid());
-    }
-
-   public function incrementGidSetting($entity)
-    {
-        $setting_manager = $this->container->get('acs.setting_manager');
-
-        return $setting_manager->setInternalSetting('last_used_gid',$entity->getGid());
     }
 
 }

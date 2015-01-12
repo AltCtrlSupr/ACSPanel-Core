@@ -17,6 +17,10 @@
             <td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
         </tr>
         <tr>
+            <th>{% trans %}db.field.server_ip{% endtrans %}</th>
+            <td>{{ entity.service.server.ip.ip }}</td>
+        </tr>
+        <tr>
             <th>{% trans %}db.field.users{% endtrans %}</th>
             <td><ul>{% for dbuser in entity.databaseUsers %}<li><a href="{{ path('databaseuser_edit', { 'id': dbuser.id }) }}">{{ dbuser }}</a></li>{% endfor %}</ul></td>
         </tr>

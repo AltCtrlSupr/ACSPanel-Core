@@ -29,10 +29,16 @@ class UserHttpdHostType extends HttpdHostType
         if($security->isGranted('ROLE_SUPER_ADMIN'))
             $superadmin = true;
 
+        $user_domains = $this->container->get('domain_repository')->getUserViewable($this->container->get('security.context')->getToken()->getUser());
+
         $web_sercices_ids = $this->em->getRepository('ACS\ACSPanelBundle\Entity\ServiceType')->getWebServiceTypes();
 
         $builder
-            ->add('domain','entity',array( 'class' => 'ACS\ACSPanelBundle\Entity\Domain', 'label' => 'httpdhost.form.domain'))
+            ->add('domain','entity',array(
+                'class' => 'ACS\ACSPanelBundle\Entity\Domain',
+                'label' => 'httpdhost.form.domain',
+                'choices' => $user_domains
+            ))
             ->add('configuration', null, array('label' => 'httpdhost.form.configuration'))
             ->add('cgi', null, array('label' => 'httpdhost.form.cgi'))
             ->add('ssi', null, array('label' => 'httpdhost.form.ssi'))
