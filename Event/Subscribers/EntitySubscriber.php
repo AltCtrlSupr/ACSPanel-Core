@@ -58,11 +58,6 @@ class EntitySubscriber implements EventSubscriber
         $entity = $args->getEntity();
         $entityManager = $args->getEntityManager();
 
-        if($this->getCurrentUser()){
-            $aclManager = $this->container->get('problematic.acl_manager');
-            $aclManager->addObjectPermission($entity, MaskBuilder::MASK_OWNER, $this->getCurrentUser());
-        }
-
         if ($entity instanceof DB){
             $this->createDatabase($entity);
             $this->setCreatedAtValue($entity);
@@ -129,6 +124,11 @@ class EntitySubscriber implements EventSubscriber
     {
         $entity = $args->getEntity();
         $entityManager = $args->getEntityManager();
+
+        if($this->getCurrentUser()){
+            $aclManager = $this->container->get('problematic.acl_manager');
+            $aclManager->addObjectPermission($entity, MaskBuilder::MASK_OWNER, $this->getCurrentUser());
+        }
 
         if ($entity instanceof DatabaseUser){
             $this->createUserInDatabase($entity);
