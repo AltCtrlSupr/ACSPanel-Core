@@ -18,15 +18,8 @@ class UserHttpdHostType extends HttpdHostType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        // TODO: Do the addition of fields with suscriber
-        global $kernel;
-
-        if ('AppCache' == get_class($kernel)) {
-            $kernel = $kernel->getKernel();
-        }
-        $service = $kernel->getContainer()->get('security.context');
-        //$container = $this->container;
-        $container = $kernel->getContainer();
+        $service = $this->container->get('security.context');
+        $container = $this->container;
 
         $security = $container->get('security.context');
 

@@ -25,15 +25,9 @@ class HttpdUserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        // IF is admin can see all the hosts, if is user only their ones...
-        if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
-            $entities = $em->getRepository('ACSACSPanelBundle:HttpdUser')->findAll();
-        }elseif(true === $this->get('security.context')->isGranted('ROLE_RESELLER')){
-            $entities = $em->getRepository('ACSACSPanelBundle:HttpdUser')->findByUsers($this->get('security.context')->getToken()->getUser()->getIdChildIds());
-        }elseif(true === $this->get('security.context')->isGranted('ROLE_USER')){
-            $entities = $em->getRepository('ACSACSPanelBundle:HttpdUser')->findByUser($this->get('security.context')->getToken()->getUser());
-        }
-
+		$entities_raw = $em->createQuery('SELECT hu FROM ACS\ACSPanelBundle\Entity\HttpdUser hu');
+		$entities = $this->get('problematic.acl.orm.filter')->apply($entities_raw, ['VIEW'], $this->get('security.context')->getToken()->getUser(), 'hu')->getResult();
+        
         return $this->render('ACSACSPanelBundle:HttpdUser:index.html.twig', array(
             'entities' => $entities,
         ));
@@ -79,7 +73,7 @@ class HttpdUserController extends Controller
         }
 
         $entity = new HttpdUser();
-        $form   = $this->createForm(new UserHttpdUserType(), $entity);
+        $form   = $this->createForm(new UserHttpdUserType($this->container), $entity);
 
         return $this->render('ACSACSPanelBundle:HttpdUser:new.html.twig', array(
             'entity' => $entity,
@@ -94,7 +88,7 @@ class HttpdUserController extends Controller
     public function createAction(Request $request)
     {
         $entity  = new HttpdUser();
-        $form = $this->createForm(new UserHttpdUserType(), $entity);
+        $form = $this->createForm(new UserHttpdUserType($this->container), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -129,7 +123,7 @@ class HttpdUserController extends Controller
             throw $this->createNotFoundException('Unable to find HttpdUser entity.');
         }
 
-        $editForm = $this->createForm(new UserHttpdUserType(), $entity);
+        $editForm = $this->createForm(new UserHttpdUserType($this->container), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ACSACSPanelBundle:HttpdUser:edit.html.twig', array(
@@ -154,7 +148,7 @@ class HttpdUserController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new UserHttpdUserType(), $entity);
+        $editForm = $this->createForm(new UserHttpdUserType($this->container), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
@@ -209,17 +203,17 @@ class HttpdUserController extends Controller
 
     public function setenabledAction(Request $request, $id)
     {
-      $em = $this->getDoctrine()->getManager();
-      $entity = $em->getRepository('ACSACSPanelBundle:HttpdUser')->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('ACSACSPanelBundle:HttpdUser')->find($id);
 
-      if (!$entity) {
-         throw $this->createNotFoundException('Unable to find htttpd user entity.');
-      }
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find htttpd user entity.');
+        }
 
-      $entity->setEnabled(!$entity->getEnabled());
-      $em->persist($entity);
-      $em->flush();
+        $entity->setEnabled(!$entity->getEnabled());
+        $em->persist($entity);
+        $em->flush();
 
-      return $this->redirect($this->generateUrl('httpduser'));
+        return $this->redirect($this->generateUrl('httpduser'));
     }
 }

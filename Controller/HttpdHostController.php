@@ -31,8 +31,7 @@ class HttpdHostController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-		$entities_raw = $em->createQuery('SELECT h,d,pd FROM ACS\ACSPanelBundle\Entity\HttpdHost h INNER JOIN h.domain d INNER JOIN d.parent_domain pd');
-		$entities = $this->get('problematic.acl.orm.filter')->apply($entities_raw, ['VIEW'], $this->get('security.context')->getToken()->getUser(), 'h')->getResult();
+        $entities = $this->get('httpdhost_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
         return $this->render('ACSACSPanelBundle:HttpdHost:index.html.twig', array(
             'entities' => $entities,
