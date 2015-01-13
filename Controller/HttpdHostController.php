@@ -72,23 +72,13 @@ class HttpdHostController extends Controller
     public function searchAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $rep = $em->getRepository('GedmoLoggable:LogEntry');
+        $rep = $this->get('');
 
         $term = $request->request->get('term');
 
-        $query = $rep->createQueryBuilder('li')
-            ->where('li.id = ?1')
-            ->orWhere('li.objectId = ?1')
-            ->orWhere('li.action LIKE ?1')
-            ->orWhere('li.objectClass LIKE ?1')
-            ->orWhere('li.data LIKE ?1')
-            ->orWhere('li.username LIKE ?1')
-            ->setParameter('1',$term)
-            ->getQuery();
+        $entities = $this->get('httpdhost_repository')->search($term, $this->get('security.context')->getToken()->getUser());
 
-        $entities = $query->execute();
-
-        return $this->render('ACSACSPanelBundle:LogItem:index.html.twig', array(
+        return $this->render('ACSACSPanelBundle:HttpdHost:index.html.twig', array(
             'search_action' => 'httpdhost_search',
             'term' => $term,
             'entities' => $entities,

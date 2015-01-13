@@ -6,9 +6,9 @@
  */
 namespace ACS\ACSPanelBundle\Model;
 
-use Doctrine\ORM\EntityRepository;
+use ACS\ACSPanelUsersBundle\Doctrine\AclEntityRepository;
 
-class DBRepository extends EntityRepository
+class DBRepository extends AclEntityRepository
 {
     public function findByUsers(Array $user)
     {

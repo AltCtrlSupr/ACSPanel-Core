@@ -6,10 +6,11 @@
  */
 namespace ACS\ACSPanelBundle\Model;
 
-use Doctrine\ORM\EntityRepository;
 use ACS\ACSPanelUsersBundle\Entity\FosUser;
 
-class DnsDomainRepository extends EntityRepository
+use ACS\ACSPanelUsersBundle\Doctrine\AclEntityRepository;
+
+class DnsDomainRepository extends AclEntityRepository
 {
     public function findByUser(FosUser $user)
     {

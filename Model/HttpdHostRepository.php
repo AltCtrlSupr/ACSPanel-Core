@@ -6,19 +6,12 @@
  */
 namespace ACS\ACSPanelBundle\Model;
 
-use Doctrine\ORM\EntityRepository;
-
 use ACS\ACSPanelUsersBundle\Entity\FosUser;
 
-class HttpdHostRepository extends EntityRepository
+use ACS\ACSPanelUsersBundle\Doctrine\AclEntityRepository;
+
+class HttpdHostRepository extends AclEntityRepository
 {
-    private $acl_filter;
-
-    public function setAclFilter($acl_filter)
-    {
-        $this->acl_filter = $acl_filter;
-    }
-
     public function findByUser(FosUser $user)
     {
         $query = $this->_em->createQuery('SELECT h FROM ACS\ACSPanelBundle\Entity\HttpdHost h INNER JOIN h.domain d WHERE d.user = ?1')->setParameter(1, $user->getId());
@@ -34,9 +27,24 @@ class HttpdHostRepository extends EntityRepository
     public function getUserViewable($user)
     {
 		$entities_raw = $this->_em->createQuery('SELECT h,d,pd FROM ACS\ACSPanelBundle\Entity\HttpdHost h INNER JOIN h.domain d LEFT JOIN d.parent_domain pd');
-		$entities = $this->acl_filter->apply($entities_raw, ['VIEW'], $user, 'h')->getResult();
+		$entities = $this->getAclFilter()->apply($entities_raw, ['VIEW'], $user, 'h')->getResult();
 
         return $entities;
     }
+
+	public function search($term, $user)
+	{
+        $query = $this->_em->createQueryBuilder('h')
+            ->where('h.id = ?1')
+            ->orWhere('h.name LIKE ?1')
+            ->orWhere('h.configuration LIKE ?1')
+            ->orWhere('h.domain LIKE ?1')
+            ->setParameter('1',$term)
+            ->getQuery();
+
+        $entities = $query->execute();
+
+
+	}
 
 }

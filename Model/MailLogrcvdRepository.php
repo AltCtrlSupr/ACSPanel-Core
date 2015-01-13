@@ -8,7 +8,9 @@ namespace ACS\ACSPanelBundle\Model;
 
 use Doctrine\ORM\EntityRepository;
 
-class MailLogrcvdRepository extends EntityRepository
+use ACS\ACSPanelUsersBundle\Doctrine\AclEntityRepository;
+
+class MailLogrcvdRepository extends AclEntityRepository
 {
     public function findByUsers(Array $user)
     {

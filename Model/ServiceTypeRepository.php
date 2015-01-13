@@ -6,9 +6,9 @@
  */
 namespace ACS\ACSPanelBundle\Model;
 
-use Doctrine\ORM\EntityRepository;
+use ACS\ACSPanelUsersBundle\Doctrine\AclEntityRepository;
 
-class ServiceTypeRepository extends EntityRepository
+class ServiceTypeRepository extends AclEntityRepository
 {
     public function getDbServiceTypes()
     {

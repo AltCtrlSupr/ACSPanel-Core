@@ -118,6 +118,7 @@ services:
             - {name: kernel.event_subscriber}
 
 
+    # ACL Repositories services
     # HttpdHostRepository
     httpdhost_repository:
         class: ACS\ACSPanelBundle\Model\HttpdHostRepository
