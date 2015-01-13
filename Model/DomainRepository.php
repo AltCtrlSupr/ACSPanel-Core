@@ -6,7 +6,6 @@
  */
 namespace ACS\ACSPanelBundle\Model;
 
-use Doctrine\ORM\EntityRepository;
 use ACS\ACSPanelUsersBundle\Entity\FosUser;
 use ACS\ACSPanelUsersBundle\Doctrine\AclEntityRepository;
 
