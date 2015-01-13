@@ -17,7 +17,6 @@ use ACS\ACSPanelBundle\Entity\MailWBList;
 use ACS\ACSPanelBundle\Entity\PanelSetting;
 use ACS\ACSPanelBundle\Entity\Server;
 use ACS\ACSPanelBundle\Entity\Service;
-use ACS\ACSPanelUsersBundle\Entity\FosUser;
 
 use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 
@@ -121,10 +120,6 @@ class EntitySubscriber implements EventSubscriber
         if ($entity instanceof DatabaseUser){
             $this->createUserInDatabase($entity);
             $this->setUserValue($entity);
-        }
-        if ($entity instanceof FosUser){
-            $this->incrementUidSetting($entity);
-            $this->incrementGidSetting($entity);
         }
 
         if ($entity instanceof FtpdUser){
