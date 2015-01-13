@@ -3,7 +3,7 @@ namespace ACS\ACSPanelBundle\DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\FixtureInterface;
-use ACS\ACSPanelBundle\Entity\FosGroup;
+use ACS\ACSPanelUsersBundle\Entity\FosGroup;
 
 class LoadGroupData implements FixtureInterface
 {

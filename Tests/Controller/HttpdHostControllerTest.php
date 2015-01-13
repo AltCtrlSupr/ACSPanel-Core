@@ -13,7 +13,6 @@ class HttpdHostControllerTest extends CommonTestCase
 
         // Create a new entry in the database
         $crawler = $this->client->request('GET', '/httpdhost/');
-		ldd($crawler->html());
         $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
 
         $crawler = $this->client->request('GET', '/httpdhost/new');
