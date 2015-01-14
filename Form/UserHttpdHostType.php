@@ -24,15 +24,14 @@ class UserHttpdHostType extends HttpdHostType
         $security = $container->get('security.context');
 
         $user = $security->getToken()->getUser();
-        $child_ids = $user->getIdChildIds();
         $superadmin = false;
         if($security->isGranted('ROLE_SUPER_ADMIN'))
             $superadmin = true;
 
         $user_domains = $this->container->get('domain_repository')->getUserViewable($this->container->get('security.context')->getToken()->getUser());
 
-        $web_services = $this->em->getRepository('ACS\ACSPanelBundle\Entity\ServiceType')->getWebServiceTypes();
-        $webproxy_services = $this->em->getRepository('ACS\ACSPanelBundle\Entity\ServiceType')->getWebproxyServiceTypes();
+        $web_services = $this->em->getRepository('ACS\ACSPanelBundle\Entity\Service')->getWebServices();
+        $webproxy_services = $this->em->getRepository('ACS\ACSPanelBundle\Entity\Service')->getWebproxyServices();
 
         $builder
             ->add('domain','entity',array(
@@ -52,7 +51,8 @@ class UserHttpdHostType extends HttpdHostType
             )
 			->add('proxy_service', null, array(
 				'label' => 'httpdhost.form.proxy_service',
-				'choices' => $webproxy_services
+				'choices' => $webproxy_services,
+				'required' => false,
 			))
             ->add('add_www_alias','checkbox',array(
                 'mapped' => false,
