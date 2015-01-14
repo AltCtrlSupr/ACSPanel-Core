@@ -31,7 +31,8 @@ class UserHttpdHostType extends HttpdHostType
 
         $user_domains = $this->container->get('domain_repository')->getUserViewable($this->container->get('security.context')->getToken()->getUser());
 
-        $web_sercices_ids = $this->em->getRepository('ACS\ACSPanelBundle\Entity\ServiceType')->getWebServiceTypes();
+        $web_services = $this->em->getRepository('ACS\ACSPanelBundle\Entity\ServiceType')->getWebServiceTypes();
+        $webproxy_services = $this->em->getRepository('ACS\ACSPanelBundle\Entity\ServiceType')->getWebproxyServiceTypes();
 
         $builder
             ->add('domain','entity',array(
@@ -44,23 +45,15 @@ class UserHttpdHostType extends HttpdHostType
             ->add('ssi', null, array('label' => 'httpdhost.form.ssi'))
             ->add('php', null, array('label' => 'httpdhost.form.php'))
             ->add('ssl', null, array('label' => 'httpdhost.form.ssl'))
-            // TODO: Add only http services
             ->add('service', null, array(
                 'label' => 'httpdhost.form.service',
-                'query_builder' => function(EntityRepository $er) use ($child_ids, $superadmin, $web_sercices_ids){
-                    $query = $er->createQueryBuilder('s')
-                        ->select('s')
-                        ->innerJoin('s.type','st','WITH','st.id IN (?1)')
-                        ->setParameter('1', $web_sercices_ids);
-                        if(!$superadmin){
-                            $query->andWhere('s.user IN (?2)')
-                            ->setParameter('2', $child_ids);
-                        }
-                        return $query;
-                    }
+				'choices' => $web_services
                 )
             )
-            ->add('proxy_service', null, array('label' => 'httpdhost.form.proxy_service'))
+			->add('proxy_service', null, array(
+				'label' => 'httpdhost.form.proxy_service',
+				'choices' => $webproxy_services
+			))
             ->add('add_www_alias','checkbox',array(
                 'mapped' => false,
                 'required' => false,

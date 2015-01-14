@@ -39,26 +39,13 @@ class ServiceTypeRepository extends AclEntityRepository
     public function getWebServiceTypes()
     {
         $query = $this->_em->createQuery('SELECT st FROM ACS\ACSPanelBundle\Entity\ServiceType st LEFT JOIN st.parent_type pst WHERE st.name LIKE ?1 OR pst.name LIKE ?1 OR st.name LIKE ?2 OR pst.name LIKE ?2')->setParameter(1, '%Web%')->setParameter(2, '%HTTP%');
-        $result = $query->getResult();
-        $ids = array();
-
-        foreach ($result as $key => $st) {
-            $ids[] = $st->getId();
-        }
-        return $ids;
-
+        return $query->getResult();
     }
 
     public function getWebproxyServiceTypes()
     {
         $query = $this->_em->createQuery('SELECT st FROM ACS\ACSPanelBundle\Entity\ServiceType st LEFT JOIN st.parent_type pst WHERE st.name LIKE ?1 OR pst.name LIKE ?1 OR st.name LIKE ?2 OR pst.name LIKE ?2')->setParameter(1, '%Webproxy%')->setParameter(2, '%HTTP proxy%');
-        $result = $query->getResult();
-        $ids = array();
-
-        foreach ($result as $key => $st) {
-            $ids[] = $st->getId();
-        }
-        return $ids;
+        return $query->getResult();
 
     }
 
