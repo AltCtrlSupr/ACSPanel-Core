@@ -12,10 +12,6 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $current_user = $this->get('security.context')->getToken()->getUser();
-
         return $this->render('ACSACSPanelBundle:Default:dashboard.html.twig');
     }
 

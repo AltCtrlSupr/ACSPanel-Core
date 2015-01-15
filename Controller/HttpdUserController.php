@@ -25,8 +25,7 @@ class HttpdUserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-		$entities_raw = $em->createQuery('SELECT hu FROM ACS\ACSPanelBundle\Entity\HttpdUser hu');
-		$entities = $this->get('problematic.acl.orm.filter')->apply($entities_raw, ['VIEW'], $this->get('security.context')->getToken()->getUser(), 'hu')->getResult();
+        $entities = $this->get('httpduser_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
         
         return $this->render('ACSACSPanelBundle:HttpdUser:index.html.twig', array(
             'entities' => $entities,

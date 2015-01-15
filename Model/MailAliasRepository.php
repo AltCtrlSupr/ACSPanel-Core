@@ -24,6 +24,13 @@ class MailAliasRepository extends AclEntityRepository
         return $query->getResult();
     }
 
+    public function getUserViewable($user)
+    {
+		$entities_raw = $this->_em->createQuery('SELECT m FROM ACS\ACSPanelBundle\Entity\MailAlias m');
+		$entities = $this->getAclFilter()->apply($entities_raw, ['VIEW'], $user, 'm')->getResult();
+
+        return $entities;
+    }
+
 }
 
-?>

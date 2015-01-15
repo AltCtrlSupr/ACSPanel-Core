@@ -31,13 +31,7 @@ class MailDomainController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         // IF is admin can see all the hosts, if is user only their ones...
-        if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
-            $entities = $em->getRepository('ACSACSPanelBundle:MailDomain')->findAll();
-        }elseif(true === $this->get('security.context')->isGranted('ROLE_RESELLER')){
-            $entities = $em->getRepository('ACSACSPanelBundle:MailDomain')->findByUsers($this->get('security.context')->getToken()->getUser()->getIdChildIds());
-        }elseif(true === $this->get('security.context')->isGranted('ROLE_USER')){
-            $entities = $em->getRepository('ACSACSPanelBundle:MailDomain')->findByUser($this->get('security.context')->getToken()->getUser());
-        }
+        $entities = $this->get('maildomain_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
         return $this->render('ACSACSPanelBundle:MailDomain:index.html.twig', array(
             'entities' => $entities,

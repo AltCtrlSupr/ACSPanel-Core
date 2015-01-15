@@ -23,7 +23,7 @@ class ServiceTypeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ACSACSPanelBundle:ServiceType')->findAll();
+        $entities = $this->get('servicetype_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
         return $this->render('ACSACSPanelBundle:ServiceType:index.html.twig', array(
             'entities' => $entities,

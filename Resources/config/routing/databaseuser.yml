@@ -1,7 +1,3 @@
-databaseuser:
-    pattern:  /
-    defaults: { _controller: "ACSACSPanelBundle:DatabaseUser:index" }
-
 databaseuser_show:
     pattern:  /{id}/show
     defaults: { _controller: "ACSACSPanelBundle:DatabaseUser:show" }

@@ -21,6 +21,7 @@ class LogItem extends LogEntry
     protected $version;
     protected $data;
     protected $username;
+
     /**
      * @var string
      */
@@ -45,7 +46,6 @@ class LogItem extends LogEntry
      * @var \ACS\ACSPanelUsersBundle\Entity\FosUser
      */
     private $user;
-
 
     /**
      * Get id
@@ -170,20 +170,5 @@ class LogItem extends LogEntry
     public function getUser()
     {
         return $this->user;
-    }
-    /**
-     * @ORM\PrePersist
-     */
-    public function setCreatedAtValue()
-    {
-        // Add your code here
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function setUserValue()
-    {
-        // Add your code here
     }
 }

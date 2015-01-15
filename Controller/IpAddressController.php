@@ -23,7 +23,7 @@ class IpAddressController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ACSACSPanelBundle:IpAddress')->findAll();
+        $entities = $this->get('ipaddress_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
         return $this->render('ACSACSPanelBundle:IpAddress:index.html.twig', array(
             'entities' => $entities,

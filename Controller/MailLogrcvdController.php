@@ -20,7 +20,8 @@ class MailLogrcvdController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('ACSACSPanelBundle:MailLogrcvd')->findByUsers($this->get('security.context')->getToken()->getUser()->getIdChildIds());
+
+        $entities = $this->get('maillogrcvd_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
         return $this->render('ACSACSPanelBundle:MailLogrcvd:index.html.twig', array(
             'entities' => $entities,

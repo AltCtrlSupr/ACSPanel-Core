@@ -65,13 +65,16 @@ abstract class CommonTestCase extends WebTestCase
 
         $user = $userManager->findUserBy(array('username' => $username));
 
-        $loginManager->loginUser($firewallName, $user);
+		if(!$user)
+			return null;
 
-        // save the login token into the session and put it in a cookie
-        $container->get('session')->set('_security_' . $firewallName,
-        serialize($container->get('security.context')->getToken()));
-        $container->get('session')->save();
-        $this->client->getCookieJar()->set(new Cookie($session->getName(), $session->getId()));
+		$loginManager->loginUser($firewallName, $user);
+
+		// save the login token into the session and put it in a cookie
+		$container->get('session')->set('_security_' . $firewallName,
+		serialize($container->get('security.context')->getToken()));
+		$container->get('session')->save();
+		$this->client->getCookieJar()->set(new Cookie($session->getName(), $session->getId()));
 
         return $this->client;
     }

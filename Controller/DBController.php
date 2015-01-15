@@ -25,13 +25,7 @@ class DBController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         // IF is admin can see all the databases, if is user only their ones...
-        if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
-            $entities = $em->getRepository('ACSACSPanelBundle:DB')->findAll();
-        }elseif(true === $this->get('security.context')->isGranted('ROLE_RESELLER')){
-            $entities = $em->getRepository('ACSACSPanelBundle:DB')->findByUsers($this->get('security.context')->getToken()->getUser()->getIdChildIds());
-        }elseif(true === $this->get('security.context')->isGranted('ROLE_USER')){
-            $entities = $em->getRepository('ACSACSPanelBundle:DB')->findByUser($this->get('security.context')->getToken()->getUser());
-        }
+        $entities = $this->get('db_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
         return $this->render('ACSACSPanelBundle:DB:index.html.twig', array(
             'entities' => $entities,

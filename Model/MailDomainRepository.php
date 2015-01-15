@@ -24,6 +24,13 @@ class MailDomainRepository extends AclEntityRepository
         return $query->getResult();
     }
 
+    public function getUserViewable($user)
+    {
+		$entities_raw = $this->_em->createQuery('SELECT md FROM ACS\ACSPanelBundle\Entity\MailDomain md');
+		$entities = $this->getAclFilter()->apply($entities_raw, ['VIEW'], $user, 'md')->getResult();
+
+        return $entities;
+    }
+
 }
 
-?>
