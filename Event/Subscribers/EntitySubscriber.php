@@ -107,8 +107,6 @@ class EntitySubscriber implements EventSubscriber
     {
         $entity = $args->getEntity();
         $entityManager = $args->getEntityManager();
-		$superadmins = $entityManager->getRepository('ACS\ACSPanelUsersBundle\Entity\FosUser')->getSuperadminUsers();
-		$aclManager = $this->container->get('problematic.acl_manager');
 
         if ($entity instanceof DB){
             $this->createDatabase($entity);
@@ -152,6 +150,38 @@ class EntitySubscriber implements EventSubscriber
         }
         if ($entity instanceof Service){
             $this->setUserValue($entity);
+        }
+
+    }
+
+    public function postRemove(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+        $entityManager = $args->getEntityManager();
+
+        if ($entity instanceof DatabaseUser){
+            $this->setUpdatedAtValue($entity);
+        }
+    }
+
+    public function postPersist(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+        $entityManager = $args->getEntityManager();
+
+		$superadmins = $entityManager->getRepository('ACS\ACSPanelUsersBundle\Entity\FosUser')->getSuperadminUsers();
+		$aclManager = $this->container->get('problematic.acl_manager');
+
+
+
+        if ($entity instanceof DatabaseUser){
+            $this->createUserInDatabase($entity);
+            $this->setUserValue($entity);
+        }
+
+        if ($entity instanceof FtpdUser){
+            $setting_manager = $this->container->get('acs.setting_manager');
+            $setting_manager->setInternalSetting('last_used_uid',$entity->getUid());
         }
 
 		// ACL Related code
@@ -204,32 +234,6 @@ class EntitySubscriber implements EventSubscriber
 
     }
 
-    public function postRemove(LifecycleEventArgs $args)
-    {
-        $entity = $args->getEntity();
-        $entityManager = $args->getEntityManager();
-
-        if ($entity instanceof DatabaseUser){
-            $this->setUpdatedAtValue($entity);
-        }
-    }
-
-    public function postPersist(LifecycleEventArgs $args)
-    {
-        $entity = $args->getEntity();
-        $entityManager = $args->getEntityManager();
-
-        if ($entity instanceof DatabaseUser){
-            $this->createUserInDatabase($entity);
-            $this->setUserValue($entity);
-        }
-
-        if ($entity instanceof FtpdUser){
-            $setting_manager = $this->container->get('acs.setting_manager');
-            $setting_manager->setInternalSetting('last_used_uid',$entity->getUid());
-        }
-    }
-
     public function preUpdate(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -243,6 +247,9 @@ class EntitySubscriber implements EventSubscriber
         if ($entity instanceof Domain){
             $this->setUpdatedAtValue($entity);
         }
+        if ($entity instanceof HttpdHost){
+            $this->setUpdatedAtValue($entity);
+		}
     }
 
     public function postUpdate(LifecycleEventArgs $args)
@@ -328,7 +335,7 @@ class EntitySubscriber implements EventSubscriber
 
     private function setUpdatedAtValue($entity)
     {
-        $entity->updatedAt = new \DateTime();
+        $entity->setUpdatedAt(new \DateTime());
     }
 
     public function createDatabase($entity)
