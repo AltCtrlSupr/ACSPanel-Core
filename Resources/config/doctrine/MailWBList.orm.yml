@@ -1,4 +1,5 @@
 ACS\ACSPanelBundle\Entity\MailWBList:
+    repositoryClass: ACS\ACSPanelBundle\Model\MailWBListRepository
     type: entity
     table: mail_wblist
     gedmo:

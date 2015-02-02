@@ -217,10 +217,35 @@ services:
             - [ setAclFilter, ['@problematic.acl.orm.filter'] ]
 
     mailwblist_repository:
-        class: ACS\ACSPanelBundle\Model\MailwblistRepository
+        class: ACS\ACSPanelBundle\Model\MailWBlistRepository
         factory_service: doctrine
         factory_method: getRepository
-        arguments: ['ACSACSPanelBundle:Mailwblistbox']
+        arguments: ['ACSACSPanelBundle:MailWBList']
         calls:
             - [ setAclFilter, ['@problematic.acl.orm.filter'] ]
+
+    maillogrcvd_repository:
+        class: ACS\ACSPanelBundle\Model\MailLogrcvdRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: ['ACSACSPanelBundle:MailLogrcvd']
+        calls:
+            - [ setAclFilter, ['@problematic.acl.orm.filter'] ]
+
+    db_repository:
+        class: ACS\ACSPanelBundle\Model\DBRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: ['ACSACSPanelBundle:DB']
+        calls:
+            - [ setAclFilter, ['@problematic.acl.orm.filter'] ]
+
+    ftpduser_repository:
+        class: ACS\ACSPanelBundle\Model\FtpdUserRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: ['ACSACSPanelBundle:FtpdUser']
+        calls:
+            - [ setAclFilter, ['@problematic.acl.orm.filter'] ]
+
 
