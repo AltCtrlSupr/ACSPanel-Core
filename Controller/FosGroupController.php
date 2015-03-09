@@ -24,7 +24,7 @@ class FosGroupController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ACSACSPanelBundle:FosGroup')->findAll();
+        $entities = $em->getRepository('ACSACSPanelUsersBundle:FosGroup')->findAll();
 
         return $this->render('ACSACSPanelBundle:FosGroup:index.html.twig', array(
             'entities' => $entities,
@@ -39,7 +39,7 @@ class FosGroupController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ACSACSPanelBundle:FosGroup')->find($id);
+        $entity = $em->getRepository('ACSACSPanelUsersBundle:FosGroup')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find FosGroup entity.');
@@ -99,7 +99,7 @@ class FosGroupController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ACSACSPanelBundle:FosGroup')->find($id);
+        $entity = $em->getRepository('ACSACSPanelUsersBundle:FosGroup')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find FosGroup entity.');
@@ -123,7 +123,7 @@ class FosGroupController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ACSACSPanelBundle:FosGroup')->find($id);
+        $entity = $em->getRepository('ACSACSPanelUsersBundle:FosGroup')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find FosGroup entity.');
@@ -158,7 +158,7 @@ class FosGroupController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('ACSACSPanelBundle:FosGroup')->find($id);
+            $entity = $em->getRepository('ACSACSPanelUsersBundle:FosGroup')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find FosGroup entity.');
