@@ -1,0 +1,9 @@
+language: php
+php:
+  - 5.3
+  - 5.4
+
+script: phpunit -c app/o
+before_script:
+  - cp app/config/parameters.yml.dist app/config/parameters.yml
+  - composer install
