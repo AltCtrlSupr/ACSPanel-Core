@@ -106,7 +106,8 @@ class AclManagerCommand extends ContainerAwareCommand
             }
 
             foreach ($superadmins as $superadmin) {
-                $output->writeln($aclManager->addObjectPermission($entity, MaskBuilder::MASK_MASTER, $superadmin));
+                $aclManager->addObjectPermission($entity, MaskBuilder::MASK_MASTER, $superadmin);
+                $output->writeln("Added " . get_class($entity) . " Acls for " . $superadmin);
             }
 
         }
@@ -121,7 +122,7 @@ class AclManagerCommand extends ContainerAwareCommand
 
 		$aclManager->addObjectPermission($entity, MaskBuilder::MASK_OWNER, $user);
 
-        return "Added ". get_class($entity) . " Acls for ".$user;
+        return "Added " . get_class($entity) . " Acls for " . $user;
 
 	}
 }
