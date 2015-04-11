@@ -155,7 +155,16 @@ And install the assets
     php app/main/console assets:install --symlink
 
 
-9) Setting up services to automatic apply panel settings
+10) Commands
+------------
+
+Adding acls entries for specific entity:
+
+```php
+php app/console acl-manager:update-entity ACS\\ACSPanelBundle\\Entity\\Domain
+```
+
+10) Setting up services to automatic apply panel settings
 --------------------------------------------------------
 
 Apache: Copy the script tools/acspanel-srv-apache2-reboot to each Apache2 server and give execution permission to the script. Change the panel database access details and add to crontab.
