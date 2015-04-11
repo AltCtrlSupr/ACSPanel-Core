@@ -3,6 +3,8 @@ php:
   - 5.3
   - 5.4
 
-script: phpunit -c app/o
 before_script:
+  - composer self-update
   - composer install
+
+script: phpunit -c app/o
