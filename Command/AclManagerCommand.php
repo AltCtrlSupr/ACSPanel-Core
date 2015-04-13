@@ -14,23 +14,23 @@ class AclManagerCommand extends ContainerAwareCommand
 {
 
     private $domain_related_user_classes = array(
-        'ACS\ACSPanelBundle\Entity\HttpdHost',
-        'ACS\ACSPanelBundle\Entity\DnsDomain',
-        'ACS\ACSPanelBundle\Entity\MailAlias'
+        '\ACS\ACSPanelBundle\Entity\HttpdHost',
+        '\ACS\ACSPanelBundle\Entity\DnsDomain',
+        '\ACS\ACSPanelBundle\Entity\MailAlias'
     );
 
     private $first_level_user_classes = array(
-        'ACS\ACSPanelBundle\Entity\DB',
-        'ACS\ACSPanelBundle\Entity\DatabaseUser',
-        'ACS\ACSPanelBundle\Entity\Domain',
-        'ACS\ACSPanelBundle\Entity\FtpdUser',
-        'ACS\ACSPanelBundle\Entity\IpAddress',
-        'ACS\ACSPanelBundle\Entity\LogItem',
-        'ACS\ACSPanelBundle\Entity\MailDomain',
-        'ACS\ACSPanelBundle\Entity\MailWBList',
-        'ACS\ACSPanelBundle\Entity\PanelSetting',
-        'ACS\ACSPanelBundle\Entity\Server',
-        'ACS\ACSPanelBundle\Entity\Service'
+        '\ACS\ACSPanelBundle\Entity\DB',
+        '\ACS\ACSPanelBundle\Entity\DatabaseUser',
+        '\ACS\ACSPanelBundle\Entity\Domain',
+        '\ACS\ACSPanelBundle\Entity\FtpdUser',
+        '\ACS\ACSPanelBundle\Entity\IpAddress',
+        '\ACS\ACSPanelBundle\Entity\LogItem',
+        '\ACS\ACSPanelBundle\Entity\MailDomain',
+        '\ACS\ACSPanelBundle\Entity\MailWBList',
+        '\ACS\ACSPanelBundle\Entity\PanelSetting',
+        '\ACS\ACSPanelBundle\Entity\Server',
+        '\ACS\ACSPanelBundle\Entity\Service'
     );
 
     protected function configure()
@@ -53,7 +53,7 @@ class AclManagerCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
         // Adding master permissions to superadmins
-        $superadmins = $em->getRepository('ACS\ACSPanelUsersBundle\Entity\FosUser')->getSuperadminUsers();
+        $superadmins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\FosUser')->getSuperadminUsers();
 
         $entities = $em->getRepository($name)->findAll();
 
@@ -75,31 +75,31 @@ class AclManagerCommand extends ContainerAwareCommand
                 }
             }
 
-            if ($entity instanceof ACS\ACSPanelUsersBundle\Entity\DnsRecord) {
+            if ($entity instanceof \ACS\ACSPanelBundle\Entity\DnsRecord) {
                 $user = $entity->getDnsDomain()->getDomain()->getUser();
                 if($user)
                     $output->writeln($this->addUserOwnerPermission($user, $entity));
             }
 
-            if ($entity instanceof ACS\ACSPanelUsersBundle\Entity\HttpdUser) {
+            if ($entity instanceof \ACS\ACSPanelBundle\Entity\HttpdUser) {
                 $user = $entity->getHttpdHost()->getDomain()->getUser();
                 if($user)
                     $output->writeln($this->addUserOwnerPermission($user, $entity));
             }
 
-            if ($entity instanceof ACS\ACSPanelUsersBundle\Entity\MailLogrcvd) {
+            if ($entity instanceof \ACS\ACSPanelBundle\Entity\MailLogrcvd) {
                 $user = $entity->getMailDomain()->getUser();
                 if ($user)
                     $output->writeln($this->addUserOwnerPermission($user, $entity));
             }
 
-            if ($entity instanceof ACS\ACSPanelUsersBundle\Entity\MailMailbox) {
-                $user = $entity->getMailDomain()->getUser();
+            if ($entity instanceof \ACS\ACSPanelBundle\Entity\MailMailbox) {
+                $user = $entity->getMailDomain()->getDomain()->getUser();
                 if ($user)
                     $output->writeln($this->addUserOwnerPermission($user, $entity));
             }
 
-            if ($entity instanceof ACS\ACSPanelUsersBundle\Entity\UserPlan) {
+            if ($entity instanceof \ACS\ACSPanelBundle\Entity\UserPlan) {
                 $user = $entity->getPuser();
                 if ($user)
                     $output->writeln($this->addUserOwnerPermission($user, $entity));
