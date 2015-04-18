@@ -20,18 +20,14 @@ class UserHttpdHostType extends HttpdHostType
     {
         $service = $this->container->get('security.context');
         $container = $this->container;
+        $user = $container->get('security.context')->getToken()->getUser();
 
         $security = $container->get('security.context');
 
-        $user = $security->getToken()->getUser();
-        $superadmin = false;
-        if($security->isGranted('ROLE_SUPER_ADMIN'))
-            $superadmin = true;
+        $user_domains = $this->container->get('domain_repository')->getUserViewable($user);
 
-        $user_domains = $this->container->get('domain_repository')->getUserViewable($this->container->get('security.context')->getToken()->getUser());
-
-        $web_services = $this->em->getRepository('ACS\ACSPanelBundle\Entity\Service')->getWebServices();
-        $webproxy_services = $this->em->getRepository('ACS\ACSPanelBundle\Entity\Service')->getWebproxyServices();
+        $web_services = $this->container->get('service_repository')->getWebServices($user);
+        $webproxy_services = $this->container->get('service_repository')->getWebproxyServices($user);
 
         $builder
             ->add('domain','entity',array(

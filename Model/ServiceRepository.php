@@ -12,7 +12,15 @@ class ServiceRepository extends AclEntityRepository
 {
     public function getDbServices($user)
     {
-        $query = $this->_em->createQuery('SELECT s,st FROM ACS\ACSPanelBundle\Entity\Service s INNER JOIN s.type st LEFT JOIN st.parent_type pst WHERE st.name = ?1 OR pst.name = ?1 OR pst.name = ?2')->setParameter(1, 'DB')->setParameter(2, 'Database');
+        $query = $this->_em->createQuery('
+            SELECT s,st 
+            FROM ACS\ACSPanelBundle\Entity\Service s 
+            INNER JOIN s.type st 
+            LEFT JOIN st.parent_type pst 
+            WHERE st.name = ?1 OR pst.name = ?1 OR pst.name = ?2')
+            ->setParameter(1, 'DB')
+            ->setParameter(2, 'Database')
+        ;
 		return $this->getAclFilter()->apply($query, ['VIEW'], $user, 's')->getResult();
     }
 
@@ -28,8 +36,7 @@ class ServiceRepository extends AclEntityRepository
 		return $this->getAclFilter()->apply($query, ['VIEW'], $user, 's')->getResult();
     }
 
-    public function getWebproxyServices($user)
-    {
+    public function getWebproxyServices($user) {
         $query = $this->_em->createQuery('SELECT s,st FROM ACS\ACSPanelBundle\Entity\Service s INNER JOIN s.type st LEFT JOIN st.parent_type pst WHERE st.name LIKE ?1 OR pst.name LIKE ?1 OR st.name LIKE ?2 OR pst.name LIKE ?2')->setParameter(1, '%Webproxy%')->setParameter(2, '%HTTP proxy%');
 		return $this->getAclFilter()->apply($query, ['VIEW'], $user, 's')->getResult();
 

@@ -10,6 +10,7 @@ use ACS\ACSPanelBundle\Entity\Domain;
 
 class LoadTestDomainData extends AbstractFixture implements OrderedFixtureInterface
 {
+
     /**
      * {@inheritDoc}
      */

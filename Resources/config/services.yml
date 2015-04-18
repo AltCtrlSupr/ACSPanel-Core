@@ -248,4 +248,10 @@ services:
         calls:
             - [ setAclFilter, ['@problematic.acl.orm.filter'] ]
 
-
+    service_repository:
+        class: ACS\ACSPanelBundle\Model\ServiceRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: ['ACSACSPanelBundle:Service']
+        calls:
+            - [ setAclFilter, ['@problematic.acl.orm.filter'] ]
