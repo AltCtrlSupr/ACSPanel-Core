@@ -2,7 +2,7 @@
 
 namespace ACS\ACSPanelBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -13,6 +13,14 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 
 abstract class CommonTestCase extends WebTestCase
 {
+    /**
+     * Fixtures to load
+     */
+    private $fixtures = [
+        'ACS\ACSPanelBundle\Tests\DataFixtures\LoadUserData',
+        'ACS\ACSPanelBundle\Tests\DataFixtures\LoadTestDomainData',
+    ];
+
     public $client;
 
     protected $_application;
@@ -23,26 +31,10 @@ abstract class CommonTestCase extends WebTestCase
 
     public function setUp()
     {
+        $this->loadFixtures($this->fixtures);
+
         $this->client = static::createClient();
         $this->client->followRedirects();
-
-        $kernel = new \AppKernel("test", true);
-        $kernel->boot();
-        $this->_application = new \Symfony\Bundle\FrameworkBundle\Console\Application($kernel);
-        $this->_application->setAutoExit(false);
-        $this->runConsole("doctrine:schema:drop", array("--force" => true));
-        $this->runConsole("doctrine:schema:create");
-        $this->runConsole("doctrine:fixtures:load", array("--fixtures" => __DIR__ . "/../../DataFixtures"));
-        $this->runConsole("doctrine:fixtures:load", array("--fixtures" => __DIR__ . "/../DataFixtures"));
-    }
-
-    protected function runConsole($command, Array $options = array())
-    {
-        $options["-e"] = "test";
-        $options["-n"] = null;
-        $options["-q"] = null;
-        $options = array_merge($options, array('command' => $command));
-        return $this->_application->run(new \Symfony\Component\Console\Input\ArrayInput($options));
     }
 
     protected function requestWithAuth($role, $method, $uri, $parameters = array())
@@ -66,7 +58,7 @@ abstract class CommonTestCase extends WebTestCase
         $user = $userManager->findUserBy(array('username' => $username));
 
 		if(!$user)
-			return null;
+			throw new \Exception('No user found');
 
 		$loginManager->loginUser($firewallName, $user);
 
@@ -82,6 +74,6 @@ abstract class CommonTestCase extends WebTestCase
     public function createSuperadminClient()
     {
         $this->client = $this->createAuthorizedClient('superadmin','1234');
-	return $this->client;
+        return $this->client;
     }
 }
