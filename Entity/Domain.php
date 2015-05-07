@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Domain
  */
-class Domain
+class Domain implements AclEntity
 {
     /**
      * @var integer
@@ -397,4 +397,8 @@ class Domain
 
     }
 
+    public function getOwners()
+    {
+        return $this->getUser();
+    }
 }

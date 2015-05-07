@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * DnsRecord
  */
-class DnsRecord
+class DnsRecord implements AclEntity
 {
     /**
      * @var integer

@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ACS\ACSPanelBundle\Entity\MailAlias
  */
-class MailAlias
+class MailAlias implements AclEntity
 {
     /**
      * @var integer $id
@@ -301,7 +301,6 @@ class MailAlias
 	    $this->updatedAt = new \DateTime();
     }
 
-
     /**
      * Set mail_domain
      *
@@ -353,4 +352,8 @@ class MailAlias
 
     }
 
+    public function getOwners()
+    {
+        return $this->getDomain()->getOwners();
+    }
 }

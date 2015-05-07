@@ -11,7 +11,7 @@ use Gedmo\Loggable\Entity\LogEntry as LogEntry;
  * @ORM\Entity
  * @Entity(repositoryClass="Gedmo\Loggable\Entity\Repository\LogEntryRepository")
  */
-class LogItem extends LogEntry
+class LogItem extends LogEntry implements AclEntity
 {
     protected $id;
     protected $action;
@@ -171,4 +171,9 @@ class LogItem extends LogEntry
     {
         return $this->user;
     }
+    public function getOwners()
+    {
+        return $this->getUser();
+    }
+
 }

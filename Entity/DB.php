@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * DB
  */
-class DB
+class DB implements AclEntity
 {
     /**
      * @var integer

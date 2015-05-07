@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * DnsDomain
  */
-class DnsDomain
+class DnsDomain implements AclEntity
 {
     /**
      * @var integer
@@ -427,6 +427,11 @@ class DnsDomain
 
         return false;
 
+    }
+
+    public function getOwners()
+    {
+        return $this->getDomain()->getOwners();
     }
 
 }

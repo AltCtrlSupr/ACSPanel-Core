@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ServiceType
  */
-class ServiceType
+class ServiceType implements AclEntity
 {
     /**
      * @var integer
@@ -133,7 +133,5 @@ class ServiceType
     {
         return $this->field_types;
     }
-
-
 
 }

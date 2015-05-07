@@ -8,10 +8,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * ACS\ACSPanelBundle\Entity\HttpdHost
- *
- *
  */
-class HttpdHost
+class HttpdHost implements AclEntity
 {
     /**
      * @var integer $id
@@ -83,6 +81,35 @@ class HttpdHost
      */
     private $aliases;
 
+    /**
+     * @var boolean
+     */
+    private $ssl;
+
+    /**
+     * @var string
+     */
+    private $certificate;
+
+    /**
+     * @var string
+     */
+    private $certificate_key;
+
+    /**
+     * @var string
+     */
+    private $certificate_chain;
+
+    /**
+     * @var string
+     */
+    private $certificate_authority;
+
+    /**
+     * @var \ACS\ACSPanelBundle\Entity\Service
+     */
+    private $proxy_service;
 
     /**
      * Get id
@@ -418,12 +445,6 @@ class HttpdHost
     }
 
     /**
-     * @var \ACS\ACSPanelBundle\Entity\Service
-     */
-    private $proxy_service;
-
-
-    /**
      * Set proxy_service
      *
      * @param \ACS\ACSPanelBundle\Entity\Service $proxyService
@@ -445,32 +466,6 @@ class HttpdHost
     {
         return $this->proxy_service;
     }
-    /**
-     * @var boolean
-     */
-    private $ssl;
-
-    /**
-     * @var string
-     */
-    private $certificate;
-
-    /**
-     * @var string
-     */
-    private $certificate_key;
-
-    /**
-     * @var string
-     */
-    private $certificate_chain;
-
-    /**
-     * @var string
-     */
-    private $certificate_authority;
-
-
     /**
      * Set ssl
      *
@@ -612,5 +607,9 @@ class HttpdHost
 
         return false;
 
+    }
+    public function getOwners()
+    {
+        return $this->getDomain()->getOwners();
     }
 }

@@ -7,9 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * FieldType
- * @todo Move to settingsbundle
  */
-class FieldType
+class FieldType implements AclEntity
 {
     /**
      * @var integer

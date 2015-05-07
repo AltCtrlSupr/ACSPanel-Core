@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ACS\ACSPanelBundle\Entity\FtpdUser
  */
-class FtpdUser
+class FtpdUser implements AclEntity
 {
     /**
      * @var integer $id
@@ -381,6 +381,11 @@ class FtpdUser
 
         return false;
 
+    }
+
+    public function getOwners()
+    {
+        return $this->getUser();
     }
 
 }

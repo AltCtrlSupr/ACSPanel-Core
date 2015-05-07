@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * UserPlan
  */
-class UserPlan
+class UserPlan implements AclEntity
 {
     /**
      * @var integer

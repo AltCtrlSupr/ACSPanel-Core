@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ACS\ACSPanelBundle\Entity\HttpdUser
  */
-class HttpdUser
+class HttpdUser implements AclEntity
 {
     /**
      * @var integer $id
@@ -287,7 +287,6 @@ class HttpdUser
         return $this;
     }
 
-
     /**
      * Get enabled
      *
@@ -326,4 +325,11 @@ class HttpdUser
 
     }
 
+    /**
+     * Gets the owner based on HttpdHost owner
+     */
+    public function getOwners()
+    {
+        return $this->getHttpdHost()->getOwners();
+    }
 }
