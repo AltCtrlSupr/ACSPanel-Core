@@ -13,13 +13,13 @@ use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 class AclManagerCommand extends ContainerAwareCommand
 {
 
-    private $domain_related_user_classes = array(
+    /* private $domain_related_user_classes = array(
         '\ACS\ACSPanelBundle\Entity\HttpdHost',
         '\ACS\ACSPanelBundle\Entity\DnsDomain',
         '\ACS\ACSPanelBundle\Entity\MailAlias'
-    );
+    ); */
 
-    private $first_level_user_classes = array(
+    /* private $first_level_user_classes = array(
         '\ACS\ACSPanelBundle\Entity\DB',
         '\ACS\ACSPanelBundle\Entity\DatabaseUser',
         '\ACS\ACSPanelBundle\Entity\Domain',
@@ -31,7 +31,7 @@ class AclManagerCommand extends ContainerAwareCommand
         '\ACS\ACSPanelBundle\Entity\PanelSetting',
         '\ACS\ACSPanelBundle\Entity\Server',
         '\ACS\ACSPanelBundle\Entity\Service'
-    );
+    ); */
 
     protected function configure()
     {
@@ -60,8 +60,16 @@ class AclManagerCommand extends ContainerAwareCommand
         foreach ($entities as $entity) {
 
             $user = $entity->getOwners();
-            if ($user) {
+            // If we get a single user we add him to object owner
+            if (is_object($user)) {
                 $output->writeln($this->addUserOwnerPermission($user, $entity));
+            }
+
+            // If we receive an array we iterate it
+            if (is_array($user)) {
+                foreach ($user as $owner) {
+                    $output->writeln($this->addUserOwnerPermission($owner, $entity));
+                }
             }
 
             foreach ($superadmins as $superadmin) {
