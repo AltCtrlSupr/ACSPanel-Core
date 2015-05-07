@@ -59,7 +59,17 @@ class AclManagerCommand extends ContainerAwareCommand
 
         foreach ($entities as $entity) {
 
-            foreach ($this->domain_related_user_classes as $class) {
+            $user = $entity->getOwners();
+            if ($user) {
+                $output->writeln($this->addUserOwnerPermission($user, $entity));
+            }
+
+            foreach ($superadmins as $superadmin) {
+                $aclManager->addObjectPermission($entity, MaskBuilder::MASK_MASTER, $superadmin);
+                $output->writeln("Added " . get_class($entity) . " Acls for " . $superadmin);
+            }
+
+            /* foreach ($this->domain_related_user_classes as $class) {
                 if ($entity instanceof $class) {
                     $user = $entity->getDomain()->getUser();
                     if ($user)
@@ -104,11 +114,7 @@ class AclManagerCommand extends ContainerAwareCommand
                 if ($user)
                     $output->writeln($this->addUserOwnerPermission($user, $entity));
             }
-
-            foreach ($superadmins as $superadmin) {
-                $aclManager->addObjectPermission($entity, MaskBuilder::MASK_MASTER, $superadmin);
-                $output->writeln("Added " . get_class($entity) . " Acls for " . $superadmin);
-            }
+             */
 
         }
     }
