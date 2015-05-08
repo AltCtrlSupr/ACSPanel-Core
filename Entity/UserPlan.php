@@ -5,6 +5,8 @@ namespace ACS\ACSPanelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+
 /**
  * UserPlan
  */
@@ -93,5 +95,10 @@ class UserPlan implements AclEntity
     public function getPuser()
     {
         return $this->puser;
+    }
+
+    public function getOwners()
+    {
+        return $this->getUser();
     }
 }

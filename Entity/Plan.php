@@ -6,6 +6,8 @@ namespace ACS\ACSPanelBundle\Entity;
 use Monolog\Logger;
 use Doctrine\ORM\Mapping as ORM;
 
+use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+
 /**
  * ACS\ACSPanelBundle\Entity\Plan
  */
@@ -567,5 +569,10 @@ class Plan implements AclEntity
     public function getMaxDbUser()
     {
         return $this->maxDbUser;
+    }
+
+    public function getOwners()
+    {
+        return $this->getUser();
     }
 }

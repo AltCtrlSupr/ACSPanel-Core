@@ -5,6 +5,8 @@ namespace ACS\ACSPanelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+
 /**
  * ServiceType
  */
@@ -134,4 +136,9 @@ class ServiceType implements AclEntity
         return $this->field_types;
     }
 
+
+    public function getOwners()
+    {
+        return $this->getUser();
+    }
 }

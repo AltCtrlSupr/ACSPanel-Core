@@ -5,6 +5,8 @@ use Monolog\Logger;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Loggable\Entity\LogEntry as LogEntry;
 
+use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+
 /**
  * LogItem
  *

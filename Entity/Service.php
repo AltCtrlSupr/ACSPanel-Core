@@ -5,6 +5,8 @@ namespace ACS\ACSPanelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+
 /**
  * Service
  */
@@ -578,4 +580,9 @@ class Service implements AclEntity
 
     }
 
+
+    public function getOwners()
+    {
+        return $this->getUser();
+    }
 }

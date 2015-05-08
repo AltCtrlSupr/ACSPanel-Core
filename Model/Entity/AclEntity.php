@@ -6,5 +6,5 @@ interface AclEntity
 {
     public function getOwners();
 
-    public function getAllowedToUse();
+    // public function getAllowedToUse();
 }

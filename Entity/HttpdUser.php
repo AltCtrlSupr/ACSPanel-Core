@@ -6,6 +6,8 @@ namespace ACS\ACSPanelBundle\Entity;
 use Monolog\Logger;
 use Doctrine\ORM\Mapping as ORM;
 
+use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+
 /**
  * ACS\ACSPanelBundle\Entity\HttpdUser
  */

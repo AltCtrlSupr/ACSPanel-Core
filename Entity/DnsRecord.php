@@ -5,6 +5,8 @@ namespace ACS\ACSPanelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+
 /**
  * DnsRecord
  */
@@ -226,7 +228,6 @@ class DnsRecord implements AclEntity
         return $this->updatedAt;
     }
 
-
     /**
      * @ORM\PrePersist
      */
@@ -245,7 +246,6 @@ class DnsRecord implements AclEntity
     {
        $this->updatedAt = new \DateTime();
     }
-
 
 	public function __toString()
 	{
@@ -300,4 +300,9 @@ class DnsRecord implements AclEntity
 
     }
 
+
+    public function getOwners()
+    {
+        return $this->getUser();
+    }
 }
