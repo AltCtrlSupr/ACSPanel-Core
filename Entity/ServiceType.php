@@ -5,10 +5,12 @@ namespace ACS\ACSPanelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+
 /**
  * ServiceType
  */
-class ServiceType
+class ServiceType implements AclEntity
 {
     /**
      * @var integer
@@ -135,5 +137,8 @@ class ServiceType
     }
 
 
-
+    public function getOwners()
+    {
+        return $this->getUser();
+    }
 }

@@ -5,11 +5,12 @@ namespace ACS\ACSPanelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+
 /**
  * FieldType
- * @todo Move to settingsbundle
  */
-class FieldType
+class FieldType implements AclEntity
 {
     /**
      * @var integer
@@ -248,4 +249,9 @@ class FieldType
     {
         return $this->default_value;
     }
+
+    public function getOwners()
+    {
+        return $this->getUser();
+}
 }

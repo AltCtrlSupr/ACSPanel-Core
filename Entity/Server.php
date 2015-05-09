@@ -5,10 +5,12 @@ namespace ACS\ACSPanelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+
 /**
  * Server
  */
-class Server
+class Server implements AclEntity
 {
     /**
      * @var integer
@@ -319,4 +321,9 @@ class Server
 
     }
 
+
+    public function getOwners()
+    {
+        return $this->getUser();
+    }
 }

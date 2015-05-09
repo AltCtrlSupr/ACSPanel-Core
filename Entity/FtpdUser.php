@@ -6,10 +6,12 @@ namespace ACS\ACSPanelBundle\Entity;
 use Monolog\Logger;
 use Doctrine\ORM\Mapping as ORM;
 
+use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+
 /**
  * ACS\ACSPanelBundle\Entity\FtpdUser
  */
-class FtpdUser
+class FtpdUser implements AclEntity
 {
     /**
      * @var integer $id
@@ -381,6 +383,11 @@ class FtpdUser
 
         return false;
 
+    }
+
+    public function getOwners()
+    {
+        return $this->getUser();
     }
 
 }

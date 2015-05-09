@@ -106,14 +106,14 @@ class MailMailboxController extends Controller
         $form->bind($request);
 
         if ($form->isValid()) {
-				// TODO: Delete from entity
-		  		$entity->setMaildir('/home/Maildir');
-				// TODO: Get from User Plan
-				$entity->setQuota(1000);
-				$entity->setQuotaLimit(1000);
-				$entity->setUsedQuota(0);
-				$entity->setBytes(0);
-				$entity->setMessages(0);
+	    // TODO: Delete from entity
+	    $entity->setMaildir('/home/Maildir');
+	    // TODO: Get from User Plan
+	    $entity->setQuota(1000);
+	    $entity->setQuotaLimit(1000);
+	    $entity->setUsedQuota(0);
+	    $entity->setBytes(0);
+	    $entity->setMessages(0);
             $entity->setEnabled(true);
             $em->persist($entity);
             $em->flush();

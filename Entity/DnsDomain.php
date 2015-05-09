@@ -5,10 +5,12 @@ namespace ACS\ACSPanelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+
 /**
  * DnsDomain
  */
-class DnsDomain
+class DnsDomain implements AclEntity
 {
     /**
      * @var integer
@@ -427,6 +429,11 @@ class DnsDomain
 
         return false;
 
+    }
+
+    public function getOwners()
+    {
+        return $this->getDomain()->getOwners();
     }
 
 }

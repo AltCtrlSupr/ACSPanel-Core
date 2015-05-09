@@ -5,11 +5,13 @@ use ACS\ACSPanelSettingsBundle\Entity\ConfigSetting as BaseSetting;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+
 /**
  * PanelSetting
  * @todo Move to settingsbundle
  */
-class PanelSetting extends BaseSetting
+class PanelSetting extends BaseSetting implements AclEntity
 {
     /**
      * @var \DateTime
@@ -178,5 +180,10 @@ class PanelSetting extends BaseSetting
     public function setUpdatedAtValue()
     {
         $this->updatedAt = new \DateTime();
+    }
+
+    public function getOwners()
+    {
+        return $this->getUser();
     }
 }

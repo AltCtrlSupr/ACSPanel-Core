@@ -5,13 +5,15 @@ use Monolog\Logger;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Loggable\Entity\LogEntry as LogEntry;
 
+use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+
 /**
  * LogItem
  *
  * @ORM\Entity
  * @Entity(repositoryClass="Gedmo\Loggable\Entity\Repository\LogEntryRepository")
  */
-class LogItem extends LogEntry
+class LogItem extends LogEntry implements AclEntity
 {
     protected $id;
     protected $action;
@@ -171,4 +173,9 @@ class LogItem extends LogEntry
     {
         return $this->user;
     }
+    public function getOwners()
+    {
+        return $this->getUser();
+    }
+
 }

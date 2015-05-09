@@ -27,7 +27,7 @@ class MailMailboxRepository extends AclEntityRepository
 
     public function getUserViewable($user)
     {
-		$entities_raw = $this->_em->createQuery('SELECT mb FROM ACS\ACSPanelBundle\Entity\MailMailBox mb');
+		$entities_raw = $this->_em->createQuery('SELECT mb FROM ACS\ACSPanelBundle\Entity\MailMailbox mb');
 		$entities = $this->getAclFilter()->apply($entities_raw, ['VIEW'], $user, 'mb')->getResult();
 
         return $entities;

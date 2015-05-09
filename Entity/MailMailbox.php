@@ -6,10 +6,12 @@ namespace ACS\ACSPanelBundle\Entity;
 use Monolog\Logger;
 use Doctrine\ORM\Mapping as ORM;
 
+use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+
 /**
  * ACS\ACSPanelBundle\Entity\MailMailbox
  */
-class MailMailbox
+class MailMailbox implements AclEntity
 {
     /**
      * @var integer $id
@@ -502,8 +504,6 @@ class MailMailbox
 	    $this->updatedAt = new \DateTime();
     }
 
-
-
     /**
      * Set enabled
      *
@@ -564,7 +564,6 @@ class MailMailbox
         return false;
     }
 
-
     /**
      * @ORM\PrePersist
      */
@@ -600,5 +599,9 @@ class MailMailbox
 
         return false;
 
+    }
+    public function getOwners()
+    {
+        return $this->getDomain()->getUser();
     }
 }
