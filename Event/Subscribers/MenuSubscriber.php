@@ -61,7 +61,7 @@ class MenuSubscriber implements EventSubscriberInterface
     {
         $menu = $menu_filter->getMenu();
         $menu->addChild('menu.quickactions.main', array( 'route' => null));
-        $menu['menu.quickactions.main']->addChild('menu.quickactions.register_host', array( 'route' => 'acs_acspanel_register_host'));
+        //$menu['menu.quickactions.main']->addChild('menu.quickactions.register_host', array( 'route' => 'acs_acspanel_register_host'));
     }
 
     public function resellerItems(FilterMenuEvent $menu_filter)
@@ -94,7 +94,7 @@ class MenuSubscriber implements EventSubscriberInterface
     public function httpdItems(FilterMenuEvent $menu_filter)
     {
         $menu = $menu_filter->getMenu();
-        $menu->addChild('menu.httpd.newhosting', array( 'route' => 'acs_acspanel_register_host'));
+        // $menu->addChild('menu.httpd.newhosting', array( 'route' => 'acs_acspanel_register_host'));
         $menu->addChild('menu.httpd.main', array( 'route' => null, 'extras' => array('icon' => 'fa-globe' )));
         $menu['menu.httpd.main']->addChild('menu.httpd.hosts', array( 'route' => 'httpdhost'));
         $menu['menu.httpd.main']->addChild('menu.httpd.users', array( 'route' => 'httpduser'));
