@@ -29,11 +29,6 @@ class MailAlias implements AclEntity
     private $goto;
 
     /**
-     * @var string $domain
-     */
-    private $domain;
-
-    /**
      * @var \DateTime $created
      */
     private $created;
@@ -67,6 +62,11 @@ class MailAlias implements AclEntity
      * @var \DateTime $updatedAt
      */
     private $updatedAt;
+
+    public function __toString()
+    {
+        return $this->getAddress() . ' to ' . $this->getGoto();
+    }
 
     /**
      * Get id
@@ -122,29 +122,6 @@ class MailAlias implements AclEntity
     public function getGoto()
     {
         return $this->goto;
-    }
-
-    /**
-     * Set domain
-     *
-     * @param string $domain
-     * @return MailAlias
-     */
-    public function setDomain($domain)
-    {
-        $this->domain = $domain;
-
-        return $this;
-    }
-
-    /**
-     * Get domain
-     *
-     * @return string
-     */
-    public function getDomain()
-    {
-        return $this->domain;
     }
 
     /**
@@ -356,6 +333,6 @@ class MailAlias implements AclEntity
 
     public function getOwners()
     {
-        return $this->getDomain()->getOwners();
+        return $this->getMailDomain()->getOwners();
     }
 }

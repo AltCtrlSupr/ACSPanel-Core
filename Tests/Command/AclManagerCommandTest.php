@@ -28,13 +28,29 @@ class ListCommandTest extends KernelTestCase
             )
         );
 
-        // This should add Plans only for admins
+        // This should add FosUser only for admins
         $this->assertRegExp('/Added/', $commandTester->getDisplay());
 
         // Tests for FosUser entity
         $commandTester->execute(
             array(
                 'entity' => '\ACS\ACSPanelUsersBundle\Entity\FosUser'
+            )
+        );
+        $this->assertRegExp('/Added/', $commandTester->getDisplay());
+
+        // Tests for MailMailbox entity
+        $commandTester->execute(
+            array(
+                'entity' => '\ACS\ACSPanelBundle\Entity\MailMailbox'
+            )
+        );
+        $this->assertRegExp('/Added/', $commandTester->getDisplay());
+
+        // Tests for MailAlias entity
+        $commandTester->execute(
+            array(
+                'entity' => '\ACS\ACSPanelBundle\Entity\MailAlias'
             )
         );
         $this->assertRegExp('/Added/', $commandTester->getDisplay());

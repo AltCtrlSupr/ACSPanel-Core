@@ -108,6 +108,11 @@ class MailMailbox implements AclEntity
      */
     private $enabled;
 
+    public function __toString()
+    {
+        return $this->getUsername() . '@' . $this->getMailDomain();
+    }
+
     /**
      * Get id
      *
@@ -602,6 +607,6 @@ class MailMailbox implements AclEntity
     }
     public function getOwners()
     {
-        return $this->getDomain()->getUser();
+        return $this->getMailDomain()->getOwners();
     }
 }

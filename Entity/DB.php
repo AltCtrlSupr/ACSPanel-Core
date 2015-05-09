@@ -1,6 +1,5 @@
 <?php
 
-
 namespace ACS\ACSPanelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;

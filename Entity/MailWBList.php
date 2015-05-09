@@ -56,6 +56,11 @@ class MailWBList implements AclEntity
      */
     private $user;
 
+    public function __toString()
+    {
+        return $this->getSender();
+    }
+
     /**
      * Get id
      *

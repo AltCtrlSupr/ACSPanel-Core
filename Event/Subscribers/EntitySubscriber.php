@@ -51,50 +51,34 @@ class EntitySubscriber implements EventSubscriber
             $this->removeDatabase($entity);
         }
 
-		$superadmins = $entityManager->getRepository('ACS\ACSPanelUsersBundle\Entity\FosUser')->getSuperadminUsers();
+        // Adding master permissions to superadmins
+        $superadmins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\FosUser')->getSuperadminUsers();
+        $admins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\FosUser')->getAdminUsers();
+
 		$aclManager = $this->container->get('problematic.acl_manager');
 
-		$domain_related_user_classes = array('HttpdHost', 'DnsDomain', 'MailAlias');
-		foreach($domain_related_user_classes as $class){
-			if($entity instanceof $class){
-				$user = $entity->getDomain()->getUser();
-				$this->removeUserOwnerPermission($user, $entity);
-			}
-		}
+        if ($entity instanceOf \Gedmo\Loggable\Entity\LogEntry)
+            $user = array();
+        else
+            $user = $entity->getOwners();
 
-		$first_level_user_classes = array('DB', 'DatabaseUser', 'Domain', 'FtpdUser', 'IpAddress', 'LogItem', 'MailDomain', 'MailWBList', 'PanelSetting', 'Server', 'Service');
-		foreach($first_level_user_classes as $class){
-			if($entity instanceof $class){
-				$user = $entity->getUser();
-				$this->removeUserOwnerPermission($user, $entity);
-			}
-		}
+        // If we get a single user we add him to object owner
+        if (is_object($user)) {
+            $this->addUserOwnerPermission($user, $entity);
+        }
 
-		if($entity instanceof DnsRecord){
-			$user = $entity->getDnsDomain()->getDomain()->getUser();
-			$this->removeUserOwnerPermission($user, $entity);
-		}
+        // If we receive an array we iterate it
+        if (is_array($user)) {
+            foreach ($user as $owner) {
+                $this->addUserOwnerPermission($owner, $entity);
+            }
+        }
 
-		if($entity instanceof HttpdUser){
-			$user = $entity->getHttpdHost()->getDomain()->getUser();
-			$this->removeUserOwnerPermission($user, $entity);
-		}
-
-		if($entity instanceof MailLogrcvd){
-			$user = $entity->getMailDomain()->getUser();
-			$this->removeUserOwnerPermission($user, $entity);
-		}
-
-		if($entity instanceof MailMailBox){
-			$user = $entity->getMailDomain()->getUser();
-			$this->removeUserOwnerPermission($user, $entity);
-		}
-
-		if($entity instanceof UserPlan){
-			$user = $entity->getPuser();
-			$this->removeUserOwnerPermission($user, $entity);
-		}
-
+        if ($user == 'admins') {
+            foreach ($admins as $admin) {
+                $this->addUserOwnerPermission($admin, $entity);
+            }
+        }
 
 		foreach($superadmins as $superadmin){
 			$aclManager->removeObjectPermission($entity, MaskBuilder::MASK_MASTER, $superadmin);
@@ -133,7 +117,7 @@ class EntitySubscriber implements EventSubscriber
         }
         if ($entity instanceof MailDomain){
             $this->setUserValue($entity);
-            $settings_manager = $this->continer->get('acs.setting_manager');
+            $settings_manager = $this->container->get('acs.setting_manager');
             $mail_domain_transport = $settings_manager->getSystemSetting('mail_domain_transport');
             if($mail_domain_transport){
                 $entity->setTransport($mail_domain_transport);
@@ -167,66 +151,37 @@ class EntitySubscriber implements EventSubscriber
     public function postPersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        $entityManager = $args->getEntityManager();
+        $em = $args->getEntityManager();
 
-		$superadmins = $entityManager->getRepository('ACS\ACSPanelUsersBundle\Entity\FosUser')->getSuperadminUsers();
+        // Adding master permissions to superadmins
+        $superadmins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\FosUser')->getSuperadminUsers();
+        $admins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\FosUser')->getAdminUsers();
+
+
 		$aclManager = $this->container->get('problematic.acl_manager');
 
+        if ($entity instanceOf \Gedmo\Loggable\Entity\LogEntry)
+            $user = array();
+        else
+            $user = $entity->getOwners();
 
-
-        if ($entity instanceof DatabaseUser){
-            $this->createUserInDatabase($entity);
-            $this->setUserValue($entity);
+        // If we get a single user we add him to object owner
+        if (is_object($user)) {
+            $this->addUserOwnerPermission($user, $entity);
         }
 
-        if ($entity instanceof FtpdUser){
-            $setting_manager = $this->container->get('acs.setting_manager');
-            $setting_manager->setInternalSetting('last_used_uid',$entity->getUid());
+        // If we receive an array we iterate it
+        if (is_array($user)) {
+            foreach ($user as $owner) {
+                $this->addUserOwnerPermission($owner, $entity);
+            }
         }
 
-		// ACL Related code
-
-		$domain_related_user_classes = array('HttpdHost', 'DnsDomain', 'MailAlias');
-		foreach($domain_related_user_classes as $class){
-			if($entity instanceof $class){
-				$user = $entity->getDomain()->getUser();
-				$this->addUserOwnerPermission($user, $entity);
-			}
-		}
-
-		$first_level_user_classes = array('DB', 'DatabaseUser', 'Domain', 'FtpdUser', 'IpAddress', 'LogItem', 'MailDomain', 'MailWBList', 'PanelSetting', 'Server', 'Service');
-		foreach($first_level_user_classes as $class){
-			if($entity instanceof $class){
-				$user = $entity->getUser();
-				$this->addUserOwnerPermission($user, $entity);
-			}
-		}
-
-		if($entity instanceof DnsRecord){
-			$user = $entity->getDnsDomain()->getDomain()->getUser();
-			$this->addUserOwnerPermission($user, $entity);
-		}
-
-		if($entity instanceof HttpdUser){
-			$user = $entity->getHttpdHost()->getDomain()->getUser();
-			$this->addUserOwnerPermission($user, $entity);
-		}
-
-		if($entity instanceof MailLogrcvd){
-			$user = $entity->getMailDomain()->getUser();
-			$this->addUserOwnerPermission($user, $entity);
-		}
-
-		if($entity instanceof MailMailBox){
-			$user = $entity->getMailDomain()->getUser();
-			$this->addUserOwnerPermission($user, $entity);
-		}
-
-		if($entity instanceof UserPlan){
-			$user = $entity->getPuser();
-			$this->addUserOwnerPermission($user, $entity);
-		}
-
+        if ($user == 'admins') {
+            foreach ($admins as $admin) {
+                $this->addUserOwnerPermission($admin, $entity);
+            }
+        }
 
 		foreach($superadmins as $superadmin){
 			$aclManager->addObjectPermission($entity, MaskBuilder::MASK_MASTER, $superadmin);
