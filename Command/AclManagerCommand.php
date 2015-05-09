@@ -57,56 +57,57 @@ class AclManagerCommand extends ContainerAwareCommand
 
         $entities = $em->getRepository($name)->findAll();
 
-        foreach($entities as $entity){
+        foreach ($entities as $entity) {
 
-            foreach($this->domain_related_user_classes as $class){
-                if($entity instanceof $class){
+            foreach ($this->domain_related_user_classes as $class) {
+                if ($entity instanceof $class) {
                     $user = $entity->getDomain()->getUser();
-                    if($user)
+                    if ($user)
                         $output->writeln($this->addUserOwnerPermission($user, $entity));
                 }
             }
 
-            foreach($this->first_level_user_classes as $class){
-                if($entity instanceof $class){
+            foreach ($this->first_level_user_classes as $class) {
+                if ($entity instanceof $class) {
                     $user = $entity->getUser();
-                    if($user)
+                    if ($user)
                         $output->writeln($this->addUserOwnerPermission($user, $entity));
                 }
             }
 
-            if($entity instanceof ACS\ACSPanelUsersBundle\Entity\DnsRecord){
+            if ($entity instanceof ACS\ACSPanelUsersBundle\Entity\DnsRecord) {
                 $user = $entity->getDnsDomain()->getDomain()->getUser();
                 if($user)
                     $output->writeln($this->addUserOwnerPermission($user, $entity));
             }
 
-            if($entity instanceof ACS\ACSPanelUsersBundle\Entity\HttpdUser){
+            if ($entity instanceof ACS\ACSPanelUsersBundle\Entity\HttpdUser) {
                 $user = $entity->getHttpdHost()->getDomain()->getUser();
                 if($user)
                     $output->writeln($this->addUserOwnerPermission($user, $entity));
             }
 
-            if($entity instanceof ACS\ACSPanelUsersBundle\Entity\MailLogrcvd){
+            if ($entity instanceof ACS\ACSPanelUsersBundle\Entity\MailLogrcvd) {
                 $user = $entity->getMailDomain()->getUser();
-                if($user)
+                if ($user)
                     $output->writeln($this->addUserOwnerPermission($user, $entity));
             }
 
-            if($entity instanceof ACS\ACSPanelUsersBundle\Entity\MailMailBox){
+            if ($entity instanceof ACS\ACSPanelUsersBundle\Entity\MailMailbox) {
                 $user = $entity->getMailDomain()->getUser();
-                if($user)
+                if ($user)
                     $output->writeln($this->addUserOwnerPermission($user, $entity));
             }
 
-            if($entity instanceof ACS\ACSPanelUsersBundle\Entity\UserPlan){
+            if ($entity instanceof ACS\ACSPanelUsersBundle\Entity\UserPlan) {
                 $user = $entity->getPuser();
-                if($user)
+                if ($user)
                     $output->writeln($this->addUserOwnerPermission($user, $entity));
             }
 
-            foreach($superadmins as $superadmin){
-                $output->writeln($aclManager->addObjectPermission($entity, MaskBuilder::MASK_MASTER, $superadmin));
+            foreach ($superadmins as $superadmin) {
+                $aclManager->addObjectPermission($entity, MaskBuilder::MASK_MASTER, $superadmin);
+                $output->writeln("Added " . get_class($entity) . " Acls for " . $superadmin);
             }
 
         }
@@ -116,14 +117,12 @@ class AclManagerCommand extends ContainerAwareCommand
 	{
 		$aclManager = $this->getContainer()->get('problematic.acl_manager');
 
-		if($parent = $user->getParentUser())
+		if ($parent = $user->getParentUser())
 			$aclManager->addObjectPermission($entity, MaskBuilder::MASK_MASTER, $parent);
 
 		$aclManager->addObjectPermission($entity, MaskBuilder::MASK_OWNER, $user);
 
-        return "Added ". get_class($entity) . " Acls for ".$user;
+        return "Added " . get_class($entity) . " Acls for " . $user;
 
 	}
-
-
 }

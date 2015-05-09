@@ -22,7 +22,7 @@ class MailWBListController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ACSACSPanelBundle:MailWBList')->findBy(array('user'=>$this->get('security.context')->getToken()->getUser()->getIdChildIds()));
+        $entities = $this->get('mailwblist_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
         return $this->render('ACSACSPanelBundle:MailWBList:index.html.twig', array(
             'entities' => $entities,

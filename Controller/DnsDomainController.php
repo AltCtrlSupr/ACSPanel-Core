@@ -31,13 +31,7 @@ class DnsDomainController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         // IF is admin can see all the dnsdomains, if is user only their ones...
-        if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
-            $entities = $em->getRepository('ACSACSPanelBundle:DnsDomain')->findAll();
-        }elseif(true === $this->get('security.context')->isGranted('ROLE_RESELLER')){
-            $entities = $em->getRepository('ACSACSPanelBundle:DnsDomain')->findByUsers($this->get('security.context')->getToken()->getUser()->getIdChildIds());
-        }elseif(true === $this->get('security.context')->isGranted('ROLE_USER')){
-            $entities = $em->getRepository('ACSACSPanelBundle:DnsDomain')->findByUser($this->get('security.context')->getToken()->getUser());
-        }
+        $entities = $this->get('dnsdomain_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
         return $this->render('ACSACSPanelBundle:DnsDomain:index.html.twig', array(
             'entities' => $entities,

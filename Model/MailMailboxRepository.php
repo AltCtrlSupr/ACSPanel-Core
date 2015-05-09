@@ -24,4 +24,14 @@ class MailMailboxRepository extends AclEntityRepository
         $query = $this->_em->createQuery('SELECT m FROM ACS\ACSPanelBundle\Entity\MailMailbox m INNER JOIN m.mail_domain md INNER JOIN md.domain d WHERE d.user IN (?1)')->setParameter(1, $user);
         return $query->getResult();
     }
+
+    public function getUserViewable($user)
+    {
+		$entities_raw = $this->_em->createQuery('SELECT mb FROM ACS\ACSPanelBundle\Entity\MailMailBox mb');
+		$entities = $this->getAclFilter()->apply($entities_raw, ['VIEW'], $user, 'mb')->getResult();
+
+        return $entities;
+    }
+
+
 }

@@ -50,6 +50,57 @@ class EntitySubscriber implements EventSubscriber
         if ($entity instanceof DatabaseUser){
             $this->removeDatabase($entity);
         }
+
+		$superadmins = $entityManager->getRepository('ACS\ACSPanelUsersBundle\Entity\FosUser')->getSuperadminUsers();
+		$aclManager = $this->container->get('problematic.acl_manager');
+
+		$domain_related_user_classes = array('HttpdHost', 'DnsDomain', 'MailAlias');
+		foreach($domain_related_user_classes as $class){
+			if($entity instanceof $class){
+				$user = $entity->getDomain()->getUser();
+				$this->removeUserOwnerPermission($user, $entity);
+			}
+		}
+
+		$first_level_user_classes = array('DB', 'DatabaseUser', 'Domain', 'FtpdUser', 'IpAddress', 'LogItem', 'MailDomain', 'MailWBList', 'PanelSetting', 'Server', 'Service');
+		foreach($first_level_user_classes as $class){
+			if($entity instanceof $class){
+				$user = $entity->getUser();
+				$this->removeUserOwnerPermission($user, $entity);
+			}
+		}
+
+		if($entity instanceof DnsRecord){
+			$user = $entity->getDnsDomain()->getDomain()->getUser();
+			$this->removeUserOwnerPermission($user, $entity);
+		}
+
+		if($entity instanceof HttpdUser){
+			$user = $entity->getHttpdHost()->getDomain()->getUser();
+			$this->removeUserOwnerPermission($user, $entity);
+		}
+
+		if($entity instanceof MailLogrcvd){
+			$user = $entity->getMailDomain()->getUser();
+			$this->removeUserOwnerPermission($user, $entity);
+		}
+
+		if($entity instanceof MailMailBox){
+			$user = $entity->getMailDomain()->getUser();
+			$this->removeUserOwnerPermission($user, $entity);
+		}
+
+		if($entity instanceof UserPlan){
+			$user = $entity->getPuser();
+			$this->removeUserOwnerPermission($user, $entity);
+		}
+
+
+		foreach($superadmins as $superadmin){
+			$aclManager->removeObjectPermission($entity, MaskBuilder::MASK_MASTER, $superadmin);
+		}
+
+
     }
 
     public function prePersist(LifecycleEventArgs $args)
@@ -100,6 +151,7 @@ class EntitySubscriber implements EventSubscriber
         if ($entity instanceof Service){
             $this->setUserValue($entity);
         }
+
     }
 
     public function postRemove(LifecycleEventArgs $args)
@@ -117,6 +169,11 @@ class EntitySubscriber implements EventSubscriber
         $entity = $args->getEntity();
         $entityManager = $args->getEntityManager();
 
+		$superadmins = $entityManager->getRepository('ACS\ACSPanelUsersBundle\Entity\FosUser')->getSuperadminUsers();
+		$aclManager = $this->container->get('problematic.acl_manager');
+
+
+
         if ($entity instanceof DatabaseUser){
             $this->createUserInDatabase($entity);
             $this->setUserValue($entity);
@@ -126,6 +183,55 @@ class EntitySubscriber implements EventSubscriber
             $setting_manager = $this->container->get('acs.setting_manager');
             $setting_manager->setInternalSetting('last_used_uid',$entity->getUid());
         }
+
+		// ACL Related code
+
+		$domain_related_user_classes = array('HttpdHost', 'DnsDomain', 'MailAlias');
+		foreach($domain_related_user_classes as $class){
+			if($entity instanceof $class){
+				$user = $entity->getDomain()->getUser();
+				$this->addUserOwnerPermission($user, $entity);
+			}
+		}
+
+		$first_level_user_classes = array('DB', 'DatabaseUser', 'Domain', 'FtpdUser', 'IpAddress', 'LogItem', 'MailDomain', 'MailWBList', 'PanelSetting', 'Server', 'Service');
+		foreach($first_level_user_classes as $class){
+			if($entity instanceof $class){
+				$user = $entity->getUser();
+				$this->addUserOwnerPermission($user, $entity);
+			}
+		}
+
+		if($entity instanceof DnsRecord){
+			$user = $entity->getDnsDomain()->getDomain()->getUser();
+			$this->addUserOwnerPermission($user, $entity);
+		}
+
+		if($entity instanceof HttpdUser){
+			$user = $entity->getHttpdHost()->getDomain()->getUser();
+			$this->addUserOwnerPermission($user, $entity);
+		}
+
+		if($entity instanceof MailLogrcvd){
+			$user = $entity->getMailDomain()->getUser();
+			$this->addUserOwnerPermission($user, $entity);
+		}
+
+		if($entity instanceof MailMailBox){
+			$user = $entity->getMailDomain()->getUser();
+			$this->addUserOwnerPermission($user, $entity);
+		}
+
+		if($entity instanceof UserPlan){
+			$user = $entity->getPuser();
+			$this->addUserOwnerPermission($user, $entity);
+		}
+
+
+		foreach($superadmins as $superadmin){
+			$aclManager->addObjectPermission($entity, MaskBuilder::MASK_MASTER, $superadmin);
+		}
+
     }
 
     public function preUpdate(LifecycleEventArgs $args)
@@ -141,6 +247,9 @@ class EntitySubscriber implements EventSubscriber
         if ($entity instanceof Domain){
             $this->setUpdatedAtValue($entity);
         }
+        if ($entity instanceof HttpdHost){
+            $this->setUpdatedAtValue($entity);
+		}
     }
 
     public function postUpdate(LifecycleEventArgs $args)
@@ -226,7 +335,7 @@ class EntitySubscriber implements EventSubscriber
 
     private function setUpdatedAtValue($entity)
     {
-        $entity->updatedAt = new \DateTime();
+        $entity->setUpdatedAt(new \DateTime());
     }
 
     public function createDatabase($entity)
@@ -328,5 +437,26 @@ class EntitySubscriber implements EventSubscriber
         $user = $service->getToken()->getUser();
         return $entity->setUser($user);
     }
+
+	public function addUserOwnerPermission($user, $entity)
+	{
+		$aclManager = $this->container->get('problematic.acl_manager');
+
+		if($parent = $user->getParentUser())
+			$aclManager->addObjectPermission($entity, MaskBuilder::MASK_MASTER, $parent);
+
+		$aclManager->addObjectPermission($entity, MaskBuilder::MASK_OWNER, $user);
+	}
+
+	public function removeUserOwnerPermission($user, $entity)
+	{
+		$aclManager = $this->container->get('problematic.acl_manager');
+
+		if($parent = $user->getParentUser())
+			$aclManager->revokePermission($entity, MaskBuilder::MASK_MASTER, $parent);
+
+		$aclManager->revokePermission($entity, MaskBuilder::MASK_OWNER, $user);
+	}
+
 
 }

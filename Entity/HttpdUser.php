@@ -42,6 +42,26 @@ class HttpdUser
     private $enabled;
 
     /**
+     * @var string $protected_dir
+     */
+    private $protected_dir;
+
+    /**
+     * @var \DateTime $createdAt
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime $updatedAt
+     */
+    private $updatedAt;
+
+    /**
+     * @var ACS\ACSPanelBundle\Entity\HttpdHost
+     */
+    private $httpd_host;
+
+    /**
      * Get id
      *
      * @return integer
@@ -142,26 +162,6 @@ class HttpdUser
     {
         return $this->groups;
     }
-    /**
-     * @var string $protected_dir
-     */
-    private $protected_dir;
-
-    /**
-     * @var \DateTime $createdAt
-     */
-    private $createdAt;
-
-    /**
-     * @var \DateTime $updatedAt
-     */
-    private $updatedAt;
-
-    /**
-     * @var ACS\ACSPanelBundle\Entity\HttpdHost
-     */
-    private $httpd_host;
-
 
     /**
      * Set protected_dir

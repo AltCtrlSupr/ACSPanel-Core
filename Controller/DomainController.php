@@ -27,8 +27,7 @@ class DomainController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         // IF is admin can see all the hosts, if is user only their ones...
-		$entities_raw = $em->createQuery('SELECT d FROM ACS\ACSPanelBundle\Entity\Domain d');
-		$entities = $this->get('problematic.acl.orm.filter')->apply($entities_raw, ['VIEW'], $this->get('security.context')->getToken()->getUser(), 'd')->getResult();
+        $entities = $this->get('domain_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
         return $this->render('ACSACSPanelBundle:Domain:index.html.twig', array(
             'entities' => $entities,

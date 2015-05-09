@@ -24,21 +24,6 @@ use ACS\ACSPanelBundle\Event\DnsEvents;
  */
 class DnsRecordController extends Controller
 {
-    /**
-     * Lists all DnsRecord entities.
-     *
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('ACSACSPanelBundle:DnsRecord')->findByUsers($this->get('security.context')->getToken()->getUser()->getIdChildIds());
-
-
-        return $this->render('ACSACSPanelBundle:DnsRecord:index.html.twig', array(
-            'entities' => $entities,
-        ));
-    }
 
     /**
      * Finds and displays a DnsRecord entity.

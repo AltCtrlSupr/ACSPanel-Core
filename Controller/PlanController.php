@@ -23,7 +23,7 @@ class PlanController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ACSACSPanelBundle:Plan')->findAll();
+        $entities = $this->get('plan_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
         return $this->render('ACSACSPanelBundle:Plan:index.html.twig', array(
             'entities' => $entities,

@@ -16,21 +16,6 @@ use ACS\ACSPanelBundle\Form\DatabaseUserType;
 class DatabaseUserController extends Controller
 {
     /**
-     * Lists all DatabaseUser entities.
-     *
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('ACSACSPanelBundle:DatabaseUser')->findAll();
-
-        return $this->render('ACSACSPanelBundle:DatabaseUser:index.html.twig', array(
-            'entities' => $entities,
-        ));
-    }
-
-    /**
      * Finds and displays a DatabaseUser entity.
      *
      */

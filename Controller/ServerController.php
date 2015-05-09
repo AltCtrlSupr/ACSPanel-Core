@@ -23,7 +23,7 @@ class ServerController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ACSACSPanelBundle:Server')->findAll();
+        $entities = $this->get('server_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
         return $this->render('ACSACSPanelBundle:Server:index.html.twig', array(
             'entities' => $entities,

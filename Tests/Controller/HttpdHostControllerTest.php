@@ -18,4 +18,13 @@ class HttpdHostControllerTest extends CommonTestCase
         $crawler = $this->client->request('GET', '/httpdhost/new');
         $this->assertTrue($crawler->filter('.error-msg:contains(No tienes suficientes recursos para crear HttpdHost)')->count() > 0);
     }
+
+	public function testNewHttpdHost()
+	{
+        // Create a new client to browse the application
+        $this->client = $this->createAuthorizedClient('superadmin','1234');
+
+        $crawler = $this->client->request('GET', '/httpdhost/new');
+        $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
+	}
 }

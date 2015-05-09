@@ -24,6 +24,12 @@ class DnsDomainRepository extends AclEntityRepository
         return $query->getResult();
     }
 
+    public function getUserViewable($user)
+    {
+		$entities_raw = $this->_em->createQuery('SELECT dns FROM ACS\ACSPanelBundle\Entity\DnsDomain dns');
+		$entities = $this->getAclFilter()->apply($entities_raw, ['VIEW'], $user, 'dns')->getResult();
+
+        return $entities;
+    }
 }
 
-?>

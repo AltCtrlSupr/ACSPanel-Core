@@ -21,7 +21,7 @@ class DBType extends AbstractType
         $em = $container->get('doctrine.orm.entity_manager');
         $service = $container->get('security.context');
 
-        $db_services = $em->getRepository('ACS\ACSPanelBundle\Entity\ServiceType')->getDbServiceTypes();
+        $db_services = $em->getRepository('ACS\ACSPanelBundle\Entity\ServiceType')->getDbServiceTypesIds();
 
         $builder
             ->add('name')

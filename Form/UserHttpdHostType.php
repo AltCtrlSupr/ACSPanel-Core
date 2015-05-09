@@ -13,6 +13,7 @@ class UserHttpdHostType extends HttpdHostType
     {
         $service = $this->container->get('security.context');
         $container = $this->container;
+        $user = $container->get('security.context')->getToken()->getUser();
 
         $security = $container->get('security.context');
 
@@ -38,7 +39,8 @@ class UserHttpdHostType extends HttpdHostType
             )
 			->add('proxy_service', null, array(
 				'label' => 'httpdhost.form.proxy_service',
-				'choices' => $webproxy_services
+				'choices' => $webproxy_services,
+				'required' => false,
 			))
             ->add('add_www_alias','checkbox',array(
                 'mapped' => false,
