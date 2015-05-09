@@ -13,6 +13,15 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 
 abstract class CommonTestCase extends WebTestCase
 {
+    /**
+     * Fixtures to load
+     */
+    private $fixtures = [
+        'ACS\ACSPanelBundle\Tests\DataFixtures\LoadUserData',
+        'ACS\ACSPanelBundle\Tests\DataFixtures\LoadDomainData',
+        'ACS\ACSPanelBundle\Tests\DataFixtures\LoadPlanData',
+    ];
+
     public $client;
 
     protected $_application;

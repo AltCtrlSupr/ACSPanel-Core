@@ -19,24 +19,12 @@ class DnsDomainType extends AbstractType
         }
         $security = $kernel->getContainer()->get('security.context');
         $user = $security->getToken()->getUser();
-        $child_ids = $user->getIdChildIds();
-        $superadmin = false;
-        if($security->isGranted('ROLE_SUPER_ADMIN'))
-            $superadmin = true;
+        $user_domains = $this->container->get('domain_repository')->getUserViewable($user);
 
         $builder
             ->add('domain','entity',array(
-                'class' => 'ACS\ACSPanelBundle\Entity\Domain',
-                'query_builder' => function(EntityRepository $er) use ($child_ids, $superadmin){
-                    $query = $er->createQueryBuilder('d')
-                        ->select('d');
-                        //->where('d.is_httpd_alias != 1');
-                        if(!$superadmin){
-                            $query->where('d.user IN (?1)')
-                            ->setParameter('1', $child_ids);
-                        }
-                        return $query;
-                    }
+                    'class' => 'ACS\ACSPanelBundle\Entity\Domain',
+                    'choices' => $user_domains,
                 )
             )
             ->add('type', 'choice', array(

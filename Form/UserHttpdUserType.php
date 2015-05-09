@@ -2,20 +2,14 @@
 
 namespace ACS\ACSPanelBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
+use ACS\ACSPanelBundle\Form\Base\ContainerAwareType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 use Doctrine\ORM\EntityRepository;
 
-class UserHttpdUserType extends HttpdUserType
+class UserHttpdUserType extends ContainerAwareType
 {
-    public $container;
-
-    public function __construct($container){
-        $this->container = $container;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $container = $this->container;
