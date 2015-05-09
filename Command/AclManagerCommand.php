@@ -39,7 +39,7 @@ class AclManagerCommand extends ContainerAwareCommand
             ->setName('acl-manager:update-entity')
             ->setDescription('Update ACL entries based on current entity permissions')
             ->addArgument(
-                'name',
+                'entity',
                 InputArgument::OPTIONAL,
                 'Entity name to update based permissions'
             )
@@ -48,14 +48,15 @@ class AclManagerCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $name = $input->getArgument('name');
+        $entity = $input->getArgument('entity');
         $aclManager = $this->getContainer()->get('problematic.acl_manager');
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
         // Adding master permissions to superadmins
         $superadmins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\FosUser')->getSuperadminUsers();
+        $admins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\FosUser')->getAdminUsers();
 
-        $entities = $em->getRepository($name)->findAll();
+        $entities = $em->getRepository($entity)->findAll();
 
         foreach ($entities as $entity) {
 
@@ -69,6 +70,12 @@ class AclManagerCommand extends ContainerAwareCommand
             if (is_array($user)) {
                 foreach ($user as $owner) {
                     $output->writeln($this->addUserOwnerPermission($owner, $entity));
+                }
+            }
+
+            if ($user == 'admins') {
+                foreach ($admins as $admin) {
+                    $output->writeln($this->addUserOwnerPermission($admin, $entity));
                 }
             }
 

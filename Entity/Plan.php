@@ -103,6 +103,11 @@ class Plan implements AclEntity
     private $maxDomain;
 
     /**
+     * @var integer
+     */
+    private $maxFtpdUser;
+
+    /**
      * Get id
      *
      * @return integer
@@ -111,11 +116,6 @@ class Plan implements AclEntity
     {
         return $this->id;
     }
-
-    /**
-     * @var integer
-     */
-    private $maxFtpdUser;
 
     /**
      * Set planName
@@ -572,6 +572,6 @@ class Plan implements AclEntity
 
     public function getOwners()
     {
-        return $this->getUser();
+        return "admins";
     }
 }
