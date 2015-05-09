@@ -12,27 +12,6 @@ use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 
 class AclManagerCommand extends ContainerAwareCommand
 {
-
-    /* private $domain_related_user_classes = array(
-        '\ACS\ACSPanelBundle\Entity\HttpdHost',
-        '\ACS\ACSPanelBundle\Entity\DnsDomain',
-        '\ACS\ACSPanelBundle\Entity\MailAlias'
-    ); */
-
-    /* private $first_level_user_classes = array(
-        '\ACS\ACSPanelBundle\Entity\DB',
-        '\ACS\ACSPanelBundle\Entity\DatabaseUser',
-        '\ACS\ACSPanelBundle\Entity\Domain',
-        '\ACS\ACSPanelBundle\Entity\FtpdUser',
-        '\ACS\ACSPanelBundle\Entity\IpAddress',
-        '\ACS\ACSPanelBundle\Entity\LogItem',
-        '\ACS\ACSPanelBundle\Entity\MailDomain',
-        '\ACS\ACSPanelBundle\Entity\MailWBList',
-        '\ACS\ACSPanelBundle\Entity\PanelSetting',
-        '\ACS\ACSPanelBundle\Entity\Server',
-        '\ACS\ACSPanelBundle\Entity\Service'
-    ); */
-
     protected function configure()
     {
         $this
@@ -81,56 +60,8 @@ class AclManagerCommand extends ContainerAwareCommand
 
             foreach ($superadmins as $superadmin) {
                 $aclManager->addObjectPermission($entity, MaskBuilder::MASK_MASTER, $superadmin);
-                $output->writeln("Added " . get_class($entity) . " Acls for " . $superadmin);
+                $output->writeln("Added ". $entity ." (" . get_class($entity) . ") Acls for " . $superadmin);
             }
-
-            /* foreach ($this->domain_related_user_classes as $class) {
-                if ($entity instanceof $class) {
-                    $user = $entity->getDomain()->getUser();
-                    if ($user)
-                        $output->writeln($this->addUserOwnerPermission($user, $entity));
-                }
-            }
-
-            foreach ($this->first_level_user_classes as $class) {
-                if ($entity instanceof $class) {
-                    $user = $entity->getUser();
-                    if ($user)
-                        $output->writeln($this->addUserOwnerPermission($user, $entity));
-                }
-            }
-
-            if ($entity instanceof \ACS\ACSPanelBundle\Entity\DnsRecord) {
-                $user = $entity->getDnsDomain()->getDomain()->getUser();
-                if($user)
-                    $output->writeln($this->addUserOwnerPermission($user, $entity));
-            }
-
-            if ($entity instanceof \ACS\ACSPanelBundle\Entity\HttpdUser) {
-                $user = $entity->getHttpdHost()->getDomain()->getUser();
-                if($user)
-                    $output->writeln($this->addUserOwnerPermission($user, $entity));
-            }
-
-            if ($entity instanceof \ACS\ACSPanelBundle\Entity\MailLogrcvd) {
-                $user = $entity->getMailDomain()->getUser();
-                if ($user)
-                    $output->writeln($this->addUserOwnerPermission($user, $entity));
-            }
-
-            if ($entity instanceof \ACS\ACSPanelBundle\Entity\MailMailbox) {
-                $user = $entity->getMailDomain()->getDomain()->getUser();
-                if ($user)
-                    $output->writeln($this->addUserOwnerPermission($user, $entity));
-            }
-
-            if ($entity instanceof \ACS\ACSPanelBundle\Entity\UserPlan) {
-                $user = $entity->getPuser();
-                if ($user)
-                    $output->writeln($this->addUserOwnerPermission($user, $entity));
-            }
-             */
-
         }
     }
 
@@ -143,7 +74,7 @@ class AclManagerCommand extends ContainerAwareCommand
 
 		$aclManager->addObjectPermission($entity, MaskBuilder::MASK_OWNER, $user);
 
-        return "Added " . get_class($entity) . " Acls for " . $user;
+        return "Added ". $entity ." (" . get_class($entity) . ") Acls for " . $user;
 
 	}
 }

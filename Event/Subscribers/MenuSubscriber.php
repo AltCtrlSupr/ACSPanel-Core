@@ -68,7 +68,7 @@ class MenuSubscriber implements EventSubscriberInterface
     {
         $menu = $menu_filter->getMenu();
         $menu->addChild('menu.reseller.main', array('route' => null));
-        $menu['menu.reseller.main']->addChild('menu.reseller.logs', array( 'route' => 'logs', 'extras' => array('icon' => 'fa-archive')));
+        // $menu['menu.reseller.main']->addChild('menu.reseller.logs', array( 'route' => 'logs', 'extras' => array('icon' => 'fa-archive')));
     }
 
     public function adminItems(FilterMenuEvent $menu_filter)
@@ -82,7 +82,7 @@ class MenuSubscriber implements EventSubscriberInterface
         $menu['menu.admin.main']['menu.admin.servers.main']->addChild('menu.admin.servers.services', array( 'route' => 'service'));
         $menu['menu.admin.main']['menu.admin.servers.main']->addChild('menu.admin.servers.service_types', array( 'route' => 'servicetype'));
         $menu['menu.admin.main']['menu.admin.servers.main']->addChild('menu.admin.servers.ip', array( 'route' => 'ipaddress'));
-        $menu['menu.admin.main']->addChild('menu.admin.logs', array( 'route' => 'logs'));
+        // $menu['menu.admin.main']->addChild('menu.admin.logs', array( 'route' => 'logs'));
     }
 
     public function domainItems(FilterMenuEvent $menu_filter)

@@ -33,6 +33,21 @@ class ServiceType implements AclEntity
     private $field_types;
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->field_types = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Return the readable name of service type
+     */
+	public function __toString(){
+		return $this->getName();
+	}
+
+    /**
      * Get id
      *
      * @return integer
@@ -89,21 +104,6 @@ class ServiceType implements AclEntity
     }
 
     /**
-     * Return the readable name of service type
-     */
-	public function __toString(){
-		return $this->getName();
-	}
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->field_types = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
      * Add fieldTypes
      *
      * @param \ACS\ACSPanelBundle\Entity\FieldType $fieldTypes
@@ -136,9 +136,8 @@ class ServiceType implements AclEntity
         return $this->field_types;
     }
 
-
     public function getOwners()
     {
-        return $this->getUser();
+        return "admins";
     }
 }

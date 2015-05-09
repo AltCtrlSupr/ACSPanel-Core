@@ -19,6 +19,8 @@ class ListCommandTest extends KernelTestCase
         $application->add(new AclManagerCommand());
 
         $command = $application->find('acl-manager:update-entity');
+
+        // Tests for Plan entity
         $commandTester = new CommandTester($command);
         $commandTester->execute(
             array(
@@ -28,5 +30,16 @@ class ListCommandTest extends KernelTestCase
 
         // This should add Plans only for admins
         $this->assertRegExp('/Added/', $commandTester->getDisplay());
+
+        // Tests for ServiceType entity
+        $commandTester->execute(
+            array(
+                'entity' => '\ACS\ACSPanelBundle\Entity\ServiceType'
+            )
+        );
+
+        // This should add Plans only for admins
+        $this->assertRegExp('/Added/', $commandTester->getDisplay());
+
     }
 }
