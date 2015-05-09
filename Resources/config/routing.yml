@@ -86,6 +86,4 @@ ACSACSPanelBundle_mailwblist:
     resource: "@ACSACSPanelBundle/Resources/config/routing/mailwblist.yml"
     prefix:   /mailwblist
 
-ACSACSPanelBundle_groups:
-    resource: "@ACSACSPanelBundle/Resources/config/routing/fosgroup.yml"
-    prefix:   /groups
+

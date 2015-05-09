@@ -5,10 +5,12 @@ namespace ACS\ACSPanelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+
 /**
  * UserPlan
  */
-class UserPlan
+class UserPlan implements AclEntity
 {
     /**
      * @var integer
@@ -93,5 +95,10 @@ class UserPlan
     public function getPuser()
     {
         return $this->puser;
+    }
+
+    public function getOwners()
+    {
+        return $this->getUser();
     }
 }

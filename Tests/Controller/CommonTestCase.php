@@ -18,7 +18,8 @@ abstract class CommonTestCase extends WebTestCase
      */
     private $fixtures = [
         'ACS\ACSPanelBundle\Tests\DataFixtures\LoadUserData',
-        'ACS\ACSPanelBundle\Tests\DataFixtures\LoadTestDomainData',
+        'ACS\ACSPanelBundle\Tests\DataFixtures\LoadDomainData',
+        'ACS\ACSPanelBundle\Tests\DataFixtures\LoadPlanData',
     ];
 
     public $client;

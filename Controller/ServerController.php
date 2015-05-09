@@ -62,7 +62,7 @@ class ServerController extends Controller
     public function newAction()
     {
         $entity = new Server();
-        $form   = $this->createForm(new ServerType(), $entity);
+        $form   = $this->createForm(new ServerType($this->get('security.context')), $entity);
 
         return $this->render('ACSACSPanelBundle:Server:new.html.twig', array(
             'entity' => $entity,
@@ -77,7 +77,7 @@ class ServerController extends Controller
     public function createAction(Request $request)
     {
         $entity  = new Server();
-        $form = $this->createForm(new ServerType(), $entity);
+        $form = $this->createForm(new ServerType($this->get('security.context')), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -109,7 +109,7 @@ class ServerController extends Controller
             throw $this->createNotFoundException('Unable to find Server entity.');
         }
 
-        $editForm = $this->createForm(new ServerType(), $entity);
+        $editForm = $this->createForm(new ServerType($this->get('security.context')), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ACSACSPanelBundle:Server:edit.html.twig', array(
@@ -134,7 +134,7 @@ class ServerController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new ServerType(), $entity);
+        $editForm = $this->createForm(new ServerType($this->get('security.context')), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {

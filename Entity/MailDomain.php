@@ -6,10 +6,12 @@ namespace ACS\ACSPanelBundle\Entity;
 use Monolog\Logger;
 use Doctrine\ORM\Mapping as ORM;
 
+use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+
 /**
  * ACS\ACSPanelBundle\Entity\MailDomain
  */
-class MailDomain
+class MailDomain implements AclEntity
 {
     /**
      * @var integer $id
@@ -410,7 +412,6 @@ class MailDomain
         return $this->service;
     }
 
-
     public function __toString()
     {
         return $this->getDomain()->getDomain();
@@ -444,4 +445,8 @@ class MailDomain
 
     }
 
+    public function getOwners()
+    {
+        return $this->getUser();
+    }
 }

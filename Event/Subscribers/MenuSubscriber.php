@@ -61,14 +61,14 @@ class MenuSubscriber implements EventSubscriberInterface
     {
         $menu = $menu_filter->getMenu();
         $menu->addChild('menu.quickactions.main', array( 'route' => null));
-        $menu['menu.quickactions.main']->addChild('menu.quickactions.register_host', array( 'route' => 'acs_acspanel_register_host'));
+        //$menu['menu.quickactions.main']->addChild('menu.quickactions.register_host', array( 'route' => 'acs_acspanel_register_host'));
     }
 
     public function resellerItems(FilterMenuEvent $menu_filter)
     {
         $menu = $menu_filter->getMenu();
         $menu->addChild('menu.reseller.main', array('route' => null));
-        $menu['menu.reseller.main']->addChild('menu.reseller.logs', array( 'route' => 'logs', 'extras' => array('icon' => 'fa-archive')));
+        // $menu['menu.reseller.main']->addChild('menu.reseller.logs', array( 'route' => 'logs', 'extras' => array('icon' => 'fa-archive')));
     }
 
     public function adminItems(FilterMenuEvent $menu_filter)
@@ -82,7 +82,7 @@ class MenuSubscriber implements EventSubscriberInterface
         $menu['menu.admin.main']['menu.admin.servers.main']->addChild('menu.admin.servers.services', array( 'route' => 'service'));
         $menu['menu.admin.main']['menu.admin.servers.main']->addChild('menu.admin.servers.service_types', array( 'route' => 'servicetype'));
         $menu['menu.admin.main']['menu.admin.servers.main']->addChild('menu.admin.servers.ip', array( 'route' => 'ipaddress'));
-        $menu['menu.admin.main']->addChild('menu.admin.logs', array( 'route' => 'logs'));
+        // $menu['menu.admin.main']->addChild('menu.admin.logs', array( 'route' => 'logs'));
     }
 
     public function domainItems(FilterMenuEvent $menu_filter)
@@ -94,7 +94,7 @@ class MenuSubscriber implements EventSubscriberInterface
     public function httpdItems(FilterMenuEvent $menu_filter)
     {
         $menu = $menu_filter->getMenu();
-        $menu->addChild('menu.httpd.newhosting', array( 'route' => 'acs_acspanel_register_host'));
+        // $menu->addChild('menu.httpd.newhosting', array( 'route' => 'acs_acspanel_register_host'));
         $menu->addChild('menu.httpd.main', array( 'route' => null, 'extras' => array('icon' => 'fa-globe' )));
         $menu['menu.httpd.main']->addChild('menu.httpd.hosts', array( 'route' => 'httpdhost'));
         $menu['menu.httpd.main']->addChild('menu.httpd.users', array( 'route' => 'httpduser'));

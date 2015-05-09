@@ -8,23 +8,21 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ServerType extends AbstractType
 {
+    private $_security;
+
+    public function __construct($security)
+    {
+        $this->_security = $security;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        // TODO: Do the addition of fields with suscriber
-        global $kernel;
-
-        if ('AppCache' == get_class($kernel)) {
-            $kernel = $kernel->getKernel();
-        }
-        $service = $kernel->getContainer()->get('security.context');
-
-
         $builder
             ->add('hostname')
             ->add('ip', new IpAddressType(),array('label' => false))
             ->add('description')
         ;
-        if($service->isGranted('ROLE_ADMIN'))
+        if($this->_security->isGranted('ROLE_ADMIN'))
             $builder->add('user');
     }
 
