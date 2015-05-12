@@ -48,9 +48,10 @@ class DomainController extends Controller
         $query = $rep->createQueryBuilder('d')
             ->where('d.id = ?1')
             ->orWhere('d.domain LIKE ?2')
-            ->setParameter('1',$term)
-            ->setParameter('2','%'.$term.'%')
-            ->getQuery();
+            ->setParameter('1', $term)
+            ->setParameter('2', '%'.$term.'%')
+            ->getQuery()
+        ;
 
         $entities = $query->execute();
 
@@ -61,7 +62,6 @@ class DomainController extends Controller
         ));
 
     }
-
 
     /**
      * Finds and displays a Domain entity.
@@ -127,7 +127,7 @@ class DomainController extends Controller
             $em = $this->getDoctrine()->getManager();
             $entity->setEnabled(true);
 
-            $this->container->get('event_dispatcher')->dispatch(DnsEvents::DOMAIN_BEFORE_ADD, new FilterDnsEvent($entity,$em));
+            $this->container->get('event_dispatcher')->dispatch(DnsEvents::DOMAIN_BEFORE_ADD, new FilterDnsEvent($entity, $em));
 
             $em->persist($entity);
 
@@ -144,10 +144,10 @@ class DomainController extends Controller
 
                 $dnsdomain->setService($dnsservice[0]);
 
+                $this->container->get('event_dispatcher')->dispatch(DnsEvents::DNS_AFTER_DOMAIN_ADD, new FilterDnsEvent($dnsdomain, $em));
+
                 $em->persist($dnsdomain);
                 $em->flush();
-
-                $this->container->get('event_dispatcher')->dispatch(DnsEvents::DNS_AFTER_DOMAIN_ADD, new FilterDnsEvent($dnsdomain,$em));
             }
 
             return $this->redirect($this->generateUrl('domain_show', array('id' => $entity->getId())));

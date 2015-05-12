@@ -4,21 +4,22 @@ namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\EventDisatcher;
+use Symfony\Component\HttpFoundation\Response;
 
 use ACS\ACSPanelBundle\Entity\DnsDomain;
 use ACS\ACSPanelBundle\Entity\DnsRecord;
 use ACS\ACSPanelBundle\Form\DnsDomainType;
 
 use ACS\ACSPanelBundle\Event\FilterDnsEvent;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 
 use ACS\ACSPanelBundle\Event\DnsEvents;
 
 
 /**
- *  * DnsDomain controller.
- *   *
- *    */
+ * DnsDomain controller.
+ *
+ */
 class DnsDomainController extends Controller
 {
     /**
@@ -65,20 +66,20 @@ class DnsDomainController extends Controller
     }
 
     /**
-     ** Displays a form to create a new DnsDomain entity.
-     **
-     **/
+     * Displays a form to create a new DnsDomain entity.
+     *
+     */
     public function newAction()
     {
-
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
 
         if (!$user->canUseResource('DnsDomain',$em)) {
-            $this->getResponse()->setStatusCode('403');
+            $response = new Response();
+            $response->setStatusCode('403');
             return $this->render('ACSACSPanelBundle:Error:resources.html.twig', array(
                 'entity' => 'Dns Domain'
-            ));
+            ), $response);
         }
 
         $entity = new DnsDomain();

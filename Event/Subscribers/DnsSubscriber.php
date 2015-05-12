@@ -37,11 +37,9 @@ class DnsSubscriber implements EventSubscriberInterface
 
         $soa = new DnsRecord();
         $soa->setDnsDomain($entity);
-        // TODO: Conf ttl times from config
         $soa->setTtl('3600');
         $soa->setType('SOA');
         $domainName = $entity->getDomain()->getName();
-        // TODO: Conf ttl times from config
         $soa->setContent($domainName.' webmaster@'.$domainName.' 1 3600 3600 3600 3600');
         $soa->setName($domainName);
         $soa->setCreatedAtValue();
@@ -51,17 +49,14 @@ class DnsSubscriber implements EventSubscriberInterface
 
     }
 
-    // TODO: Add ns servers from panel settings
-    public function addNS(FilterDnsEvent $dnsfilter)
-    {
-    }
-
     public function incrementSOA(FilterDnsEvent $dnsfilter)
     {
         $em = $dnsfilter->getEm();
         $entity = $dnsfilter->getDnsDomain();
 
-        $soa = $em->getRepository('ACSACSPanelBundle:DnsRecord')->findBy(array('type'=>'SOA','dns_domain'=>$entity->getDnsDomain()));
+        ldd($entity);
+
+        $soa = $em->getRepository('ACSACSPanelBundle:DnsRecord')->findBy(array('type'=>'SOA', 'dns_domain' => $entity->getDnsDomain()));
         $soa = $soa[0];
         $soacontent = explode(' ',$soa->getContent());
 
