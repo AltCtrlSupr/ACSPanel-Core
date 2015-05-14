@@ -12,7 +12,7 @@ class DnsSubscriber implements EventSubscriberInterface
         return array(
             'dns.after.domain.add' => array(
                 array('addSOA',100),
-                array('addNS',150),
+                // array('addNS',150),
             ),
             'dns.after.record.update' => array(
                 array('incrementSOA',100),

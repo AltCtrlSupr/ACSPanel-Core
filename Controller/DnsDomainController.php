@@ -83,7 +83,7 @@ class DnsDomainController extends Controller
         }
 
         $entity = new DnsDomain();
-        $form   = $this->createForm(new DnsDomainType(), $entity);
+        $form   = $this->createForm(new DnsDomainType($this->container), $entity);
 
         return $this->render('ACSACSPanelBundle:DnsDomain:new.html.twig', array(
             'entity' => $entity,
@@ -99,7 +99,7 @@ class DnsDomainController extends Controller
     public function createAction(Request $request)
     {
         $entity  = new DnsDomain();
-        $form = $this->createForm(new DnsDomainType(), $entity);
+        $form = $this->createForm(new DnsDomainType($this->container), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -134,7 +134,7 @@ class DnsDomainController extends Controller
             throw $this->createNotFoundException('Unable to find DnsDomain entity.');
         }
 
-        $editForm = $this->createForm(new DnsDomainType(), $entity);
+        $editForm = $this->createForm(new DnsDomainType($this->container), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ACSACSPanelBundle:DnsDomain:edit.html.twig', array(
@@ -160,7 +160,7 @@ class DnsDomainController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new DnsDomainType(), $entity);
+        $editForm = $this->createForm(new DnsDomainType($this->container), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {

@@ -2,7 +2,7 @@
 /**
  * ServiceTypeRepository
  *
- * @author genar
+ * @author genar <genar@acs.li>
  */
 namespace ACS\ACSPanelBundle\Model;
 
@@ -17,6 +17,4 @@ class IpAddressRepository extends AclEntityRepository
 
         return $entities;
     }
-
-
 }

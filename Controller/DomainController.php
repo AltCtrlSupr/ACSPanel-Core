@@ -138,11 +138,13 @@ class DomainController extends Controller
                 $dnsdomain->setDomain($entity);
                 $dnsdomain->setType('master');
                 $dnsdomain->setEnabled(true);
-                $dnstypes = $em->getRepository('ACSACSPanelBundle:ServiceType')->getDNSServiceTypes();
+                $dnstypes = $em->getRepository('ACSACSPanelBundle:ServiceType')->getDNSServiceTypesIds();
                 // TODO: Change somehow to get a default DNS server
                 $dnsservice = $em->getRepository('ACSACSPanelBundle:Service')->findByType($dnstypes);
 
-                $dnsdomain->setService($dnsservice[0]);
+                if (count($dnsservice)) {
+                    $dnsdomain->setService($dnsservice[0]);
+                }
 
                 $this->container->get('event_dispatcher')->dispatch(DnsEvents::DNS_AFTER_DOMAIN_ADD, new FilterDnsEvent($dnsdomain, $em));
 

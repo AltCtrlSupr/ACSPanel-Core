@@ -300,9 +300,8 @@ class DnsRecord implements AclEntity
 
     }
 
-
     public function getOwners()
     {
-        return $this->getUser();
+        return $this->getDnsDomain()->getOwners();
     }
 }

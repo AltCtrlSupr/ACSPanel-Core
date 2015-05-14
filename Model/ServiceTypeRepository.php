@@ -23,9 +23,15 @@ class ServiceTypeRepository extends AclEntityRepository
 
     }
 
-    public function getDNSServiceTypesIds()
+    public function getDNSServiceTypesQuery()
     {
         $query = $this->_em->createQuery('SELECT st FROM ACS\ACSPanelBundle\Entity\ServiceType st LEFT JOIN st.parent_type pst WHERE st.name = ?1 OR pst.name = ?1 OR pst.name = ?2')->setParameter(1, 'DNS')->setParameter(2, 'DNS');
+        return $query;
+    }
+
+    public function getDNSServiceTypesIds()
+    {
+        $query = $this->getDNSServiceTypesQuery();
         $result = $query->getResult();
         $ids = array();
 
@@ -33,7 +39,12 @@ class ServiceTypeRepository extends AclEntityRepository
             $ids[] = $st->getId();
         }
         return $ids;
+    }
 
+    public function getDNSServiceTypes()
+    {
+        $query = $this->getDNSServiceTypesQuery();
+        return $query->getResult();
     }
 
     public function getWebServiceTypesIds()
@@ -56,6 +67,4 @@ class ServiceTypeRepository extends AclEntityRepository
 
         return $entities;
     }
-
-
 }
