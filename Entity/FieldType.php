@@ -252,6 +252,6 @@ class FieldType implements AclEntity
 
     public function getOwners()
     {
-        return $this->getUser();
-}
+        return "admins";
+    }
 }

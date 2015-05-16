@@ -2,8 +2,6 @@
 
 namespace ACS\ACSPanelBundle\Tests\Controller;
 
-use ACS\ACSPanelBundle\Tests\Controller\CommonTestCase;
-
 class DbControllerTest extends CommonTestCase
 {
     public function testDbIndex()

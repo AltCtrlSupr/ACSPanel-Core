@@ -2,11 +2,11 @@
 
 namespace ACS\ACSPanelBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
+use ACS\ACSPanelBundle\Form\Base\ContainerAwareType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class HttpdHostType extends AbstractType
+class HttpdHostType extends ContainerAwareType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

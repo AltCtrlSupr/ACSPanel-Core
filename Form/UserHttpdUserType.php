@@ -26,4 +26,9 @@ class UserHttpdUserType extends ContainerAwareType
             ))
         ;
     }
+
+    public function getName()
+    {
+        return 'acs_acspanelbundle_httpdusertype';
+    }
 }
