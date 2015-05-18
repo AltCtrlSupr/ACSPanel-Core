@@ -15,7 +15,7 @@ class AclManagerCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('acl-manager:update-entity')
+            ->setName('acs:acl-manager:update-entity')
             ->setDescription('Update ACL entries based on current entity permissions')
             ->addArgument(
                 'entity',

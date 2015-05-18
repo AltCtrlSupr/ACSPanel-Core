@@ -13,10 +13,10 @@ class ServiceRepository extends AclEntityRepository
     public function getDbServices($user)
     {
         $query = $this->_em->createQuery('
-            SELECT s,st 
-            FROM ACS\ACSPanelBundle\Entity\Service s 
-            INNER JOIN s.type st 
-            LEFT JOIN st.parent_type pst 
+            SELECT s,st
+            FROM ACS\ACSPanelBundle\Entity\Service s
+            INNER JOIN s.type st
+            LEFT JOIN st.parent_type pst
             WHERE st.name = ?1 OR pst.name = ?1 OR pst.name = ?2')
             ->setParameter(1, 'DB')
             ->setParameter(2, 'Database')
@@ -26,7 +26,14 @@ class ServiceRepository extends AclEntityRepository
 
     public function getDNSServices($user)
     {
-        $query = $this->_em->createQuery('SELECT s,st FROM ACS\ACSPanelBundle\Entity\Service s INNER JOIN s.type st LEFT JOIN st.parent_type pst WHERE st.name = ?1 OR pst.name = ?1 OR pst.name = ?2')->setParameter(1, 'DNS')->setParameter(2, 'DNS');
+        $query = $this->_em->createQuery('
+            SELECT s,st
+            FROM ACS\ACSPanelBundle\Entity\Service s
+            INNER JOIN s.type st
+            LEFT JOIN st.parent_type pst
+            WHERE st.name LIKE ?1
+            OR pst.name LIKE ?1
+        ')->setParameter(1, '%DNS%');
 		return $this->getAclFilter()->apply($query, ['VIEW'], $user, 's')->getResult();
     }
 

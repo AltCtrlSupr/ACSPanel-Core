@@ -11,9 +11,11 @@ class DnsDomainType extends ContainerAwareType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $security = $this->container->get('security.context');
+        $container = $this->container;
+        $security = $container->get('security.context');
         $user = $security->getToken()->getUser();
-        $user_domains = $this->container->get('domain_repository')->getUserViewable($user);
+        $user_domains = $container->get('domain_repository')->getUserViewable($user);
+        $dns_services = $container->get('service_repository')->getDNSServices($user);
 
         $builder
             ->add('domain','entity',array(
@@ -28,7 +30,10 @@ class DnsDomainType extends ContainerAwareType
                 )
             ))
             ->add('master')
-            ->add('service')
+            ->add('service', 'entity', array(
+                'class' => 'ACS\ACSPanelBundle\Entity\Service',
+                'choices' => $dns_services
+            ))
         ;
     }
 

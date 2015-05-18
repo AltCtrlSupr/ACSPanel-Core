@@ -18,7 +18,7 @@ class ListCommandTest extends KernelTestCase
         $application = new Application($kernel);
         $application->add(new AclManagerCommand());
 
-        $command = $application->find('acl-manager:update-entity');
+        $command = $application->find('acs:acl-manager:update-entity');
 
         // Tests for Plan entity
         $commandTester = new CommandTester($command);
