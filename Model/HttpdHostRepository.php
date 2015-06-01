@@ -42,9 +42,9 @@ class HttpdHostRepository extends AclEntityRepository
             ->setParameter('1',$term)
             ->getQuery();
 
-        $entities = $query->execute();
+		$entities = $this->getAclFilter()->apply($query, ['VIEW'], $user, 'h')->getResult();
 
-
+        return $entities;
 	}
 
 }

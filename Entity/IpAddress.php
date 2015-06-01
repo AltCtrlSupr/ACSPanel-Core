@@ -5,10 +5,12 @@ namespace ACS\ACSPanelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+
 /**
  * IpAddress
  */
-class IpAddress
+class IpAddress implements AclEntity
 {
     /**
      * @var integer
@@ -52,7 +54,6 @@ class IpAddress
     {
         $this->services = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
 
     /**
      * Get id
@@ -197,7 +198,6 @@ class IpAddress
 	    $this->updatedAt = new \DateTime();
     }
 
-
 	public function __toString(){
         return $this->ip;
 	}
@@ -270,4 +270,8 @@ class IpAddress
 
     }
 
+    public function getOwners()
+    {
+        return $this->getUser();
+    }
 }

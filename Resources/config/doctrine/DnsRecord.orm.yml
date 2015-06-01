@@ -60,9 +60,9 @@ ACS\ACSPanelBundle\Entity\DnsRecord:
               on: update
     manyToOne:
         dns_domain:
-            targetEntity: DnsDomain 
+            targetEntity: DnsDomain
             mappedBy: dnsrecords
-            cascade: {  }
+            cascade: [ "persist" ]
             inversedBy: dnsrecords
             joinTable: null
             orderBy: null

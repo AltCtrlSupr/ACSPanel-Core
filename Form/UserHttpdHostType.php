@@ -9,13 +9,6 @@ use Doctrine\ORM\EntityRepository;
 
 class UserHttpdHostType extends HttpdHostType
 {
-    public $container;
-
-    public function __construct($container, $em){
-        $this->container = $container;
-        $this->em = $em;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $service = $this->container->get('security.context');
@@ -24,10 +17,9 @@ class UserHttpdHostType extends HttpdHostType
 
         $security = $container->get('security.context');
 
-        $user_domains = $this->container->get('domain_repository')->getUserViewable($user);
-
-        $web_services = $this->container->get('service_repository')->getWebServices($user);
-        $webproxy_services = $this->container->get('service_repository')->getWebproxyServices($user);
+        $user_domains = $container->get('domain_repository')->getUserViewable($user);
+        $web_services = $container->get('service_repository')->getWebServices($user);
+        $webproxy_services = $container->get('service_repository')->getWebproxyServices($user);
 
         $builder
             ->add('domain','entity',array(

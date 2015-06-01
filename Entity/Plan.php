@@ -1,15 +1,16 @@
 <?php
 
-
 namespace ACS\ACSPanelBundle\Entity;
 
 use Monolog\Logger;
 use Doctrine\ORM\Mapping as ORM;
 
+use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+
 /**
  * ACS\ACSPanelBundle\Entity\Plan
  */
-class Plan
+class Plan implements AclEntity
 {
     /**
      * @var integer $id
@@ -86,6 +87,25 @@ class Plan
      */
     private $maxMailAliasDomain;
 
+    /**
+     * @var integer
+     */
+    private $maxDb;
+
+    /**
+     * @var integer
+     */
+    private $maxDbUser;
+
+    /**
+     * @var integer
+     */
+    private $maxDomain;
+
+    /**
+     * @var integer
+     */
+    private $maxFtpdUser;
 
     /**
      * Get id
@@ -119,7 +139,6 @@ class Plan
     {
         return $this->planName;
     }
-
 
     /**
      * Set createdAt
@@ -166,7 +185,6 @@ class Plan
     {
         return $this->updatedAt;
     }
-
 
     /**
      * Constructor
@@ -411,12 +429,6 @@ class Plan
         return $this->maxMailAliasDomain;
     }
     /**
-     * @var integer
-     */
-    private $maxFtpdUser;
-
-
-    /**
      * Set maxFtpdUser
      *
      * @param integer $maxFtpdUser
@@ -438,7 +450,6 @@ class Plan
     {
         return $this->maxFtpdUser;
     }
-
 
     /**
      * Add uplans
@@ -492,12 +503,6 @@ class Plan
 	    $this->updatedAt = new \DateTime();
     }
     /**
-     * @var integer
-     */
-    private $maxDomain;
-
-
-    /**
      * Set maxDomain
      *
      * @param integer $maxDomain
@@ -519,17 +524,6 @@ class Plan
     {
         return $this->maxDomain;
     }
-    /**
-     * @var integer
-     */
-    private $maxDb;
-
-    /**
-     * @var integer
-     */
-    private $maxDbUser;
-
-
     /**
      * Set maxDb
      *
@@ -574,5 +568,10 @@ class Plan
     public function getMaxDbUser()
     {
         return $this->maxDbUser;
+    }
+
+    public function getOwners()
+    {
+        return "admins";
     }
 }

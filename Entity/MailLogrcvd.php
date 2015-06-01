@@ -4,10 +4,12 @@ namespace ACS\ACSPanelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+
 /**
  * MailLogrcvd
  */
-class MailLogrcvd
+class MailLogrcvd implements AclEntity
 {
     /**
      * @var integer
@@ -39,6 +41,10 @@ class MailLogrcvd
      */
     private $domain;
 
+    /**
+     * @var \ACS\ACSPanelBundle\Entity\MailDomain
+     */
+    private $mail_domain;
 
     /**
      * Get id
@@ -175,12 +181,6 @@ class MailLogrcvd
         return $this->domain;
     }
     /**
-     * @var \ACS\ACSPanelBundle\Entity\MailDomain
-     */
-    private $mail_domain;
-
-
-    /**
      * Set mail_domain
      *
      * @param \ACS\ACSPanelBundle\Entity\MailDomain $mailDomain
@@ -229,5 +229,9 @@ class MailLogrcvd
 
         return false;
 
+    }
+    public function getOwners()
+    {
+        return $this->getUser();
     }
 }

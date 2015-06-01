@@ -6,14 +6,18 @@ use ACS\ACSPanelBundle\Tests\Controller\CommonTestCase;
 
 class HttpdUserControllerTest extends CommonTestCase
 {
-    public function testNewHttpdUserEmptyProtectedDir()
+    public function testCompleteScenario()
     {
 		$client = $this->createSuperadminClient();
 
+		$client = $this->createSuperadminClient();
+
+		$crawler = $client->request('GET', '/httpduser');
+		$this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
+
 		// Loading form
 		$crawler = $client->request('GET', '/httpduser/new');
-
-		$this->assertTrue($crawler->filter('.error-msg:contains(No tienes suficientes recursos para crear HttpdUser)')->count() > 0);
+		$this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
 
 		// Form should accept empty protected dir
 		/*$form = $crawler->selectButton('Create')->form(array(
@@ -26,11 +30,4 @@ class HttpdUserControllerTest extends CommonTestCase
 		$crawler = $client->submit($form);*/
     }
 
-	public function testHttpdUserIndex()
-	{
-		$client = $this->createSuperadminClient();
-
-		$crawler = $client->request('GET', '/httpduser');
-		$this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
-	}
 }

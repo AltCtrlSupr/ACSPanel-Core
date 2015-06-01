@@ -1,9 +1,13 @@
-<?php 
+<?php
 
 namespace ACS\ACSPanelBundle\Tests\Modules;
 
 use ACS\ACSPanelBundle\Modules\Domain;
 
+/**
+ * The class ACS\ACSPanelBundle\Modules\Domain
+ * needs Internet connection to retrieve the list of extensions
+ */
 class DomainTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetRegDomainWithAlias()
@@ -26,6 +30,4 @@ class DomainTest extends \PHPUnit_Framework_TestCase
         $result = $domain->get_etld();
         $this->assertEquals('com.', $result);
     }
-
-
 }

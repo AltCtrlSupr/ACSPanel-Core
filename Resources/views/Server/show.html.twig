@@ -2,34 +2,36 @@
 {% block page_title %} - {% trans %}Server{% endtrans %}{% endblock %}
 {% block body %}
 
-<table class="record_properties table">
-    <tbody>
-        <tr>
-            <th>{% trans %}Id{% endtrans %}</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>{% trans %}Hostname{% endtrans %}</th>
-            <td>{{ entity.hostname }}</td>
-        </tr>
-        <tr>
-            <th>{% trans %}Ip{% endtrans %}</th>
-            <td>{{ entity.ip }}</td>
-        </tr>
-        <tr>
-            <th>{% trans %}Description{% endtrans %}</th>
-            <td>{{ entity.description }}</td>
-        </tr>
-        <tr>
-            <th>{% trans %}Createdat{% endtrans %}</th>
-            <td>{{ entity.createdAt|date(date_format) }}</td>
-        </tr>
-        <tr>
-            <th>{% trans %}Updatedat{% endtrans %}</th>
-            <td>{{ entity.updatedAt|date(date_format) }}</td>
-        </tr>
-    </tbody>
-</table>
+<div class="box">
+    <table class="record_properties table table-striped">
+        <tbody>
+            <tr>
+                <th>{% trans %}Id{% endtrans %}</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>{% trans %}Hostname{% endtrans %}</th>
+                <td>{{ entity.hostname }}</td>
+            </tr>
+            <tr>
+                <th>{% trans %}Ip{% endtrans %}</th>
+                <td>{{ entity.ip }}</td>
+            </tr>
+            <tr>
+                <th>{% trans %}Description{% endtrans %}</th>
+                <td>{{ entity.description }}</td>
+            </tr>
+            <tr>
+                <th>{% trans %}Createdat{% endtrans %}</th>
+                <td>{{ entity.createdAt|date(date_format) }}</td>
+            </tr>
+            <tr>
+                <th>{% trans %}Updatedat{% endtrans %}</th>
+                <td>{{ entity.updatedAt|date(date_format) }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 <ul class="record_actions">
     <li>

@@ -5,10 +5,12 @@ namespace ACS\ACSPanelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+
 /**
  * ServiceType
  */
-class ServiceType
+class ServiceType implements AclEntity
 {
     /**
      * @var integer
@@ -29,6 +31,21 @@ class ServiceType
      * @var \Doctrine\Common\Collections\Collection
      */
     private $field_types;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->field_types = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Return the readable name of service type
+     */
+	public function __toString(){
+		return $this->getName();
+	}
 
     /**
      * Get id
@@ -87,21 +104,6 @@ class ServiceType
     }
 
     /**
-     * Return the readable name of service type
-     */
-	public function __toString(){
-		return $this->getName();
-	}
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->field_types = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
      * Add fieldTypes
      *
      * @param \ACS\ACSPanelBundle\Entity\FieldType $fieldTypes
@@ -134,6 +136,8 @@ class ServiceType
         return $this->field_types;
     }
 
-
-
+    public function getOwners()
+    {
+        return "admins";
+    }
 }

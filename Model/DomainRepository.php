@@ -2,13 +2,12 @@
 /**
  * HttpdAliasRepository
  *
- * @author genar
+ * @author genar <genar@acs.li>
  */
 namespace ACS\ACSPanelBundle\Model;
 
 use ACS\ACSPanelUsersBundle\Entity\FosUser;
 use ACS\ACSPanelUsersBundle\Doctrine\AclEntityRepository;
-
 
 class DomainRepository extends AclEntityRepository
 {

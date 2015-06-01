@@ -6,10 +6,12 @@ namespace ACS\ACSPanelBundle\Entity;
 use Monolog\Logger;
 use Doctrine\ORM\Mapping as ORM;
 
+use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+
 /**
  * ACS\ACSPanelBundle\Entity\MailAlias
  */
-class MailAlias
+class MailAlias implements AclEntity
 {
     /**
      * @var integer $id
@@ -25,11 +27,6 @@ class MailAlias
      * @var string $goto
      */
     private $goto;
-
-    /**
-     * @var string $domain
-     */
-    private $domain;
 
     /**
      * @var \DateTime $created
@@ -65,6 +62,11 @@ class MailAlias
      * @var \DateTime $updatedAt
      */
     private $updatedAt;
+
+    public function __toString()
+    {
+        return $this->getAddress() . ' to ' . $this->getGoto();
+    }
 
     /**
      * Get id
@@ -120,29 +122,6 @@ class MailAlias
     public function getGoto()
     {
         return $this->goto;
-    }
-
-    /**
-     * Set domain
-     *
-     * @param string $domain
-     * @return MailAlias
-     */
-    public function setDomain($domain)
-    {
-        $this->domain = $domain;
-
-        return $this;
-    }
-
-    /**
-     * Get domain
-     *
-     * @return string
-     */
-    public function getDomain()
-    {
-        return $this->domain;
     }
 
     /**
@@ -301,7 +280,6 @@ class MailAlias
 	    $this->updatedAt = new \DateTime();
     }
 
-
     /**
      * Set mail_domain
      *
@@ -353,4 +331,8 @@ class MailAlias
 
     }
 
+    public function getOwners()
+    {
+        return $this->getMailDomain()->getOwners();
+    }
 }

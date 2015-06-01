@@ -4,10 +4,12 @@ namespace ACS\ACSPanelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+
 /**
  * MailWBList
  */
-class MailWBList
+class MailWBList implements AclEntity
 {
     /**
      * @var integer
@@ -54,6 +56,10 @@ class MailWBList
      */
     private $user;
 
+    public function __toString()
+    {
+        return $this->getSender();
+    }
 
     /**
      * Get id
@@ -259,7 +265,6 @@ class MailWBList
        }
     }
 
-
     /**
      * @ORM\PreUpdate
      */
@@ -294,5 +299,9 @@ class MailWBList
 
         return false;
 
+    }
+    public function getOwners()
+    {
+        return $this->getUser();
     }
 }

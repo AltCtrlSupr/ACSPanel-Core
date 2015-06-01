@@ -58,6 +58,4 @@ class Builder extends ContainerAware
 
         return $menu;
     }
-
-
 }
