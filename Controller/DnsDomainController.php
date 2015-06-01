@@ -3,24 +3,23 @@
 namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\EventDispatcher\EventDisatcher;
-use Symfony\Component\HttpFoundation\Response;
+use FOS\RestBundle\Controller\FOSRestController;
 
 use ACS\ACSPanelBundle\Entity\DnsDomain;
 use ACS\ACSPanelBundle\Entity\DnsRecord;
 use ACS\ACSPanelBundle\Form\DnsDomainType;
 
 use ACS\ACSPanelBundle\Event\FilterDnsEvent;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 use ACS\ACSPanelBundle\Event\DnsEvents;
 
 
 /**
- * DnsDomain controller.
- *
- */
-class DnsDomainController extends Controller
+ *  * DnsDomain controller.
+ *   *
+ *    */
+class DnsDomainController extends FOSRestController
 {
     /**
      ** Lists all DnsDomain entities.
@@ -66,22 +65,23 @@ class DnsDomainController extends Controller
     }
 
     /**
-     * Displays a form to create a new DnsDomain entity.
-     *
-     */
+     ** Displays a form to create a new DnsDomain entity.
+     **
+     **/
     public function newAction()
     {
+
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
 
         if (!$user->canUseResource('DnsDomain',$em)) {
             return $this->render('ACSACSPanelBundle:Error:resources.html.twig', array(
                 'entity' => 'Dns Domain'
-            ), $response);
+            ));
         }
 
         $entity = new DnsDomain();
-        $form   = $this->createForm(new DnsDomainType($this->container), $entity);
+        $form   = $this->createForm(new DnsDomainType(), $entity);
 
         return $this->render('ACSACSPanelBundle:DnsDomain:new.html.twig', array(
             'entity' => $entity,
@@ -97,7 +97,7 @@ class DnsDomainController extends Controller
     public function createAction(Request $request)
     {
         $entity  = new DnsDomain();
-        $form = $this->createForm(new DnsDomainType($this->container), $entity);
+        $form = $this->createForm(new DnsDomainType(), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -132,7 +132,7 @@ class DnsDomainController extends Controller
             throw $this->createNotFoundException('Unable to find DnsDomain entity.');
         }
 
-        $editForm = $this->createForm(new DnsDomainType($this->container), $entity);
+        $editForm = $this->createForm(new DnsDomainType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ACSACSPanelBundle:DnsDomain:edit.html.twig', array(
@@ -158,7 +158,7 @@ class DnsDomainController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new DnsDomainType($this->container), $entity);
+        $editForm = $this->createForm(new DnsDomainType(), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {

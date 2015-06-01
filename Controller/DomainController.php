@@ -3,7 +3,9 @@
 namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use FOS\RestBundle\Controller\FOSRestController;
+
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 use ACS\ACSPanelBundle\Entity\Domain;
 use ACS\ACSPanelBundle\Entity\DnsDomain;
@@ -16,11 +18,12 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  * Domain controller.
  *
  */
-class DomainController extends Controller
+class DomainController extends FOSRestController
 {
     /**
      * Lists all Domain entities.
      *
+     * @Rest\Get("domain")
      */
     public function indexAction()
     {
@@ -29,14 +32,20 @@ class DomainController extends Controller
         // IF is admin can see all the hosts, if is user only their ones...
         $entities = $this->get('domain_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
-        return $this->render('ACSACSPanelBundle:Domain:index.html.twig', array(
+        $data = array(
             'entities' => $entities,
             'search_action' => 'domain_search',
-        ));
+        );
+
+        $view = $this->view($data)->setTemplate('ACSACSPanelBundle:Domain:index.html.twig');
+
+        return $this->handleView($view);
     }
 
     /**
      * Finds and displays a LogItem search results.
+     *
+     * @Rest\View("ACSACSPanelBundle:Domain:index.html.twig")
      */
     public function searchAction(Request $request)
     {
@@ -55,17 +64,18 @@ class DomainController extends Controller
 
         $entities = $query->execute();
 
-        return $this->render('ACSACSPanelBundle:Domain:index.html.twig', array(
+        return array(
             'entities' => $entities,
             'term' => $term,
             'search_action' => 'domain_search',
-        ));
+        );
 
     }
 
     /**
      * Finds and displays a Domain entity.
      *
+     * @Rest\View()
      */
     public function showAction($id)
     {
@@ -82,17 +92,18 @@ class DomainController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('ACSACSPanelBundle:Domain:show.html.twig', array(
+        return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
             'dnsdomains' => $dnsdomains,
             'maildomains' => $maildomains,
-        ));
+        );
     }
 
     /**
      * Displays a form to create a new Domain entity.
      *
+     * @Rest\View()
      */
     public function newAction()
     {
@@ -107,10 +118,10 @@ class DomainController extends Controller
         $entity = new Domain();
         $form   = $this->createForm(new DomainType($this->container), $entity);
 
-        return $this->render('ACSACSPanelBundle:Domain:new.html.twig', array(
+        return array(
             'entity' => $entity,
             'form'   => $form->createView(),
-        ));
+        );
     }
 
     /**
@@ -164,6 +175,7 @@ class DomainController extends Controller
     /**
      * Displays a form to edit an existing Domain entity.
      *
+     * @Rest\View()
      */
     public function editAction($id)
     {
@@ -178,11 +190,11 @@ class DomainController extends Controller
         $editForm = $this->createForm(new DomainType($this->container), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('ACSACSPanelBundle:Domain:edit.html.twig', array(
+        return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        ));
+        );
     }
 
     /**
@@ -241,14 +253,6 @@ class DomainController extends Controller
         return $this->redirect($this->generateUrl('domain'));
     }
 
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
-    }
-
     public function setaliasAction(Request $request, $id, $type)
     {
        $em = $this->getDoctrine()->getManager();
@@ -259,18 +263,18 @@ class DomainController extends Controller
        }
 
        switch($type){
-       case 'dns':
-         $entity->setIsDnsAlias(!$entity->getIsDnsAlias());
-         break;
-       case 'httpd':
-         $entity->setIsHttpdAlias(!$entity->getIsHttpdAlias());
-         break;
-       case 'mail':
-         $entity->setIsMailAlias(!$entity->getIsMailAlias());
-         break;
-       default:
-         throw $this->createException('Type not valid');
-         break;
+           case 'dns':
+             $entity->setIsDnsAlias(!$entity->getIsDnsAlias());
+             break;
+           case 'httpd':
+             $entity->setIsHttpdAlias(!$entity->getIsHttpdAlias());
+             break;
+           case 'mail':
+             $entity->setIsMailAlias(!$entity->getIsMailAlias());
+             break;
+           default:
+             throw $this->createException('Type not valid');
+             break;
        }
 
        $em->persist($entity);
@@ -281,17 +285,25 @@ class DomainController extends Controller
 
     public function setenabledAction(Request $request, $id)
     {
-      $em = $this->getDoctrine()->getManager();
-      $entity = $em->getRepository('ACSACSPanelBundle:Domain')->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('ACSACSPanelBundle:Domain')->find($id);
 
-      if (!$entity) {
-        throw $this->createNotFoundException('Unable to find Domain entity.');
-      }
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Domain entity.');
+        }
 
-      $entity->setEnabled(!$entity->getEnabled());
-      $em->persist($entity);
-      $em->flush();
+        $entity->setEnabled(!$entity->getEnabled());
+        $em->persist($entity);
+        $em->flush();
 
-      return $this->redirect($this->generateUrl('domain'));
+        return $this->redirect($this->generateUrl('domain'));
+    }
+
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder(array('id' => $id))
+            ->add('id', 'hidden')
+            ->getForm()
+        ;
     }
 }
