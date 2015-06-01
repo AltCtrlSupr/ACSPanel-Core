@@ -75,8 +75,6 @@ class DnsDomainController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
 
         if (!$user->canUseResource('DnsDomain',$em)) {
-            $response = new Response();
-            $response->setStatusCode('403');
             return $this->render('ACSACSPanelBundle:Error:resources.html.twig', array(
                 'entity' => 'Dns Domain'
             ), $response);
