@@ -9,9 +9,9 @@
 
 {% block body %}
 
-    <form action="{{ path('httpdhost_create') }}" method="post" {{ form_enctype(form) }}>
+    <form class="form" action="{{ path('httpdhost_create') }}" method="post" {{ form_enctype(form) }}>
         <div class="form_box row-fluid">
-            <div class="span6">
+            <div class="col-md-6">
                 <span class="label label-important">{{ form_errors(form) }}</span>
                 {{ form_row(form.domain) }}
                 {{ form_row(form.configuration) }}
@@ -23,7 +23,7 @@
                 {{ form_row(form.service) }}
                 {{ form_row(form.proxy_service) }}
             </div>
-            <div class="span6">
+            <div class="col-md-6">
                 <div class="control-group"><div class="controls">{{ form_widget(form.ssl) }}{{ form_label(form.ssl, null, {'label_attr': {'class':'checkbox inline'}})}}</div></div>
                 {{ form_row(form.certificate) }}
                 {{ form_row(form.certificate_key) }}
