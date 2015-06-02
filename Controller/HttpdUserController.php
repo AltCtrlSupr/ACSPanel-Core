@@ -15,6 +15,7 @@ use ACS\ACSPanelBundle\Form\UserHttpdUserType;
  * HttpdUser controller.
  * @todo: Check if it's necessary to mark webserver to restart
  *
+ * @Rest\RouteResource("HttpdUser")
  */
 class HttpdUserController extends FOSRestController
 {

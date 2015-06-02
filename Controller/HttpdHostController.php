@@ -22,6 +22,7 @@ use ACS\ACSPanelBundle\Event\DnsEvents;
 /**
  * HttpdHost controller.
  *
+ * @Rest\RouteResource("HttpdHost")
  */
 class HttpdHostController extends FOSRestController
 {

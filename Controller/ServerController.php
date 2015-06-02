@@ -14,6 +14,7 @@ use ACS\ACSPanelBundle\Form\ServerType;
 /**
  * Server controller.
  *
+ * @Rest\RouteResource("Server")
  */
 class ServerController extends FOSRestController
 {

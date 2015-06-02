@@ -17,6 +17,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 /**
  * Domain controller.
  *
+ * @Rest\RouteResource("Domain")
  */
 class DomainController extends FOSRestController
 {

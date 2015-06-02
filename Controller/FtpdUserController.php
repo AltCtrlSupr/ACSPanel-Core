@@ -14,6 +14,7 @@ use ACS\ACSPanelBundle\Form\FtpdUserType;
 /**
  * FtpdUser controller.
  *
+ * @Rest\RouteResource("FtpdUser")
  */
 class FtpdUserController extends FOSRestController
 {

@@ -20,6 +20,11 @@ acs_acspanel_httpdhost:
     resource: "@ACSACSPanelBundle/Resources/config/routing/httpdhost.yml"
     prefix:   /httpdhost
 
+api_ACSACSPanelBundle_httpdhost:
+    type: rest
+    resource: "ACS\ACSPanelBundle\Controller\HttpdHostController"
+    prefix:   /api/
+
 ACSACSPanelBundle_httpduser:
     resource: "@ACSACSPanelBundle/Resources/config/routing/httpduser.yml"
     prefix:   /httpduser

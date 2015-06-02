@@ -14,6 +14,7 @@ use ACS\ACSPanelBundle\Form\DBType;
 /**
  * DB controller.
  *
+ * @Rest\RouteResource("DB")
  */
 class DBController extends FOSRestController
 {

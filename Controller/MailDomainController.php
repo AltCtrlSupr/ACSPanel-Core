@@ -20,6 +20,7 @@ use ACS\ACSPanelBundle\Event\DnsEvents;
 /**
  * MailDomain controller.
  *
+ * @Rest\RouteResource("MailDomain")
  */
 class MailDomainController extends FOSRestController
 {

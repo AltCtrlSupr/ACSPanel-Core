@@ -15,6 +15,7 @@ use ACS\ACSPanelBundle\Form\ServiceType;
 /**
  * Service controller.
  *
+ * @Rest\RouteResource("Service")
  */
 class ServiceController extends FOSRestController
 {

@@ -14,6 +14,7 @@ use ACS\ACSPanelBundle\Form\IpAddressType;
 /**
  * IpAddress controller.
  *
+ * @Rest\RouteResource("IpAddress")
  */
 class IpAddressController extends FOSRestController
 {

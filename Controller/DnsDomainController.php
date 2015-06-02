@@ -3,7 +3,9 @@
 namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+
 use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 use ACS\ACSPanelBundle\Entity\DnsDomain;
 use ACS\ACSPanelBundle\Entity\DnsRecord;
@@ -16,15 +18,16 @@ use ACS\ACSPanelBundle\Event\DnsEvents;
 
 
 /**
- *  * DnsDomain controller.
- *   *
- *    */
+ * DnsDomain controller.
+ *
+ * @Rest\RouteResource("DnsDomain")
+ */
 class DnsDomainController extends FOSRestController
 {
     /**
-     ** Lists all DnsDomain entities.
-     **
-     **/
+     * Lists all DnsDomain entities.
+     *
+     */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();

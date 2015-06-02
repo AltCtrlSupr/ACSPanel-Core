@@ -14,6 +14,7 @@ use ACS\ACSPanelBundle\Form\MailAliasType;
 /**
  * MailAlias controller.
  *
+ * @Rest\RouteResource("MailAlias")
  */
 class MailAliasController extends FOSRestController
 {

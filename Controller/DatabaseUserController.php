@@ -14,6 +14,7 @@ use ACS\ACSPanelBundle\Form\DatabaseUserType;
  *
  * DatabaseUser controller.
  *
+ * @Rest\RouteResource("DatabaseUser")
  */
 class DatabaseUserController extends FOSRestController
 {
