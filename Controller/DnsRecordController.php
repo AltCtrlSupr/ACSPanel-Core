@@ -4,7 +4,9 @@
 namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 use ACS\ACSPanelBundle\Entity\DnsRecord;
 use ACS\ACSPanelBundle\Entity\DnsDomain;
@@ -15,14 +17,13 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 use ACS\ACSPanelBundle\Event\DnsEvents;
 
-
 /**
  * DnsRecord controller.
  *
  * @todo determine if is still needed
  *
  */
-class DnsRecordController extends Controller
+class DnsRecordController extends FOSRestController
 {
 
     /**

@@ -4,7 +4,9 @@
 namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 use ACS\ACSPanelBundle\Entity\Server;
 use ACS\ACSPanelBundle\Form\ServerType;
@@ -13,7 +15,7 @@ use ACS\ACSPanelBundle\Form\ServerType;
  * Server controller.
  *
  */
-class ServerController extends Controller
+class ServerController extends FOSRestController
 {
     /**
      * Lists all Server entities.

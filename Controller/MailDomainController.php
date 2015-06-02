@@ -1,10 +1,11 @@
 <?php
 
-
 namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 use ACS\ACSPanelBundle\Entity\DnsRecord;
 use ACS\ACSPanelBundle\Entity\MailDomain;
@@ -20,7 +21,7 @@ use ACS\ACSPanelBundle\Event\DnsEvents;
  * MailDomain controller.
  *
  */
-class MailDomainController extends Controller
+class MailDomainController extends FOSRestController
 {
     /**
      * Lists all MailDomain entities.

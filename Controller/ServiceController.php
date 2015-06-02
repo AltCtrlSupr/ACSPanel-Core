@@ -1,10 +1,11 @@
 <?php
 
-
 namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 use ACS\ACSPanelBundle\Entity\Service;
 use ACS\ACSPanelBundle\Entity\PanelSetting;
@@ -15,7 +16,7 @@ use ACS\ACSPanelBundle\Form\ServiceType;
  * Service controller.
  *
  */
-class ServiceController extends Controller
+class ServiceController extends FOSRestController
 {
     /**
      * Lists all Service entities.

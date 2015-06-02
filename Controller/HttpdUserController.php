@@ -4,7 +4,9 @@
 namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 use ACS\ACSPanelBundle\Entity\HttpdUser;
 use ACS\ACSPanelBundle\Form\UserHttpdUserType;
@@ -14,8 +16,7 @@ use ACS\ACSPanelBundle\Form\UserHttpdUserType;
  * @todo: Check if it's necessary to mark webserver to restart
  *
  */
-class HttpdUserController extends Controller
-
+class HttpdUserController extends FOSRestController
 {
     /**
      * Lists all HttpdUser entities.
@@ -26,7 +27,7 @@ class HttpdUserController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entities = $this->get('httpduser_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
-        
+
         return $this->render('ACSACSPanelBundle:HttpdUser:index.html.twig', array(
             'entities' => $entities,
         ));

@@ -3,8 +3,8 @@
 namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use FOS\RestBundle\Controller\FOSRestController;
 
+use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
 use ACS\ACSPanelBundle\Entity\Domain;
@@ -24,6 +24,7 @@ class DomainController extends FOSRestController
      * Lists all Domain entities.
      *
      * @Rest\Get("domain")
+     * @Rest\View(templateVar="search_action")
      */
     public function indexAction()
     {
@@ -31,15 +32,11 @@ class DomainController extends FOSRestController
 
         // IF is admin can see all the hosts, if is user only their ones...
         $entities = $this->get('domain_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
+        $search_action = 'domain_search';
 
-        $data = array(
+        return array(
             'entities' => $entities,
-            'search_action' => 'domain_search',
         );
-
-        $view = $this->view($data)->setTemplate('ACSACSPanelBundle:Domain:index.html.twig');
-
-        return $this->handleView($view);
     }
 
     /**
