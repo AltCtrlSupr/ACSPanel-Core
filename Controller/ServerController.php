@@ -21,6 +21,7 @@ class ServerController extends FOSRestController
     /**
      * Lists all Server entities.
      *
+     * @Rest\View(templateVar="search_action")
      */
     public function indexAction()
     {
@@ -28,9 +29,9 @@ class ServerController extends FOSRestController
 
         $entities = $this->get('server_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
-        return $this->render('ACSACSPanelBundle:Server:index.html.twig', array(
-            'entities' => $entities,
-        ));
+        return array(
+            'entities' => $entities
+        );
     }
 
     /**

@@ -29,6 +29,7 @@ class HttpdHostController extends FOSRestController
     /**
      * Lists all HttpdHost entities.
      *
+     * @Rest\View(templateVar="search_action")
      */
     public function indexAction()
     {
@@ -36,10 +37,11 @@ class HttpdHostController extends FOSRestController
 
         $entities = $this->get('httpdhost_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
-        return $this->render('ACSACSPanelBundle:HttpdHost:index.html.twig', array(
-            'entities' => $entities,
-            'search_action' => 'httpdhost_search',
-        ));
+        $search_action = 'httpdhost_search';
+
+        return array(
+            'entities' => $entities
+        );
     }
 
     /**

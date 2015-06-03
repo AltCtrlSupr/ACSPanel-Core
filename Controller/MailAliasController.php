@@ -21,6 +21,7 @@ class MailAliasController extends FOSRestController
     /**
      * Lists all MailAlias entities.
      *
+     * @Rest\View(templateVar="search_action")
      */
     public function indexAction()
     {
@@ -29,9 +30,9 @@ class MailAliasController extends FOSRestController
         // IF is admin can see all the hosts, if is user only their ones...
         $entities = $this->get('mailalias_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
-        return $this->render('ACSACSPanelBundle:MailAlias:index.html.twig', array(
-            'entities' => $entities,
-        ));
+        return array(
+            'entities' => $entities
+        );
     }
 
     /**
@@ -56,13 +57,15 @@ class MailAliasController extends FOSRestController
 
         return $this->render('ACSACSPanelBundle:MailAlias:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
+            'delete_form' => $deleteForm->createView(),
+        ));
     }
 
     public function showWidgetAction($maildomain_id)
     {
       $em = $this->getDoctrine()->getManager();
       $entities = $em->getRepository('ACSACSPanelBundle:MailAlias')->findBy(array('mail_domain'=>$maildomain_id));
+
       return $this->render('ACSACSPanelBundle:MailAlias:show_widget.html.twig', array(
          'entities' => $entities,
       ));

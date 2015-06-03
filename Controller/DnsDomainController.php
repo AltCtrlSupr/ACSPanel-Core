@@ -16,7 +16,6 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 use ACS\ACSPanelBundle\Event\DnsEvents;
 
-
 /**
  * DnsDomain controller.
  *
@@ -27,6 +26,7 @@ class DnsDomainController extends FOSRestController
     /**
      * Lists all DnsDomain entities.
      *
+     * @Rest\View(templateVar="search_action")
      */
     public function indexAction()
     {
@@ -35,16 +35,17 @@ class DnsDomainController extends FOSRestController
         // IF is admin can see all the dnsdomains, if is user only their ones...
         $entities = $this->get('dnsdomain_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
-        return $this->render('ACSACSPanelBundle:DnsDomain:index.html.twig', array(
-            'entities' => $entities,
-            'search_action' => 'dnsdomain_search',
-        ));
+        $search_action = 'dnsdomain_search';
+
+        return array(
+            'entities' => $entities
+        );
     }
 
     /**
-     ** Finds and displays a DnsDomain entity.
-     **
-     **/
+     * Finds and displays a DnsDomain entity.
+     *
+     */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -68,9 +69,9 @@ class DnsDomainController extends FOSRestController
     }
 
     /**
-     ** Displays a form to create a new DnsDomain entity.
-     **
-     **/
+     * Displays a form to create a new DnsDomain entity.
+     *
+     */
     public function newAction()
     {
 
@@ -94,9 +95,9 @@ class DnsDomainController extends FOSRestController
     }
 
     /**
-     ** Creates a new DnsDomain entity.
-     **
-     **/
+     * Creates a new DnsDomain entity.
+     *
+     */
     public function createAction(Request $request)
     {
         $entity  = new DnsDomain();
@@ -122,9 +123,9 @@ class DnsDomainController extends FOSRestController
     }
 
     /**
-     ** Displays a form to edit an existing DnsDomain entity.
-     **
-     **/
+     * Displays a form to edit an existing DnsDomain entity.
+     *
+     */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -147,9 +148,9 @@ class DnsDomainController extends FOSRestController
     }
 
     /**
-     ** Edits an existing DnsDomain entity.
-     **
-     **/
+     * Edits an existing DnsDomain entity.
+     *
+     */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -181,9 +182,9 @@ class DnsDomainController extends FOSRestController
     }
 
     /**
-     ** Deletes a DnsDomain entity.
-     **
-     **/
+     * Deletes a DnsDomain entity.
+     *
+     */
     public function deleteAction(Request $request, $id)
     {
         $form = $this->createDeleteForm($id);
@@ -204,14 +205,6 @@ class DnsDomainController extends FOSRestController
         return $this->redirect($this->generateUrl('dnsdomain'));
     }
 
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-            ;
-    }
-
     public function setenabledAction(Request $request, $id)
     {
       $em = $this->getDoctrine()->getManager();
@@ -230,7 +223,6 @@ class DnsDomainController extends FOSRestController
 
     /**
      * Finds and displays a DnsDomain search results.
-     * @todo add dns records to the search
      */
     public function searchAction(Request $request)
     {
@@ -259,5 +251,11 @@ class DnsDomainController extends FOSRestController
 
     }
 
-
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder(array('id' => $id))
+            ->add('id', 'hidden')
+            ->getForm()
+            ;
+    }
 }

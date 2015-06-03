@@ -4,13 +4,13 @@ namespace ACS\ACSPanelBundle\Tests\Controller\API;
 
 use ACS\ACSPanelBundle\Tests\Controller\CommonTestCase;
 
-class DomainControllerTest extends CommonTestCase
+class ServiceControllerTest extends CommonTestCase
 {
-    public function testDomainScenario()
+    public function testServiceScenario()
     {
 		$client = $this->createSuperadminClient();
 
-		$crawler = $this->client->request('GET', '/api/domains/index.json');
+		$crawler = $this->client->request('GET', '/api/services/index.json');
 
 		$this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 

@@ -13,7 +13,6 @@ use ACS\ACSPanelBundle\Form\UserHttpdUserType;
 
 /**
  * HttpdUser controller.
- * @todo: Check if it's necessary to mark webserver to restart
  *
  * @Rest\RouteResource("HttpdUser")
  */
@@ -22,6 +21,7 @@ class HttpdUserController extends FOSRestController
     /**
      * Lists all HttpdUser entities.
      *
+     * @Rest\View(templateVar="search_action")
      */
     public function indexAction()
     {
@@ -29,9 +29,9 @@ class HttpdUserController extends FOSRestController
 
         $entities = $this->get('httpduser_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
-        return $this->render('ACSACSPanelBundle:HttpdUser:index.html.twig', array(
-            'entities' => $entities,
-        ));
+        return array(
+            'entities' => $entities
+        );
     }
 
     /**

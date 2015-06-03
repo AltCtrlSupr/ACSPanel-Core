@@ -22,6 +22,7 @@ class ServiceController extends FOSRestController
     /**
      * Lists all Service entities.
      *
+     * @Rest\View(templateVar="search_action")
      */
     public function indexAction()
     {
@@ -29,9 +30,9 @@ class ServiceController extends FOSRestController
 
         $entities = $this->get('service_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
-        return $this->render('ACSACSPanelBundle:Service:index.html.twig', array(
-            'entities' => $entities,
-        ));
+        return array(
+            'entities' => $entities
+        );
     }
 
     /**

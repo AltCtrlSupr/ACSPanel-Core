@@ -24,7 +24,6 @@ class DomainController extends FOSRestController
     /**
      * Lists all Domain entities.
      *
-     * @Rest\Get("domain")
      * @Rest\View(templateVar="search_action")
      */
     public function indexAction()
@@ -36,7 +35,7 @@ class DomainController extends FOSRestController
         $search_action = 'domain_search';
 
         return array(
-            'entities' => $entities,
+            'entities' => $entities
         );
     }
 

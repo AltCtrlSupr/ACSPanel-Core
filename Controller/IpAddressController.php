@@ -21,6 +21,7 @@ class IpAddressController extends FOSRestController
     /**
      * Lists all IpAddress entities.
      *
+     * @Rest\View(templateVar="search_action")
      */
     public function indexAction()
     {
@@ -28,9 +29,9 @@ class IpAddressController extends FOSRestController
 
         $entities = $this->get('ipaddress_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
-        return $this->render('ACSACSPanelBundle:IpAddress:index.html.twig', array(
-            'entities' => $entities,
-        ));
+        return array(
+            'entities' => $entities
+        );
     }
 
     /**
