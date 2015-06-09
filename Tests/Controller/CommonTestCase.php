@@ -23,38 +23,35 @@ abstract class CommonTestCase extends WebTestCase
         'ACS\ACSPanelBundle\Tests\DataFixtures\LoadServiceTypeData',
     ];
 
-    public $client;
-
-    protected $_application;
-    /**
-     * @var \Doctrine\ORM\EntityManager
-     */
     private $em;
+
+    public $client;
 
     public function setUp()
     {
         $this->loadFixtures($this->fixtures);
 
-        $this->client = static::createClient();
-        $this->client->followRedirects();
-    }
+        $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
-    protected function requestWithAuth($role, $method, $uri, $parameters = array())
-    {
-        $this->client = $this->createAuthorizedClient($role);
-        return $this->client->request($method, $uri, $parameters, array(), array());
+        $this->createSuperadminClient('superadmin');
     }
 
     protected function createAuthorizedClient($username)
     {
-        $client = static::makeClient(true);
-        $client->followRedirects();
-        return $client;
+        $admin_user = $this->em->getRepository('ACSACSPanelUsersBundle:FosUser')->findOneByUsername($username);
+
+        $this->loginAs($admin_user, 'main');
+
+        $this->client = $this->makeClient(true);
+
+        $this->client->followRedirects();
+
+        return $this->client;
     }
 
     public function createSuperadminClient()
     {
-        $this->client = $this->createAuthorizedClient('superadmin','1234');
+        $this->client = $this->createAuthorizedClient('superadmin');
         return $this->client;
     }
 }
