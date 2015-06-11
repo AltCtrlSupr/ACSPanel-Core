@@ -21,6 +21,10 @@ class DomainControllerTest extends CommonTestCase
                 'application/json'
             )
         );
+
+        $this->assertRegExp('/{"id":1,"domain":"0domain.tld"/', $client->getResponse()->getContent());
+
+        $this->assertNotRegExp('/password/', $client->getResponse()->getContent());
     }
 }
 

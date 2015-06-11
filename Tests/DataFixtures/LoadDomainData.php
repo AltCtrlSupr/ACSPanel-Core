@@ -15,11 +15,16 @@ class LoadDomainData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        $domain1 = new Domain();
-        $domain1->setDomain('domain.tld');
-        $domain1->setEnabled(true);
+        // Adding 15 domains for superadmin
+        for ($i=0; $i < 15; $i++) {
+            $domain1 = new Domain();
+            $domain1->setDomain($i . 'domain.tld');
+            $domain1->setEnabled(true);
+            $domain1->setUser($this->getReference('user-super-admin'));
 
-        $manager->persist($domain1);
+            $manager->persist($domain1);
+        }
+
         $manager->flush();
     }
 

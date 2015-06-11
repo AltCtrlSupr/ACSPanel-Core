@@ -57,34 +57,34 @@ class EntitySubscriber implements EventSubscriber
 
 		$aclManager = $this->container->get('problematic.acl_manager');
 
-        if ($entity instanceOf \Gedmo\Loggable\Entity\LogEntry)
+        if ($entity instanceOf \Gedmo\Loggable\Entity\LogEntry) {
             $user = array();
-        else
+        } else {
             $user = $entity->getOwners();
+        }
 
         // If we get a single user we add him to object owner
         if (is_object($user)) {
-            $this->addUserOwnerPermission($user, $entity);
+            $this->removeUserOwnerPermission($user, $entity);
         }
 
         // If we receive an array we iterate it
         if (is_array($user)) {
             foreach ($user as $owner) {
-                $this->addUserOwnerPermission($owner, $entity);
+                $this->removeUserOwnerPermission($owner, $entity);
             }
         }
 
+        // If owners are all admins
         if ($user == 'admins') {
             foreach ($admins as $admin) {
-                $this->addUserOwnerPermission($admin, $entity);
+                $this->removeUserOwnerPermission($admin, $entity);
             }
         }
 
-		foreach($superadmins as $superadmin){
+		foreach ($superadmins as $superadmin) {
 			$aclManager->removeObjectPermission($entity, MaskBuilder::MASK_MASTER, $superadmin);
 		}
-
-
     }
 
     public function prePersist(LifecycleEventArgs $args)
@@ -97,24 +97,30 @@ class EntitySubscriber implements EventSubscriber
             $this->setCreatedAtValue($entity);
             $this->setUserValue($entity);
         }
+
         if ($entity instanceof DatabaseUser){
             $this->setCreatedAtValue($entity);
             $this->setUserValue($entity);
         }
+
         if ($entity instanceof Domain){
             $this->setUserValue($entity);
         }
+
         if ($entity instanceof FtpdUser){
             $this->setUserValue($entity);
             $usertools = $this->container->get('acs.user.tools');
             $this->setUid($usertools->getAvailableUid());
         }
+
         if ($entity instanceof HttpdUser){
             $this->setProtectedDir($entity);
         }
+
         if ($entity instanceof IpAddress){
             $this->setUserValue($entity);
         }
+
         if ($entity instanceof MailDomain){
             $this->setUserValue($entity);
             $settings_manager = $this->container->get('acs.setting_manager');
@@ -123,9 +129,11 @@ class EntitySubscriber implements EventSubscriber
                 $entity->setTransport($mail_domain_transport);
             }
         }
+
         if ($entity instanceof MailWBList){
             $this->setUserValue($entity);
         }
+
         if ($entity instanceof PanelSetting){
             $this->setUserValue($entity);
         }
@@ -160,10 +168,11 @@ class EntitySubscriber implements EventSubscriber
 
 		$aclManager = $this->container->get('problematic.acl_manager');
 
-        if ($entity instanceOf \Gedmo\Loggable\Entity\LogEntry)
+        if ($entity instanceOf \Gedmo\Loggable\Entity\LogEntry) {
             $user = array();
-        else
+        } else {
             $user = $entity->getOwners();
+        }
 
         // If we get a single user we add him to object owner
         if (is_object($user)) {
@@ -177,13 +186,14 @@ class EntitySubscriber implements EventSubscriber
             }
         }
 
+        // If owners are all admins
         if ($user == 'admins') {
             foreach ($admins as $admin) {
                 $this->addUserOwnerPermission($admin, $entity);
             }
         }
 
-		foreach($superadmins as $superadmin){
+		foreach ($superadmins as $superadmin) {
 			$aclManager->addObjectPermission($entity, MaskBuilder::MASK_MASTER, $superadmin);
 		}
 
@@ -397,8 +407,9 @@ class EntitySubscriber implements EventSubscriber
 	{
 		$aclManager = $this->container->get('problematic.acl_manager');
 
-		if($parent = $user->getParentUser())
+		if ($parent = $user->getParentUser()) {
 			$aclManager->addObjectPermission($entity, MaskBuilder::MASK_MASTER, $parent);
+        }
 
 		$aclManager->addObjectPermission($entity, MaskBuilder::MASK_OWNER, $user);
 	}
