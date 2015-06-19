@@ -33,7 +33,6 @@ class DomainController extends FOSRestController
         // IF is admin can see all the hosts, if is user only their ones...
         $entities = $this->get('domain_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
-        // $entities = $this->get('doctrine.orm.entity_manager')->getRepository('ACSACSPanelBundle:Domain')->findByUser($this->get('security.context')->getToken()->getUser());
         $search_action = 'domain_search';
 
         return array(
@@ -74,6 +73,7 @@ class DomainController extends FOSRestController
     /**
      * Finds and displays a Domain entity.
      *
+     * @Rest\Get("/domains/{id}/show")
      * @Rest\View()
      */
     public function showAction($id)

@@ -25,6 +25,20 @@ class DomainControllerTest extends CommonTestCase
         $this->assertRegExp('/{"id":1,"domain":"0domain.tld"/', $client->getResponse()->getContent());
 
         $this->assertNotRegExp('/password/', $client->getResponse()->getContent());
+
+        // Show one domain
+		$crawler = $this->client->request('GET', '/api/domains/1/show.json');
+
+		$this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+
+        // Check if the respense contents are json
+        $this->assertTrue(
+            $client->getResponse()->headers->contains(
+                'Content-Type',
+                'application/json'
+            )
+        );
+
     }
 }
 
