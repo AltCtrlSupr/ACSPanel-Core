@@ -127,6 +127,8 @@ class DomainController extends FOSRestController
     /**
      * Creates a new Domain entity.
      *
+     * @Rest\Post("/domains/create")
+     * @Rest\View("ACSACSPanelBundle:Domain:new.html.twig", templateVar="entity")
      */
     public function createAction(Request $request)
     {
@@ -166,10 +168,7 @@ class DomainController extends FOSRestController
             return $this->redirect($this->generateUrl('domain_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('ACSACSPanelBundle:Domain:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
+        return $form;
     }
 
     /**

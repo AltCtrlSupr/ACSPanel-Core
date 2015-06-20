@@ -39,6 +39,12 @@ class DomainControllerTest extends CommonTestCase
             )
         );
 
+        // Creating new domains with body
+        $crawler = $this->client->request('POST', '/api/domains/create.json', array(
+            'form' => array('domain' => 'test.cat')
+        ));
+        ldd($this->client->getResponse()->getContent());
+
     }
 }
 
