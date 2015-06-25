@@ -10,8 +10,6 @@ class HttpdUserControllerTest extends CommonTestCase
     {
 		$client = $this->createSuperadminClient();
 
-		$client = $this->createSuperadminClient();
-
 		$crawler = $client->request('GET', '/httpduser');
 		$this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
 

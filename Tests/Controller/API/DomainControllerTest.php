@@ -41,9 +41,17 @@ class DomainControllerTest extends CommonTestCase
 
         // Creating new domains with body
         $crawler = $this->client->request('POST', '/api/domains/create.json', array(
-            'form' => array('domain' => 'test.cat')
-        ));
-        ldd($this->client->getResponse()->getContent());
+            'acs_acspanelbundle_domaintype' => array('domain' => 'test.cat')
+        ), array(), array('accept-header' => 'application/json'));
+
+        // Check if the respense contents are json
+        $this->assertTrue(
+            $client->getResponse()->headers->contains(
+                'Content-Type',
+                'application/json'
+            )
+        );
+
 
     }
 }

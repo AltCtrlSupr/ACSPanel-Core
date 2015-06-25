@@ -54,10 +54,14 @@ class DnsSubscriber implements EventSubscriberInterface
         $em = $dnsfilter->getEm();
         $entity = $dnsfilter->getDnsDomain();
 
-        ldd($entity);
-
         $soa = $em->getRepository('ACSACSPanelBundle:DnsRecord')->findBy(array('type'=>'SOA', 'dns_domain' => $entity->getDnsDomain()));
+
+        if (empty($soa)) {
+            return null;
+        }
+
         $soa = $soa[0];
+
         $soacontent = explode(' ',$soa->getContent());
 
         if(count($soacontent)<3)

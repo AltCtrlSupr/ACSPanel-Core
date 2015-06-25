@@ -41,7 +41,7 @@ class DomainController extends FOSRestController
     }
 
     /**
-     * Finds and displays a LogItem search results.
+     * Finds and displays a Domain search results.
      *
      * @Rest\View("ACSACSPanelBundle:Domain:index.html.twig")
      */
@@ -74,7 +74,7 @@ class DomainController extends FOSRestController
      * Finds and displays a Domain entity.
      *
      * @Rest\Get("/domains/{id}/show")
-     * @Rest\View()
+     * @Rest\View(templateVar="template_data", populateDefaultVars="true")
      */
     public function showAction($id)
     {
@@ -88,14 +88,16 @@ class DomainController extends FOSRestController
 
         $dnsdomains = $em->getRepository('ACSACSPanelBundle:DnsDomain')->findByDomain($entity);
         $maildomains = $em->getRepository('ACSACSPanelBundle:MailDomain')->findByDomain($entity);
+        $delete_form = $this->createDeleteForm($id);
 
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+        $template_data = array(
             'dnsdomains' => $dnsdomains,
             'maildomains' => $maildomains,
+            'delete_form' => $delete_form
+        );
+
+        return array(
+            'entity'      => $entity
         );
     }
 
@@ -165,7 +167,9 @@ class DomainController extends FOSRestController
                 $em->flush();
             }
 
-            return $this->redirect($this->generateUrl('domain_show', array('id' => $entity->getId())));
+            // It only works with 201 code
+            $view = $this->routeRedirectView('domain_show', array('id' => $entity->getId()), 201);
+            return $this->handleView($view);
         }
 
         return $form;
