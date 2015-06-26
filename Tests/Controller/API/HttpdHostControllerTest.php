@@ -2,9 +2,7 @@
 
 namespace ACS\ACSPanelBundle\Tests\Controller\API;
 
-use ACS\ACSPanelBundle\Tests\Controller\CommonTestCase;
-
-class HttpdHostControllerTest extends CommonTestCase
+class HttpdHostControllerTest extends CommonApiTestCase
 {
     public function testHttpdHostScenario()
     {

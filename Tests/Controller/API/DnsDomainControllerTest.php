@@ -2,9 +2,7 @@
 
 namespace ACS\ACSPanelBundle\Tests\Controller\API;
 
-use ACS\ACSPanelBundle\Tests\Controller\CommonTestCase;
-
-class DnsDomainControllerTest extends CommonTestCase
+class DnsDomainControllerTest extends CommonApiTestCase
 {
     public function testServiceScenario()
     {

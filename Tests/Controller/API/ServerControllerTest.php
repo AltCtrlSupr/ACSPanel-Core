@@ -2,9 +2,7 @@
 
 namespace ACS\ACSPanelBundle\Tests\Controller\API;
 
-use ACS\ACSPanelBundle\Tests\Controller\CommonTestCase;
-
-class ServerControllerTest extends CommonTestCase
+class ServerControllerTest extends CommonApiTestCase
 {
     public function testServerScenario()
     {
@@ -15,12 +13,7 @@ class ServerControllerTest extends CommonTestCase
 		$this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         // Check if the respense contents are json
-        $this->assertTrue(
-            $client->getResponse()->headers->contains(
-                'Content-Type',
-                'application/json'
-            )
-        );
+        $this->assertJson($client);
     }
 }
 

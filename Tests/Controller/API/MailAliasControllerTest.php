@@ -2,9 +2,7 @@
 
 namespace ACS\ACSPanelBundle\Tests\Controller\API;
 
-use ACS\ACSPanelBundle\Tests\Controller\CommonTestCase;
-
-class MailAliasControllerTest extends CommonTestCase
+class MailAliasControllerTest extends CommonApiTestCase
 {
     public function testServiceScenario()
     {

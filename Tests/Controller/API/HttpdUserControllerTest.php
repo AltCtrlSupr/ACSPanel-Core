@@ -2,9 +2,7 @@
 
 namespace ACS\ACSPanelBundle\Tests\Controller\API;
 
-use ACS\ACSPanelBundle\Tests\Controller\CommonTestCase;
-
-class HttpdUserControllerTest extends CommonTestCase
+class HttpdUserControllerTest extends CommonApiTestCase
 {
     public function testHttpdUsersScenario()
     {

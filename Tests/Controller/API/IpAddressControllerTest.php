@@ -2,9 +2,7 @@
 
 namespace ACS\ACSPanelBundle\Tests\Controller\API;
 
-use ACS\ACSPanelBundle\Tests\Controller\CommonTestCase;
-
-class IpAddressControllerTest extends CommonTestCase
+class IpAddressControllerTest extends CommonApiTestCase
 {
     public function testServiceScenario()
     {
