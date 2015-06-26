@@ -19,7 +19,6 @@ class DnsRecordControllerTest extends CommonTestCase
 		));
 		$crawler = $client->submit($form);
 		$this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-
     }
 }
 
