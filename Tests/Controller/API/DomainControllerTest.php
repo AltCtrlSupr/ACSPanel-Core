@@ -30,9 +30,24 @@ class DomainControllerTest extends CommonApiTestCase
         // Creating new domains with body
         $crawler = $this->client->request('POST', '/api/domains/create.json', array(
             'acs_acspanelbundle_domaintype' => array('domain' => 'test.cat')
-        ), array(), array('accept-header' => 'application/json'));
+        ));
 
         // Check if the respense contents are json
+        $this->assertJson($client);
+
+		$crawler = $this->client->request('GET', '/api/domains/2domain/search.json');
+        // Check if the respense contents are json
+        $this->assertJson($client);
+        $this->assertRegExp('/{"id":3,"domain":"2domain.tld","created_at":"/', $client->getResponse()->getContent());
+
+        // Modifying domains with body
+        $crawler = $this->client->request('PATCH', '/api/domains/2/update.json', array(
+            'acs_acspanelbundle_domaintype' => array('domain' => 'test.cat')
+        ));
+        $this->assertJson($client);
+        $this->assertRegExp('/{"id":2,"domain":"test.cat","created_at":"/', $client->getResponse()->getContent());
+
+        $crawler = $this->client->request('DELETE', '/api/domains/2.json');
         $this->assertJson($client);
     }
 }

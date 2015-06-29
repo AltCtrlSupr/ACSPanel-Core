@@ -51,6 +51,7 @@ class EntitySubscriber implements EventSubscriber
             $this->removeDatabase($entity);
         }
 
+        $em = $args->getEntityManager();
         // Adding master permissions to superadmins
         $superadmins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\FosUser')->getSuperadminUsers();
         $admins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\FosUser')->getAdminUsers();
@@ -83,7 +84,7 @@ class EntitySubscriber implements EventSubscriber
         }
 
 		foreach ($superadmins as $superadmin) {
-			$aclManager->removeObjectPermission($entity, MaskBuilder::MASK_MASTER, $superadmin);
+			$aclManager->deleteAclFor($entity);
 		}
     }
 

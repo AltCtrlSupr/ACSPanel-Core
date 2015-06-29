@@ -45,13 +45,12 @@ class DomainController extends FOSRestController
      * Finds and displays a Domain search results.
      *
      * @Rest\View("ACSACSPanelBundle:Domain:index.html.twig")
+     * @Rest\Get("/domains/{term}/search")
      */
-    public function searchAction(Request $request)
+    public function searchAction($term)
     {
         $em = $this->getDoctrine()->getManager();
         $rep = $em->getRepository('ACSACSPanelBundle:Domain');
-
-        $term = $request->request->get('term');
 
         $query = $rep->createQueryBuilder('d')
             ->where('d.id = ?1')
@@ -61,14 +60,20 @@ class DomainController extends FOSRestController
             ->getQuery()
         ;
 
-        $entities = $query->execute();
-
-        return array(
-            'entities' => $entities,
-            'term' => $term,
+        $template_vars = array(
             'search_action' => 'domain_search',
+            'term' => $term,
         );
 
+        $entities = $query->execute();
+
+        $view = $this->view($entities, 200)
+            ->setTemplate("ACSACSPanelBundle:Domain:index.html.twig")
+            ->setTemplateVar("entities")
+            ->setTemplateData($template_vars)
+        ;
+
+        return $this->handleView($view);
     }
 
     /**
@@ -78,14 +83,9 @@ class DomainController extends FOSRestController
      */
     public function showAction($id)
     {
+        $entity = $this->getEntity($id);
+
         $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ACSACSPanelBundle:Domain')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Domain entity.');
-        }
-
         $dnsdomains = $em->getRepository('ACSACSPanelBundle:DnsDomain')->findByDomain($entity);
         $maildomains = $em->getRepository('ACSACSPanelBundle:MailDomain')->findByDomain($entity);
         $delete_form = $this->createDeleteForm($id);
@@ -103,7 +103,6 @@ class DomainController extends FOSRestController
         ;
 
         return $this->handleView($view);
-
     }
 
     /**
@@ -187,13 +186,7 @@ class DomainController extends FOSRestController
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ACSACSPanelBundle:Domain')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Domain entity.');
-        }
+        $entity = $this->getEntity($id);
 
         $editForm = $this->createForm(new DomainType($this->container), $entity);
         $deleteForm = $this->createDeleteForm($id);
@@ -208,33 +201,29 @@ class DomainController extends FOSRestController
     /**
      * Edits an existing Domain entity.
      *
+     * @Rest\View()
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ACSACSPanelBundle:Domain')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Domain entity.');
-        }
+        $entity = $this->getEntity($id);
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new DomainType($this->container), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
             return $this->redirect($this->generateUrl('domain_edit', array('id' => $id)));
         }
 
-        return $this->render('ACSACSPanelBundle:Domain:edit.html.twig', array(
+        return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        ));
+        );
     }
 
     /**
@@ -247,13 +236,9 @@ class DomainController extends FOSRestController
         $form->bind($request);
 
         if ($form->isValid()) {
+            $entity = $this->getEntity($id);
+
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('ACSACSPanelBundle:Domain')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Domain entity.');
-            }
-
             $em->remove($entity);
             $em->flush();
         }
@@ -263,12 +248,7 @@ class DomainController extends FOSRestController
 
     public function setaliasAction(Request $request, $id, $type)
     {
-       $em = $this->getDoctrine()->getManager();
-       $entity = $em->getRepository('ACSACSPanelBundle:Domain')->find($id);
-
-       if (!$entity) {
-         throw $this->createNotFoundException('Unable to find Domain entity.');
-       }
+        $entity = $this->getEntity($id);
 
        switch($type){
            case 'dns':
@@ -293,6 +273,17 @@ class DomainController extends FOSRestController
 
     public function setenabledAction(Request $request, $id)
     {
+        $entity = $this->getEntity($id);
+
+        $entity->setEnabled(!$entity->getEnabled());
+        $em->persist($entity);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('domain'));
+    }
+
+    private function getEntity($id)
+    {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('ACSACSPanelBundle:Domain')->find($id);
 
@@ -300,11 +291,7 @@ class DomainController extends FOSRestController
             throw $this->createNotFoundException('Unable to find Domain entity.');
         }
 
-        $entity->setEnabled(!$entity->getEnabled());
-        $em->persist($entity);
-        $em->flush();
-
-        return $this->redirect($this->generateUrl('domain'));
+        return $entity;
     }
 
     private function createDeleteForm($id)
