@@ -13,12 +13,7 @@ class DnsDomainControllerTest extends CommonApiTestCase
 		$this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         // Check if the respense contents are json
-        $this->assertTrue(
-            $client->getResponse()->headers->contains(
-                'Content-Type',
-                'application/json'
-            )
-        );
+        $this->assertJson($client);
     }
 }
 
