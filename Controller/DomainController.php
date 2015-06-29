@@ -24,7 +24,6 @@ class DomainController extends FOSRestController
     /**
      * Lists all Domain entities.
      *
-     * @Rest\View(templateVar="search_action")
      */
     public function indexAction()
     {
@@ -33,11 +32,13 @@ class DomainController extends FOSRestController
         // IF is admin can see all the hosts, if is user only their ones...
         $entities = $this->get('domain_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
-        $search_action = 'domain_search';
+        $view = $this->view($entities, 200)
+            ->setTemplate("ACSACSPanelBundle:Domain:index.html.twig")
+            ->setTemplateVar("entities")
+            ->setTemplateData(array('search_action' => 'domain_search'))
+        ;
 
-        return array(
-            'entities' => $entities
-        );
+        return $this->handleView($view);
     }
 
     /**
@@ -74,7 +75,6 @@ class DomainController extends FOSRestController
      * Finds and displays a Domain entity.
      *
      * @Rest\Get("/domains/{id}/show")
-     * @Rest\View(templateVar="template_data", populateDefaultVars="true")
      */
     public function showAction($id)
     {
@@ -93,12 +93,17 @@ class DomainController extends FOSRestController
         $template_data = array(
             'dnsdomains' => $dnsdomains,
             'maildomains' => $maildomains,
-            'delete_form' => $delete_form
+            'delete_form' => $delete_form->createView()
         );
 
-        return array(
-            'entity'      => $entity
-        );
+        $view = $this->view($entity, 200)
+            ->setTemplate("ACSACSPanelBundle:Domain:show.html.twig")
+            ->setTemplateVar("entity")
+            ->setTemplateData($template_data)
+        ;
+
+        return $this->handleView($view);
+
     }
 
     /**
