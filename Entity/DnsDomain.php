@@ -1,6 +1,5 @@
 <?php
 
-
 namespace ACS\ACSPanelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -358,7 +357,6 @@ class DnsDomain implements AclEntity
         return $this->dnsrecords;
     }
 
-
     /**
      * Set service
      *
@@ -391,7 +389,6 @@ class DnsDomain implements AclEntity
 		    $this->createdAt = new \DateTime();
 	    }
     }
-
 
     /**
      * @ORM\PreUpdate

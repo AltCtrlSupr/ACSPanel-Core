@@ -26,7 +26,7 @@ class DnsDomainController extends FOSRestController
     /**
      * Lists all DnsDomain entities.
      *
-     * @Rest\View(templateVar="search_action")
+     * @Rest\View()
      */
     public function indexAction()
     {
@@ -35,37 +35,38 @@ class DnsDomainController extends FOSRestController
         // IF is admin can see all the dnsdomains, if is user only their ones...
         $entities = $this->get('dnsdomain_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
-        $search_action = 'dnsdomain_search';
+        $view = $this->view($entities, 200)
+            ->setTemplate("ACSACSPanelBundle:DnsDomain:index.html.twig")
+            ->setTemplateVar("entities")
+            ->setTemplateData(array('search_action' => 'dnsdomain_search'))
+        ;
 
-        return array(
-            'entities' => $entities
-        );
+        return $this->handleView($view);
     }
 
     /**
      * Finds and displays a DnsDomain entity.
      *
+     * @Rest\Get("/dnsdomains/{id}/show")
      */
     public function showAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ACSACSPanelBundle:DnsDomain')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find DnsDomain entity.');
-        }
-
-        if (!$entity->userCanSee($this->get('security.context'))) {
-            throw new \Exception('You cannot edit this entity!');
-        }
+        $entity = $this->getEntity($id);
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('ACSACSPanelBundle:DnsDomain:show.html.twig', array(
-            'entity'      => $entity,
+        $template_data = array(
             'search_action' => 'dnsdomain_search',
-            'delete_form' => $deleteForm->createView(),        ));
+            'delete_form' => $deleteForm->createView()
+        );
+
+        $view = $this->view($entity, 200)
+            ->setTemplate("ACSACSPanelBundle:DnsDomain:show.html.twig")
+            ->setTemplateVar("entity")
+            ->setTemplateData($template_data)
+        ;
+
+        return $this->handleView($view);
     }
 
     /**
@@ -97,6 +98,8 @@ class DnsDomainController extends FOSRestController
     /**
      * Creates a new DnsDomain entity.
      *
+     * @Rest\Post("/dnsdomains/create")
+     * @Rest\View("ACSACSPanelBundle:DnsDomain:new.html.twig", templateVar="entity")
      */
     public function createAction(Request $request)
     {
@@ -112,14 +115,11 @@ class DnsDomainController extends FOSRestController
 
             $this->container->get('event_dispatcher')->dispatch(DnsEvents::DNS_AFTER_DOMAIN_ADD, new FilterDnsEvent($entity,$em));
 
-            return $this->redirect($this->generateUrl('dnsdomain_show', array('id' => $entity->getId())));
+            $view = $this->routeRedirectView('dnsdomain_show', array('id' => $entity->getId()), 201);
+            return $this->handleView($view);
         }
 
-        return $this->render('ACSACSPanelBundle:DnsDomain:new.html.twig', array(
-            'entity' => $entity,
-            'search_action' => 'dnsdomain_search',
-            'form'   => $form->createView(),
-        ));
+        return $form;
     }
 
     /**
@@ -257,5 +257,22 @@ class DnsDomainController extends FOSRestController
             ->add('id', 'hidden')
             ->getForm()
             ;
+    }
+
+    private function getEntity($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('ACSACSPanelBundle:DnsDomain')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find DnsDomain entity.');
+        }
+
+        if (!$entity->userCanSee($this->get('security.context'))) {
+            throw new \Exception('You cannot edit this entity!');
+        }
+
+        return $entity;
     }
 }

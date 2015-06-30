@@ -2,7 +2,7 @@
 /**
  * HttpdAliasRepository
  *
- * @author genar
+ * @author Genar Trias Ortiz
  */
 namespace ACS\ACSPanelBundle\Model;
 
@@ -27,8 +27,14 @@ class DnsDomainRepository extends AclEntityRepository
     public function getUserViewable($user)
     {
 		$entities_raw = $this->_em->createQuery('SELECT dns FROM ACS\ACSPanelBundle\Entity\DnsDomain dns');
-		$entities = $this->getAclFilter()->apply($entities_raw, ['VIEW'], $user, 'dns')->getResult();
+        $entities = $this->__applyAclFilter($entities_raw, $user);
 
+        return $entities;
+    }
+
+    private function __applyAclFilter($query, $user)
+    {
+		$entities = $this->getAclFilter()->apply($query, ['VIEW'], $user, 'dns')->getResult();
         return $entities;
     }
 }
