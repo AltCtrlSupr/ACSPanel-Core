@@ -16,9 +16,9 @@ class LoadDnsDomainData extends AbstractFixture implements OrderedFixtureInterfa
     public function load(ObjectManager $manager)
     {
         // Adding 15 dns-domains for superadmin
-        for ($i=0; $i < 15; $i++) {
+        for ($i=0; $i < 10; $i++) {
             $ddomain = new DnsDomain();
-            $ddomain->setType('A');
+            $ddomain->setType('MASTER');
             $ddomain->setEnabled(true);
             $ddomain->setDomain($this->getReference('domain-'. $i));
 

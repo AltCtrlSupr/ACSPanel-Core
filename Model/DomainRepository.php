@@ -2,7 +2,7 @@
 /**
  * HttpdAliasRepository
  *
- * @author genar <genar@acs.li>
+ * @author Genar Trias Ortiz <genar@acs.li>
  */
 namespace ACS\ACSPanelBundle\Model;
 
@@ -13,8 +13,8 @@ class DomainRepository extends AclEntityRepository
 {
     public function getUserViewable($user)
     {
-		$entities_raw = $this->_em->createQuery('SELECT d FROM ACS\ACSPanelBundle\Entity\Domain d');
-		$entities = $this->getAclFilter()->apply($entities_raw, ['VIEW'], $user, 'd')->getResult();
+        $entities_raw = $this->_em->createQuery('SELECT d FROM ACS\ACSPanelBundle\Entity\Domain d');
+        $entities = $this->getAclFilter()->apply($entities_raw, ['VIEW'], $user, 'd')->getResult();
 
         return $entities;
     }
@@ -55,9 +55,14 @@ class DomainRepository extends AclEntityRepository
      */
     public function findAliasesByUser($user)
     {
-        $query = $this->_em->createQuery('SELECT d FROM ACS\ACSPanelBundle\Entity\Domain d WHERE d.is_httpd_alias = true AND d.user_id = ?1 ')->setParameter(1, $user->getId());
+        $query = $this->_em->createQuery('
+            SELECT d
+            FROM ACS\ACSPanelBundle\Entity\Domain d
+            WHERE d.is_httpd_alias = true
+            AND d.user_id = ?1 '
+        )
+        ->setParameter(1, $user->getId());
         return $query->getResult();
     }
-
 }
 

@@ -6,17 +6,17 @@ class DnsDomainControllerTest extends CommonApiTestCase
 {
     public function testServiceScenario()
     {
-		$client = $this->createSuperadminClient();
+        $client = $this->createSuperadminClient();
 
-		$crawler = $this->client->request('GET', '/api/dnsdomains/index.json');
+        $crawler = $this->client->request('GET', '/api/dnsdomains/index.json');
 
-		$this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         // Check if the respense contents are json
         $this->assertJson($client);
 
-		$crawler = $this->client->request('GET', '/api/dnsdomains/1/show.json');
-		$this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $crawler = $this->client->request('GET', '/api/dnsdomains/1/show.json');
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         // Check if the respense contents are json
         $this->assertJson($client);
@@ -26,13 +26,11 @@ class DnsDomainControllerTest extends CommonApiTestCase
         // Creating new domains with body
         $crawler = $this->client->request('POST', '/api/dnsdomains/create.json', array(
             'acs_acspanelbundle_pdnsdomaintype' => array(
-                'domain' => 2,
+                'domain' => 15,
                 'type' => 'MASTER',
-                'service' => 1
             )
         ));
-        // ldd($this->client->getResponse()->getContent());
-		// $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(201, $this->client->getResponse()->getStatusCode());
 
         // Check if the respense contents are json
         $this->assertJson($client);

@@ -153,22 +153,7 @@ class DomainController extends FOSRestController
             $em->flush();
 
             if($form['add_dns_domain']->getData()){
-                $dnsdomain = new DnsDomain();
-                $dnsdomain->setDomain($entity);
-                $dnsdomain->setType('master');
-                $dnsdomain->setEnabled(true);
-                $dnstypes = $em->getRepository('ACSACSPanelBundle:ServiceType')->getDNSServiceTypesIds();
-                // TODO: Change somehow to get a default DNS server
-                $dnsservice = $em->getRepository('ACSACSPanelBundle:Service')->findByType($dnstypes);
-
-                if (count($dnsservice)) {
-                    $dnsdomain->setService($dnsservice[0]);
-                }
-
-                $this->container->get('event_dispatcher')->dispatch(DnsEvents::DNS_AFTER_DOMAIN_ADD, new FilterDnsEvent($dnsdomain, $em));
-
-                $em->persist($dnsdomain);
-                $em->flush();
+                $this->__handleDnsCreation($entity);
             }
 
             // It only works with 201 code
@@ -177,6 +162,28 @@ class DomainController extends FOSRestController
         }
 
         return $form;
+    }
+
+    private function __handleDnsCreation($entity)
+    {
+        $dnsdomain = new DnsDomain();
+        $dnsdomain->setDomain($entity);
+        $dnsdomain->setType('master');
+        $dnsdomain->setEnabled(true);
+
+        $em = $this->getDoctrine()->getManager();
+        $dnstypes = $em->getRepository('ACSACSPanelBundle:ServiceType')->getDNSServiceTypesIds();
+        // TODO: Change somehow to get a default DNS server
+        $dnsservice = $em->getRepository('ACSACSPanelBundle:Service')->findByType($dnstypes);
+
+        if (count($dnsservice)) {
+            $dnsdomain->setService($dnsservice[0]);
+        }
+
+        $this->container->get('event_dispatcher')->dispatch(DnsEvents::DNS_AFTER_DOMAIN_ADD, new FilterDnsEvent($dnsdomain, $em));
+
+        $em->persist($dnsdomain);
+        $em->flush();
     }
 
     /**
@@ -229,6 +236,7 @@ class DomainController extends FOSRestController
     /**
      * Deletes a Domain entity.
      *
+     * @Rest\Delete()
      */
     public function deleteAction(Request $request, $id)
     {
@@ -243,7 +251,8 @@ class DomainController extends FOSRestController
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('domain'));
+        $view = $this->routeRedirectView('domain', array(), 201);
+        return $this->handleView($view);
     }
 
     public function setaliasAction(Request $request, $id, $type)

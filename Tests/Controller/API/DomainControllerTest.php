@@ -6,11 +6,11 @@ class DomainControllerTest extends CommonApiTestCase
 {
     public function testDomainScenario()
     {
-		$client = $this->createSuperadminClient();
+        $client = $this->createSuperadminClient();
 
-		$crawler = $this->client->request('GET', '/api/domains/index.json');
+        $crawler = $this->client->request('GET', '/api/domains/index.json');
 
-		$this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         // Check if the respense contents are json
         $this->assertJson($client);
@@ -20,9 +20,9 @@ class DomainControllerTest extends CommonApiTestCase
         $this->assertNotRegExp('/password/', $client->getResponse()->getContent());
 
         // Show one domain
-		$crawler = $this->client->request('GET', '/api/domains/1/show.json');
+        $crawler = $this->client->request('GET', '/api/domains/1/show.json');
 
-		$this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         // Check if the respense contents are json
         $this->assertJson($client);
@@ -35,7 +35,7 @@ class DomainControllerTest extends CommonApiTestCase
         // Check if the respense contents are json
         $this->assertJson($client);
 
-		$crawler = $this->client->request('GET', '/api/domains/2domain/search.json');
+        $crawler = $this->client->request('GET', '/api/domains/2domain/search.json');
         // Check if the respense contents are json
         $this->assertJson($client);
         $this->assertRegExp('/{"id":3,"domain":"2domain.tld","created_at":"/', $client->getResponse()->getContent());
