@@ -39,7 +39,7 @@ class DnsDomainController extends FOSRestController
             ->setTemplate("ACSACSPanelBundle:DnsDomain:index.html.twig")
             ->setTemplateVar("entities")
             ->setTemplateData(array('search_action' => 'dnsdomain_search'))
-        ;
+            ;
 
         return $this->handleView($view);
     }
@@ -64,7 +64,7 @@ class DnsDomainController extends FOSRestController
             ->setTemplate("ACSACSPanelBundle:DnsDomain:show.html.twig")
             ->setTemplateVar("entity")
             ->setTemplateData($template_data)
-        ;
+            ;
 
         return $this->handleView($view);
     }
@@ -128,13 +128,7 @@ class DnsDomainController extends FOSRestController
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ACSACSPanelBundle:DnsDomain')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find DnsDomain entity.');
-        }
+        $entity = $this->getEntity($id);
 
         $editForm = $this->createForm(new DnsDomainType($this->container), $entity);
         $deleteForm = $this->createDeleteForm($id);
@@ -155,11 +149,7 @@ class DnsDomainController extends FOSRestController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ACSACSPanelBundle:DnsDomain')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find DnsDomain entity.');
-        }
+        $entity = $this->getEntity($id);
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new DnsDomainType($this->container), $entity);
@@ -177,9 +167,9 @@ class DnsDomainController extends FOSRestController
             'search_action' => 'dnsdomain_search',
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
+                    'delete_form' => $deleteForm->createView(),
+                ));
+        }
 
     /**
      * Deletes a DnsDomain entity.
@@ -192,11 +182,8 @@ class DnsDomainController extends FOSRestController
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('ACSACSPanelBundle:DnsDomain')->find($id);
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find DnsDomain entity.');
-            }
+            $entity = $this->getEntity($id);
 
             $em->remove($entity);
             $em->flush();
@@ -207,18 +194,19 @@ class DnsDomainController extends FOSRestController
 
     public function setenabledAction(Request $request, $id)
     {
-      $em = $this->getDoctrine()->getManager();
-      $entity = $em->getRepository('ACSACSPanelBundle:DnsDomain')->find($id);
+        $entity = $this->getEntity($id);
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('ACSACSPanelBundle:DnsDomain')->find($id);
 
-      if (!$entity) {
-         throw $this->createNotFoundException('Unable to find Dns Domain entity.');
-      }
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Dns Domain entity.');
+        }
 
-      $entity->setEnabled(!$entity->getEnabled());
-      $em->persist($entity);
-      $em->flush();
+        $entity->setEnabled(!$entity->getEnabled());
+        $em->persist($entity);
+        $em->flush();
 
-      return $this->redirect($this->generateUrl('dnsdomain'));
+        return $this->redirect($this->generateUrl('dnsdomain'));
     }
 
     /**
@@ -239,7 +227,8 @@ class DnsDomainController extends FOSRestController
             ->orWhere('d.account LIKE ?2')
             ->setParameter('1',$term)
             ->setParameter('2','%'.$term.'%')
-            ->getQuery();
+            ->getQuery()
+        ;
 
         $entities = $query->execute();
 
