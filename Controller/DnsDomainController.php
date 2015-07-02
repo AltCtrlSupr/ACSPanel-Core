@@ -160,7 +160,8 @@ class DnsDomainController extends FOSRestController
             $em->flush();
             $this->container->get('event_dispatcher')->dispatch(DnsEvents::DNS_AFTER_DOMAIN_UPDATE, new FilterDnsEvent($entity,$em));
 
-            return $this->redirect($this->generateUrl('dnsdomain_edit', array('id' => $id)));
+            $view = $this->routeRedirectView('dnsdomain_edit', array('id' => $id), 201);
+            return $this->handleView($view);
         }
 
         return $this->render('ACSACSPanelBundle:DnsDomain:edit.html.twig', array(
@@ -174,6 +175,7 @@ class DnsDomainController extends FOSRestController
     /**
      * Deletes a DnsDomain entity.
      *
+     * @Rest\Delete()
      */
     public function deleteAction(Request $request, $id)
     {
@@ -189,7 +191,8 @@ class DnsDomainController extends FOSRestController
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('dnsdomain'));
+        $view = $this->routeRedirectView('domain', array(), 201);
+        return $this->handleView($view);
     }
 
     public function setenabledAction(Request $request, $id)
