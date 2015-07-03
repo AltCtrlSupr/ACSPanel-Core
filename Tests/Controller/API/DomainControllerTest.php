@@ -21,7 +21,6 @@ class DomainControllerTest extends CommonApiTestCase
 
         // Show one domain
         $crawler = $this->client->request('GET', '/api/domains/1/show.json');
-
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         // Check if the respense contents are json

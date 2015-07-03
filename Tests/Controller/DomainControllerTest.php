@@ -6,7 +6,7 @@ use ACS\ACSPanelBundle\Tests\Controller\CommonTestCase;
 
 class DomainControllerTest extends CommonTestCase
 {
-    public function testDnsDomainScenario()
+    public function testDomainScenario()
     {
 		$client = $this->createSuperadminClient();
 

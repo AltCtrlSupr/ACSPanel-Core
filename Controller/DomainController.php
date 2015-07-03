@@ -4,8 +4,8 @@ namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use ACS\ACSPanelBundle\Controller\Base\CommonController;
 
 use ACS\ACSPanelBundle\Entity\Domain;
 use ACS\ACSPanelBundle\Entity\DnsDomain;
@@ -19,8 +19,14 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  *
  * @Rest\RouteResource("Domain")
  */
-class DomainController extends FOSRestController
+class DomainController extends CommonController
 {
+    public function __construct()
+    {
+        $this->setEntityRepository('ACSACSPanelBundle:Domain');
+        $this->setEntityRouteBase('domain');
+    }
+
     /**
      * Lists all Domain entities.
      *
@@ -233,28 +239,6 @@ class DomainController extends FOSRestController
         );
     }
 
-    /**
-     * Deletes a Domain entity.
-     *
-     * @Rest\Delete()
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
-
-        if ($form->isValid()) {
-            $entity = $this->getEntity($id);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        $view = $this->routeRedirectView('domain', array(), 201);
-        return $this->handleView($view);
-    }
-
     public function setaliasAction(Request $request, $id, $type)
     {
         $entity = $this->getEntity($id);
@@ -291,23 +275,5 @@ class DomainController extends FOSRestController
         return $this->redirect($this->generateUrl('domain'));
     }
 
-    private function getEntity($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('ACSACSPanelBundle:Domain')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Domain entity.');
-        }
-
-        return $entity;
-    }
-
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
-    }
 }

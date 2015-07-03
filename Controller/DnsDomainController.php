@@ -4,7 +4,7 @@ namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use FOS\RestBundle\Controller\FOSRestController;
+use ACS\ACSPanelBundle\Controller\Base\CommonController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
 use ACS\ACSPanelBundle\Entity\DnsDomain;
@@ -21,8 +21,14 @@ use ACS\ACSPanelBundle\Event\DnsEvents;
  *
  * @Rest\RouteResource("DnsDomain")
  */
-class DnsDomainController extends FOSRestController
+class DnsDomainController extends CommonController
 {
+    public function __construct()
+    {
+        $this->setEntityRepository('ACSACSPanelBundle:DnsDomain');
+        $this->setEntityRouteBase('dnsdomain');
+    }
+
     /**
      * Lists all DnsDomain entities.
      *
@@ -168,31 +174,8 @@ class DnsDomainController extends FOSRestController
             'search_action' => 'dnsdomain_search',
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-                    'delete_form' => $deleteForm->createView(),
-                ));
-        }
-
-    /**
-     * Deletes a DnsDomain entity.
-     *
-     * @Rest\Delete()
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $entity = $this->getEntity($id);
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        $view = $this->routeRedirectView('domain', array(), 201);
-        return $this->handleView($view);
+            'delete_form' => $deleteForm->createView(),
+        ));
     }
 
     public function setenabledAction(Request $request, $id)
@@ -243,28 +226,4 @@ class DnsDomainController extends FOSRestController
 
     }
 
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-            ;
-    }
-
-    private function getEntity($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ACSACSPanelBundle:DnsDomain')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find DnsDomain entity.');
-        }
-
-        if (!$entity->userCanSee($this->get('security.context'))) {
-            throw new \Exception('You cannot edit this entity!');
-        }
-
-        return $entity;
-    }
 }

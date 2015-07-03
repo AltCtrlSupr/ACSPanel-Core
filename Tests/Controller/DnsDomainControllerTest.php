@@ -10,11 +10,11 @@ class DnsDomainControllerTest extends CommonTestCase
     {
 		$client = $this->createSuperadminClient();
 
-		$crawler = $this->client->request('GET', '/dnsdomain');
-		$this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+		$crawler = $client->request('GET', '/dnsdomain');
+		$this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-		$crawler = $this->client->request('GET', '/dnsdomain/new');
-		$this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+		$crawler = $client->request('GET', '/dnsdomain/new');
+		$this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }
 
