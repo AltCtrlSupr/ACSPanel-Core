@@ -30,6 +30,7 @@ class DomainController extends CommonController
     /**
      * Lists all Domain entities.
      *
+     * @Rest\View(templateVar="entities")
      */
     public function indexAction()
     {
@@ -39,18 +40,16 @@ class DomainController extends CommonController
         $entities = $this->get('domain_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
         $view = $this->view($entities, 200)
-            ->setTemplate("ACSACSPanelBundle:Domain:index.html.twig")
-            ->setTemplateVar("entities")
             ->setTemplateData(array('search_action' => 'domain_search'))
         ;
 
-        return $this->handleView($view);
+        return $view;
     }
 
     /**
      * Finds and displays a Domain search results.
      *
-     * @Rest\View("ACSACSPanelBundle:Domain:index.html.twig")
+     * @Rest\View(template="ACSACSPanelBundle:Domain:index.html.twig", templateVar="entities")
      * @Rest\Get("/domains/{term}/search")
      */
     public function searchAction($term)
@@ -74,18 +73,17 @@ class DomainController extends CommonController
         $entities = $query->execute();
 
         $view = $this->view($entities, 200)
-            ->setTemplate("ACSACSPanelBundle:Domain:index.html.twig")
-            ->setTemplateVar("entities")
             ->setTemplateData($template_vars)
         ;
 
-        return $this->handleView($view);
+        return $view;
     }
 
     /**
      * Finds and displays a Domain entity.
      *
      * @Rest\Get("/domains/{id}/show")
+     * @Rest\View(templateVar="entity")
      */
     public function showAction($id)
     {
@@ -103,18 +101,16 @@ class DomainController extends CommonController
         );
 
         $view = $this->view($entity, 200)
-            ->setTemplate("ACSACSPanelBundle:Domain:show.html.twig")
-            ->setTemplateVar("entity")
             ->setTemplateData($template_data)
         ;
 
-        return $this->handleView($view);
+        return $view;
     }
 
     /**
      * Displays a form to create a new Domain entity.
      *
-     * @Rest\View()
+     * @Rest\View(templateVar="entity")
      */
     public function newAction()
     {
@@ -130,17 +126,18 @@ class DomainController extends CommonController
         $entity = new Domain();
         $form   = $this->createForm(new DomainType($this->container), $entity);
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        $view = $this->view($entity, 200)
+            ->setTemplateData(array('form' => $form->createView()))
+        ;
+
+        return $view;
     }
 
     /**
      * Creates a new Domain entity.
      *
      * @Rest\Post("/domains/create")
-     * @Rest\View("ACSACSPanelBundle:Domain:new.html.twig", templateVar="entity")
+     * @Rest\View(template="ACSACSPanelBundle:Domain:new.html.twig", templateVar="entity")
      */
     public function createAction(Request $request)
     {
@@ -167,7 +164,11 @@ class DomainController extends CommonController
             return $this->handleView($view);
         }
 
-        return $form;
+        $view = $this->view($entity, 200)
+            ->setTemplateData(array('form' => $form->createView()))
+        ;
+
+        return $view;
     }
 
     private function __handleDnsCreation($entity)
