@@ -4,6 +4,7 @@ namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use ACS\ACSPanelBundle\Controller\Base\CommonController;
 
@@ -30,6 +31,11 @@ class DomainController extends CommonController
     /**
      * Lists all Domain entities.
      *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Returns all the domains owned by current user",
+     * )
+     *
      * @Rest\View(templateVar="entities")
      */
     public function indexAction()
@@ -48,6 +54,19 @@ class DomainController extends CommonController
 
     /**
      * Finds and displays a Domain search results.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Returns the domains owned by current user filtered by search term",
+     *  requirements={
+     *      {
+     *          "name"="term",
+     *          "dataType"="string",
+     *          "requirement"="\w+",
+     *          "description"="The search term to filter"
+     *      }
+     *  },
+     * )
      *
      * @Rest\View(template="ACSACSPanelBundle:Domain:index.html.twig", templateVar="entities")
      * @Rest\Get("/domains/{term}/search")
@@ -81,6 +100,11 @@ class DomainController extends CommonController
 
     /**
      * Finds and displays a Domain entity.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Return the domain for the passed id",
+     * )
      *
      * @Rest\Get("/domains/{id}/show")
      * @Rest\View(templateVar="entity")
@@ -135,6 +159,11 @@ class DomainController extends CommonController
 
     /**
      * Creates a new Domain entity.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Creates new domain",
+     * )
      *
      * @Rest\Post("/domains/create")
      * @Rest\View(template="ACSACSPanelBundle:Domain:new.html.twig", templateVar="entity")
@@ -214,6 +243,11 @@ class DomainController extends CommonController
 
     /**
      * Edits an existing Domain entity.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Edits domain identified by id",
+     * )
      *
      * @Rest\View()
      */

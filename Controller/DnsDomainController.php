@@ -4,6 +4,7 @@ namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use ACS\ACSPanelBundle\Controller\Base\CommonController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
@@ -32,6 +33,11 @@ class DnsDomainController extends CommonController
     /**
      * Lists all DnsDomain entities.
      *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Show all DNS Domains owned by current user",
+     * )
+     *
      * @Rest\View(templateVar="entities")
      */
     public function indexAction()
@@ -50,6 +56,11 @@ class DnsDomainController extends CommonController
 
     /**
      * Finds and displays a DnsDomain entity.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Show DNS Domain identifyed by id",
+     * )
      *
      * @Rest\Get("/dnsdomains/{id}/show")
      * @Rest\View(templateVar="entity")
@@ -106,6 +117,11 @@ class DnsDomainController extends CommonController
     /**
      * Creates a new DnsDomain entity.
      *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Creates new DNS Domain",
+     * )
+     *
      * @Rest\Post("/dnsdomains/create")
      * @Rest\View("ACSACSPanelBundle:DnsDomain:new.html.twig", templateVar="entity")
      */
@@ -152,6 +168,10 @@ class DnsDomainController extends CommonController
     /**
      * Edits an existing DnsDomain entity.
      *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Updates DNS Domain identifyed by id",
+     * )
      */
     public function updateAction(Request $request, $id)
     {
