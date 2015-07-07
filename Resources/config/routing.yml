@@ -153,3 +153,7 @@ ACSACSPanelBundle_mailwblist:
     prefix:   /mailwblist
 
 
+# Dynamic DNS Action
+dyndns:
+    pattern:  /nic/update
+    defaults: { _controller: "ACSACSPanelBundle:DynamicDns:update" }

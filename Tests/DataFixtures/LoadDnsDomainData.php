@@ -7,6 +7,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
 use ACS\ACSPanelBundle\Entity\DnsDomain;
+use ACS\ACSPanelBundle\Entity\DnsRecord;
 
 class LoadDnsDomainData extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -22,6 +23,15 @@ class LoadDnsDomainData extends AbstractFixture implements OrderedFixtureInterfa
             $ddomain->setEnabled(true);
             $ddomain->setDomain($this->getReference('domain-'. $i));
 
+            $drecord = new DnsRecord();
+            $drecord->setName($ddomain->__toString());
+            $drecord->setContent('127.0.0.1');
+            $drecord->setTtl('1');
+            $drecord->setType('A');
+
+            $drecord->setDnsDomain($ddomain);
+
+            $manager->persist($drecord);
             $manager->persist($ddomain);
         }
 

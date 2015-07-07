@@ -32,7 +32,7 @@ class DnsDomainController extends CommonController
     /**
      * Lists all DnsDomain entities.
      *
-     * @Rest\View()
+     * @Rest\View(templateVar="entities")
      */
     public function indexAction()
     {
@@ -42,18 +42,17 @@ class DnsDomainController extends CommonController
         $entities = $this->get('dnsdomain_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
         $view = $this->view($entities, 200)
-            ->setTemplate("ACSACSPanelBundle:DnsDomain:index.html.twig")
-            ->setTemplateVar("entities")
             ->setTemplateData(array('search_action' => 'dnsdomain_search'))
-            ;
+        ;
 
-        return $this->handleView($view);
+        return $view;
     }
 
     /**
      * Finds and displays a DnsDomain entity.
      *
      * @Rest\Get("/dnsdomains/{id}/show")
+     * @Rest\View(templateVar="entity")
      */
     public function showAction($id)
     {
@@ -67,21 +66,19 @@ class DnsDomainController extends CommonController
         );
 
         $view = $this->view($entity, 200)
-            ->setTemplate("ACSACSPanelBundle:DnsDomain:show.html.twig")
-            ->setTemplateVar("entity")
             ->setTemplateData($template_data)
-            ;
+        ;
 
-        return $this->handleView($view);
+        return $view;
     }
 
     /**
      * Displays a form to create a new DnsDomain entity.
      *
+     * @Rest\View(templateVar="entity")
      */
     public function newAction()
     {
-
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
 
@@ -94,11 +91,16 @@ class DnsDomainController extends CommonController
         $entity = new DnsDomain();
         $form   = $this->createForm(new DnsDomainType($this->container), $entity);
 
-        return $this->render('ACSACSPanelBundle:DnsDomain:new.html.twig', array(
-            'entity' => $entity,
+        $template_data = array(
             'search_action' => 'dnsdomain_search',
             'form'   => $form->createView(),
-        ));
+        );
+
+        $view = $this->view($entity, 200)
+            ->setTemplateData($template_data)
+        ;
+
+        return $view;
     }
 
     /**

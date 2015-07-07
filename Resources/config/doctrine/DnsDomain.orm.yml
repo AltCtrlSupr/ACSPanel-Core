@@ -49,7 +49,7 @@ ACS\ACSPanelBundle\Entity\DnsDomain:
                 - versioned
         enabled:
             type: boolean
-            nullable: true 
+            nullable: true
             gedmo:
                 - versioned
         createdAt:
@@ -78,6 +78,7 @@ ACS\ACSPanelBundle\Entity\DnsDomain:
         dnsrecords:
             targetEntity: DnsRecord
             mappedBy: dns_domain
+            cascade: [ persist ]
 
     lifecycleCallbacks:
       prePersist: [ setCreatedAtValue ]
