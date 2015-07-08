@@ -15,6 +15,12 @@ class DynDnsControllerTest extends CommonApiTestCase
         // Check if the respense contents are json
         $this->assertJson($client);
         $this->assertRegExp('/8.8.8.8/', $client->getResponse()->getContent());
+
+        $crawler = $client->request('GET', '/nic/update?hostname=1domain.tld');
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        // Check if the respense contents are json
+        $this->assertJson($client);
+        $this->assertRegExp('/127.0.0.1/', $client->getResponse()->getContent());
     }
 }
 

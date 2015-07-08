@@ -29,6 +29,10 @@ class DynamicDnsController extends FOSRestController
         $new_ip = $request->get('myip');
         $hostname = $request->get('hostname');
 
+        if (!$new_ip) {
+            $new_ip = $request->server->get('REMOTE_ADDR');
+        }
+
         $record = $this->__getRecordToUpdate($hostname);
 
         if ($record && $new_ip && $hostname) {
