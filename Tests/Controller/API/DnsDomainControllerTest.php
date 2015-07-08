@@ -4,7 +4,7 @@ namespace ACS\ACSPanelBundle\Tests\Controller\API;
 
 class DnsDomainControllerTest extends CommonApiTestCase
 {
-    public function testServiceScenario()
+    public function testDnsDomainScenario()
     {
         $client = $this->createSuperadminClient();
 
