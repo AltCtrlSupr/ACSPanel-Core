@@ -20,6 +20,7 @@ class MenuSubscriber implements EventSubscriberInterface
                 array('databaseItems', 30),
                 array('ftpItems', 20),
                 array('settingsItems', 10),
+                array('documentationItems', 10),
                 array('logoutItems', -9000),
             ),
             'menu.reseller.after.items'     => array(
@@ -140,6 +141,12 @@ class MenuSubscriber implements EventSubscriberInterface
     {
         $menu = $menu_filter->getMenu();
         $menu->addChild('menu.settings.main', array( 'route' => 'settings', 'extras' => array('icon' => 'fa-gear')));
+    }
+
+    public function documentationItems(FilterMenuEvent $menu_filter)
+    {
+        $menu = $menu_filter->getMenu();
+        $menu->addChild('menu.apidocumentation.main', array( 'route' => 'nelmio_api_doc_index', 'extras' => array('icon' => 'fa-key')));
     }
 
 }
