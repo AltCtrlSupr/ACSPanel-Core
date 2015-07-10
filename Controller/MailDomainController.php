@@ -81,7 +81,7 @@ class MailDomainController extends FOSRestController
         }
 
         $entity = new MailDomain();
-        $form   = $this->createForm(new MailDomainType(), $entity);
+        $form   = $this->createForm(new MailDomainType($this->container), $entity);
 
         return $this->render('ACSACSPanelBundle:MailDomain:new.html.twig', array(
             'entity' => $entity,
@@ -96,7 +96,7 @@ class MailDomainController extends FOSRestController
     public function createAction(Request $request)
     {
         $entity  = new MailDomain();
-        $form = $this->createForm(new MailDomainType(), $entity);
+        $form = $this->createForm(new MailDomainType($this->container), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -151,7 +151,7 @@ class MailDomainController extends FOSRestController
             throw $this->createNotFoundException('Unable to find MailDomain entity.');
         }
 
-        $editForm = $this->createForm(new MailDomainType(), $entity);
+        $editForm = $this->createForm(new MailDomainType($this->container), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ACSACSPanelBundle:MailDomain:edit.html.twig', array(
@@ -176,7 +176,7 @@ class MailDomainController extends FOSRestController
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new MailDomainType(), $entity);
+        $editForm = $this->createForm(new MailDomainType($this->container), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {

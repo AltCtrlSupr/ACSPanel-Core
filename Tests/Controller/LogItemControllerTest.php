@@ -8,10 +8,10 @@ class LogItemControllerTest extends CommonTestCase
 {
     public function testLogItemIndex()
     {
-		$client = $this->createSuperadminClient();
+        $client = $this->createSuperadminClient();
 
-		$crawler = $client->request('GET', '/logs');
-		$this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
+        $crawler = $client->request('GET', '/logs');
+        $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
     }
 }
 

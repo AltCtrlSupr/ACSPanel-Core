@@ -25,6 +25,11 @@ class HttpdUserControllerTest extends CommonTestCase
         ));
 
         $crawler = $client->submit($form);
+
+        $this->assertRegExp('/This value should not be blank/', $client->getResponse()->getContent());
+
+        // Should we receive 200 code
+        $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
 }
 
 }

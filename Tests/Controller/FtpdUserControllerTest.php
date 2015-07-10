@@ -8,10 +8,10 @@ class FtpdUserControllerTest extends CommonTestCase
 {
     public function testFtpdUserIndex()
     {
-		$client = $this->createSuperadminClient();
+        $client = $this->createSuperadminClient();
 
-		$crawler = $client->request('GET', '/ftpduser');
-		$this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
+        $crawler = $client->request('GET', '/ftpduser');
+        $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
 
     }
 }

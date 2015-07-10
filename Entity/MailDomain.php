@@ -7,6 +7,7 @@ use Monolog\Logger;
 use Doctrine\ORM\Mapping as ORM;
 
 use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ACS\ACSPanelBundle\Entity\MailDomain
@@ -20,6 +21,7 @@ class MailDomain implements AclEntity
 
     /**
      * @var string $domain
+     * @Assert\NotBlank()
      */
     private $domain;
 
@@ -80,6 +82,7 @@ class MailDomain implements AclEntity
 
     /**
      * @var \ACS\ACSPanelBundle\Entity\Service
+     * @Assert\NotBlank()
      */
     private $service;
 
