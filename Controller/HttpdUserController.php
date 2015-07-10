@@ -21,7 +21,7 @@ class HttpdUserController extends FOSRestController
     /**
      * Lists all HttpdUser entities.
      *
-     * @Rest\View(templateVar="search_action")
+     * @Rest\View()
      */
     public function indexAction()
     {
@@ -94,12 +94,9 @@ class HttpdUserController extends FOSRestController
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-				$entity->setEnabled(true);
+            $entity->setEnabled(true);
             $em->persist($entity);
             $em->flush();
-
-            // Mark webserver to restart
-            //$this->get('server.actions')->setWebserverToReload($entity->getHttpdHost()->getService()->getServer());
 
             return $this->redirect($this->generateUrl('httpduser_show', array('id' => $entity->getId())));
         }

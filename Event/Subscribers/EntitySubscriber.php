@@ -347,10 +347,11 @@ class EntitySubscriber implements EventSubscriber
         $service = $this->container->get('security.context');
 
         $user = $service->getToken()->getUser();
-	if(!$entity->getProtectedDir())
-		return $entity->setProtectedDir($settings->getSystemSetting('home_base').$user->getUsername().'/web/'.$entity->getHttpdHost()->getDomain()->getDomain().'/httpdocs');
-	else
-		return $entity;
+        if (!$entity->getProtectedDir()) {
+            return $entity->setProtectedDir($settings->getSystemSetting('home_base') . $user->getUsername() . '/web/' . $entity->getHttpdHost()->getDomain()->getDomain() . '/httpdocs');
+        } else {
+            return $entity;
+        }
     }
 
     public function removeDatabase($entity)

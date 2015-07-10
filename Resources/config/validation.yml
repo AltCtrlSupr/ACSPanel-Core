@@ -7,7 +7,7 @@ ACS\ACSPanelBundle\Entity\IpAddress:
 
 ACS\ACSPanelBundle\Entity\MailMailbox:
     constraints:
-        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             fields: [mail_domain, username]
 
 ACS\ACSPanelBundle\Entity\Domain:
@@ -18,7 +18,7 @@ ACS\ACSPanelBundle\Entity\Domain:
             - Regex:
                 pattern: "/^[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}$|^localhost$/"
                 message: The domain must be valid domain name
-            #- ACS\ACSPanelBundle\Validator\Constraints\DuplicateHost: 
+            #- ACS\ACSPanelBundle\Validator\Constraints\DuplicateHost:
                 #target_entity: ACSACSPanelBundle:HttpdAlias
                 #target_field: alias
 
@@ -31,5 +31,11 @@ ACS\ACSPanelBundle\Entity\FosUser:
 
 ACS\ACSPanelBundle\Entity\DatabaseUser:
     constraints:
-        - ACS\ACSPanelBundle\Validator\Constraints\VariableLimitedLength: 
+        - ACS\ACSPanelBundle\Validator\Constraints\VariableLimitedLength:
             max_length: 16
+
+
+ACS\ACSPanelBundle\Entity\HttpsUser:
+    properties:
+        httpd_host:
+            - NotNull: ~

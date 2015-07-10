@@ -7,12 +7,10 @@
         <span class="label label-important">{{ form_errors(edit_form) }}</span>
         <p>
             {{ form_label(edit_form.address) }}
-            {{ form_widget(edit_form.address) }}
-	    @
-            {{ form_widget(edit_form.mail_domain) }}
+            {{ form_widget(edit_form.address) }} @ {{ form_widget(edit_form.mail_domain) }}
             {{ form_label(edit_form.goto) }}
             {{ form_widget(edit_form.goto) }}
-            <button class="btn" type="submit">Edit</button>
+            <button class="btn btn-success" type="submit">Edit</button>
             {{ form_widget(edit_form._token) }}
         </p>
     </form>

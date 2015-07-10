@@ -7,7 +7,7 @@
         <span class="label label-important">{{ form_errors(edit_form) }}</span>
         {{ form_widget(edit_form) }}
         <p>
-        <button type="submit">{% trans %}dbuser.button.edit{% endtrans %}</button>
+        <button class="btn btn-success" type="submit">{% trans %}dbuser.button.edit{% endtrans %}</button>
         </p>
     </form>
 </div>
@@ -21,7 +21,7 @@
     <li>
         <form action="{{ path('databaseuser_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
-            <button class="btn" type="submit">{% trans %}dbuser.button.delete{% endtrans %}</button>
+            <button  class="btn btn-primary" type="submit">{% trans %}dbuser.button.delete{% endtrans %}</button>
         </form>
     </li>
 </ul>

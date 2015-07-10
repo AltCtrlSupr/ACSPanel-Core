@@ -34,14 +34,13 @@ class UserHttpdHostType extends HttpdHostType
             ->add('ssl', null, array('label' => 'httpdhost.form.ssl'))
             ->add('service', null, array(
                 'label' => 'httpdhost.form.service',
-				'choices' => $web_services
-                )
-            )
-			->add('proxy_service', null, array(
-				'label' => 'httpdhost.form.proxy_service',
-				'choices' => $webproxy_services,
-				'required' => false,
-			))
+                'choices' => $web_services
+            ))
+            ->add('proxy_service', null, array(
+                'label' => 'httpdhost.form.proxy_service',
+                'choices' => $webproxy_services,
+                'required' => false,
+            ))
             ->add('add_www_alias','checkbox',array(
                 'mapped' => false,
                 'required' => false,
