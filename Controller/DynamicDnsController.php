@@ -44,9 +44,7 @@ class DynamicDnsController extends FOSRestController
 
             $this->container->get('event_dispatcher')->dispatch(DnsEvents::DNS_AFTER_RECORD_UPDATE, new FilterDnsEvent($record, $em));
 
-            $view = $this->view($record, 200)
-                ->setFormat('json')
-            ;
+            $view = $this->view([], 200);
 
             return $view;
         }
