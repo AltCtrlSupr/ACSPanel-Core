@@ -14,7 +14,8 @@
 
 {% block body %}
 
-<table class="records_list table table-striped table-bordered datatable">
+<div class="box box-primary box-body">
+    <table class="records_list table table-striped table-bordered datatable">
     <thead>
         <tr>
             <th class="center">{% trans %}user.field.enabled{% endtrans %}</th>
@@ -81,7 +82,8 @@
         {% endif %}
     {% endfor %}
     </tbody>
-</table>
+    </table>
+</div>
 
 <ul>
     <li>

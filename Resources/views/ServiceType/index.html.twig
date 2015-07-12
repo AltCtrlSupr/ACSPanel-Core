@@ -8,58 +8,60 @@
 
 {% block body %}
 
-<table class="records_list table table-striped table-bordered datatable">
-    <thead>
-        <tr>
-            <th>{% trans %}Service type{% endtrans %}</th>
-            <th>{% trans %}Actions{% endtrans %}</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-            {% if not entity.parenttype %}
-                <tr>
-                    <td><ul>
-                            <li><a href="{{ path('servicetype_show', { 'id': entity.id }) }}">{{ entity.name }}</a></li>
-                            {% for childentity in entities %}
-                                {% if childentity.parenttype == entity %}
-                                    <ul><li>
-                                        <a href="{{ path('servicetype_show', { 'id': childentity.id }) }}">{{ childentity.name }}</a>
-                                    </li>
+<div class="box box-primary box-body">
+    <table class="records_list table table-striped table-bordered datatable">
+        <thead>
+            <tr>
+                <th>{% trans %}Service type{% endtrans %}</th>
+                <th>{% trans %}Actions{% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+                {% if not entity.parenttype %}
+                    <tr>
+                        <td><ul>
+                                <li><a href="{{ path('servicetype_show', { 'id': entity.id }) }}">{{ entity.name }}</a></li>
+                                {% for childentity in entities %}
+                                    {% if childentity.parenttype == entity %}
+                                        <ul><li>
+                                            <a href="{{ path('servicetype_show', { 'id': childentity.id }) }}">{{ childentity.name }}</a>
+                                        </li>
 
-                                    {% for childentity2 in entities %}
-                                        {% if childentity2.parenttype == childentity %}
-                                            <ul><li>
-                                                <a href="{{ path('servicetype_show', { 'id': childentity2.id }) }}">{{ childentity2.name }}</a>
-                                            </li></ul>
-                                        {% endif %}
-                                    {% endfor %}
+                                        {% for childentity2 in entities %}
+                                            {% if childentity2.parenttype == childentity %}
+                                                <ul><li>
+                                                    <a href="{{ path('servicetype_show', { 'id': childentity2.id }) }}">{{ childentity2.name }}</a>
+                                                </li></ul>
+                                            {% endif %}
+                                        {% endfor %}
 
+                                        </ul>
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                                <td>
+                        <div class="dropdown">
+                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                                {% trans %}Actions{% endtrans %}
+                                <span class="caret"></span>
+                            </a>
+                        <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a href="{{ path('servicetype_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ path('servicetype_edit', { 'id': entity.id }) }}">{% trans %}edit{% endtrans %}</a>
+                                        </li>
                                     </ul>
-                                {% endif %}
-                            {% endfor %}
-                        </td>
-                            <td>
-                    <div class="dropdown">
-                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                            {% trans %}Actions{% endtrans %}
-                            <span class="caret"></span>
-                        </a>
-                    <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ path('servicetype_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ path('servicetype_edit', { 'id': entity.id }) }}">{% trans %}edit{% endtrans %}</a>
-                                    </li>
-                                </ul>
-                                </div>
-                            </li></ul></td>
-                </tr>
-            {% endif %}
-    {% endfor %}
-    </tbody>
-</table>
+                                    </div>
+                                </li></ul></td>
+                    </tr>
+                {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 <ul>
     <li>
