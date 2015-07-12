@@ -22,6 +22,7 @@ class LoadDnsDomainData extends AbstractFixture implements OrderedFixtureInterfa
             $ddomain->setType('MASTER');
             $ddomain->setEnabled(true);
             $ddomain->setDomain($this->getReference('domain-'. $i));
+            $ddomain->setPublic(true);
 
             $drecord = new DnsRecord();
             $drecord->setName($ddomain->__toString());

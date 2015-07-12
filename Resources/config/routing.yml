@@ -157,3 +157,19 @@ ACSACSPanelBundle_mailwblist:
 dyndns:
     pattern:  /nic/update
     defaults: { _controller: "ACSACSPanelBundle:DynamicDns:update" }
+
+dyndns_show:
+    pattern:  /dyndns/show/{name}
+    defaults: { _controller: "ACSACSPanelBundle:DynamicDns:show" }
+
+dyndns_new:
+    pattern:  /dyndns/new
+    defaults: { _controller: "ACSACSPanelBundle:DynamicDns:new" }
+
+dyndns_create:
+    pattern:  /dyndns/create
+    defaults: { _controller: "ACSACSPanelBundle:DynamicDns:create" }
+
+dyndns_update:
+    pattern:  /dyndns/update
+    defaults: { _controller: "ACSACSPanelBundle:DynamicDns:update" }

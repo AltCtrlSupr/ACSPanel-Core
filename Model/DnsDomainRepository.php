@@ -32,6 +32,12 @@ class DnsDomainRepository extends AclEntityRepository
         return $entities;
     }
 
+    public function getPublic()
+    {
+        $query = $this->_em->createQuery('SELECT dns FROM ACS\ACSPanelBundle\Entity\DnsDomain dns INNER JOIN dns.domain d WHERE dns.public = true');
+        return $query->getResult();
+    }
+
     private function __applyAclFilter($query, $user)
     {
         $entities = $this->getAclFilter()->apply($query, ['VIEW'], $user, 'dns')->getResult();

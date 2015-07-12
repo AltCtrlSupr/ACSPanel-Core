@@ -77,6 +77,11 @@ class DnsDomain implements AclEntity
     private $service;
 
     /**
+     * @var boolean $enabled
+     */
+    private $public;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -433,4 +438,27 @@ class DnsDomain implements AclEntity
         return $this->getDomain()->getOwners();
     }
 
+
+    /**
+     * Set public
+     *
+     * @param boolean $public
+     * @return Domain
+     */
+    public function setPublic($public)
+    {
+        $this->public = $public;
+
+        return $this;
+    }
+
+    /**
+     * Get public
+     *
+     * @return boolean
+     */
+    public function getPublic()
+    {
+        return $this->public;
+    }
 }

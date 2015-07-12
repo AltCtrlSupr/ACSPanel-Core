@@ -144,6 +144,14 @@ services:
         calls:
             - [ setAclFilter, ['@problematic.acl.orm.filter'] ]
 
+    dnsrecord_repository:
+        class: ACS\ACSPanelBundle\Model\DnsRecordRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: ['ACSACSPanelBundle:DnsRecord']
+        calls:
+            - [ setAclFilter, ['@problematic.acl.orm.filter'] ]
+
     mailalias_repository:
         class: ACS\ACSPanelBundle\Model\MailAliasRepository
         factory_service: doctrine

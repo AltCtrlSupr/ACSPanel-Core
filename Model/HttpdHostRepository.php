@@ -26,8 +26,8 @@ class HttpdHostRepository extends AclEntityRepository
 
     public function getUserViewable($user)
     {
-		$entities_raw = $this->_em->createQuery('SELECT h,d,pd FROM ACS\ACSPanelBundle\Entity\HttpdHost h INNER JOIN h.domain d LEFT JOIN d.parent_domain pd');
-		$entities = $this->getAclFilter()->apply($entities_raw, ['VIEW'], $user, 'h')->getResult();
+        $entities_raw = $this->_em->createQuery('SELECT h,d,pd FROM ACS\ACSPanelBundle\Entity\HttpdHost h INNER JOIN h.domain d LEFT JOIN d.parent_domain pd');
+        $entities = $this->getAclFilter()->apply($entities_raw, ['VIEW'], $user, 'h')->getResult();
 
         return $entities;
     }
@@ -42,7 +42,7 @@ class HttpdHostRepository extends AclEntityRepository
             ->setParameter('1',$term)
             ->getQuery();
 
-		$entities = $this->getAclFilter()->apply($query, ['VIEW'], $user, 'h')->getResult();
+        $entities = $this->getAclFilter()->apply($query, ['VIEW'], $user, 'h')->getResult();
 
         return $entities;
 	}

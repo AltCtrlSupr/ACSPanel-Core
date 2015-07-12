@@ -59,6 +59,9 @@ ACS\ACSPanelBundle\Entity\DnsDomain:
             type: datetime
             column: updated_at
             nullable: true
+        public:
+            type: boolean
+            nullable: true
     oneToOne:
         domain:
             targetEntity: Domain
