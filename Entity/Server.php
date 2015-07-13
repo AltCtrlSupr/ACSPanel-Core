@@ -43,7 +43,7 @@ class Server implements AclEntity
     private $updatedAt;
 
     /**
-     * @var \ACS\ACSPanelUsersBundle\Entity\FosUser
+     * @var \ACS\ACSPanelUsersBundle\Entity\User
      */
     private $user;
 
@@ -186,10 +186,10 @@ class Server implements AclEntity
     /**
      * Set user
      *
-     * @param \ACS\ACSPanelBundle\Entity\FosUser $user
+     * @param \ACS\ACSPanelBundle\Entity\User $user
      * @return Server
      */
-    public function setUser(\ACS\ACSPanelUsersBundle\Entity\FosUser $user = null)
+    public function setUser(\ACS\ACSPanelUsersBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
@@ -199,7 +199,7 @@ class Server implements AclEntity
     /**
      * Get user
      *
-     * @return \ACS\ACSPanelUsersBundle\Entity\FosUser
+     * @return \ACS\ACSPanelUsersBundle\Entity\User
      */
     public function getUser()
     {

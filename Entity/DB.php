@@ -42,7 +42,7 @@ class DB implements AclEntity
     private $service;
 
     /**
-     * @var \ACS\ACSPanelUsersBundle\Entity\FosUser
+     * @var \ACS\ACSPanelUsersBundle\Entity\User
      */
     private $user;
 
@@ -208,10 +208,10 @@ class DB implements AclEntity
     /**
      * Set user
      *
-     * @param \ACS\ACSPanelUsersBundle\Entity\FosUser $user
+     * @param \ACS\ACSPanelUsersBundle\Entity\User $user
      * @return DB
      */
-    public function setUser(\ACS\ACSPanelUsersBundle\Entity\FosUser $user = null)
+    public function setUser(\ACS\ACSPanelUsersBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
@@ -221,7 +221,7 @@ class DB implements AclEntity
     /**
      * Get user
      *
-     * @return \ACS\ACSPanelUsersBundle\Entity\FosUser
+     * @return \ACS\ACSPanelUsersBundle\Entity\User
      */
     public function getUser()
     {

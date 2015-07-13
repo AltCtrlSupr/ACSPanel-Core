@@ -151,7 +151,7 @@ class MailLogrcvd implements AclEntity
     /**
      * Get user
      *
-     * @return \ACS\ACSPanelUsersBundle\Entity\FosUser
+     * @return \ACS\ACSPanelUsersBundle\Entity\User
      */
     public function getUser()
     {

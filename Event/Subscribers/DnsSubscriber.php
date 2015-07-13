@@ -84,8 +84,9 @@ class DnsSubscriber implements EventSubscriberInterface
         $domain = $entity;
 
         // Only clone dns records if is dns alias
-        if(!$domain->getIsDnsAlias())
+        if(!$domain->getIsDnsAlias()) {
             return;
+        }
 
         // Getting the Dns domain for entity parent domain
         $parentDnsDomain = $em->getRepository('ACSACSPanelBundle:DnsDomain')->findOneBy(array('domain'=>$entity->getParentDomain()));
@@ -97,13 +98,13 @@ class DnsSubscriber implements EventSubscriberInterface
             $pattern = '/'.$parentDnsDomain->getDomain().'$/';
 
             $name = preg_replace($pattern,$entity->getName(),$dnsRecord->getName());
-            $type=$dnsRecord->getType();
+            $type = $dnsRecord->getType();
             $content = preg_replace($pattern,$entity->getName(),$dnsRecord->getContent());
 
-            $exist=$em->getRepository('ACSACSPanelBundle:DnsRecord')->findBy(array('name'=>$name,'type'=>$type,'content'=>$content));
+            $exist = $em->getRepository('ACSACSPanelBundle:DnsRecord')->findBy(array('name'=>$name,'type'=>$type,'content'=>$content));
 
             if(!count($exist)){
-                $newRecord=new DnsRecord();
+                $newRecord = new DnsRecord();
                 $newRecord->setName($name);
                 $newRecord->setType($type);
 
@@ -114,9 +115,8 @@ class DnsSubscriber implements EventSubscriberInterface
                 $newRecord->setPrio($dnsRecord->getPrio());
 
                 $em->persist($newRecord);
-                $em->flush();
             }
-
         }
+        $em->flush();
     }
 }

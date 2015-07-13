@@ -46,7 +46,7 @@ ACS\ACSPanelBundle\Entity\MailDomain:
                 - versioned
         enabled:
             type: boolean
-            nullable: true 
+            nullable: true
             gedmo:
                 - versioned
         createdAt:
@@ -71,7 +71,7 @@ ACS\ACSPanelBundle\Entity\MailDomain:
                 onDelete: CASCADE
     manyToOne:
         user:
-            targetEntity: \ACS\ACSPanelUsersBundle\Entity\FosUser
+            targetEntity: \ACS\ACSPanelUsersBundle\Entity\User
             cascade: {  }
             inversedBy: maildomains
             joinTable: null

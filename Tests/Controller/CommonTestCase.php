@@ -39,7 +39,7 @@ abstract class CommonTestCase extends WebTestCase
 
     protected function createAuthorizedClient($username)
     {
-        $admin_user = $this->em->getRepository('ACSACSPanelUsersBundle:FosUser')->findOneByUsername($username);
+        $admin_user = $this->em->getRepository('ACSACSPanelUsersBundle:User')->findOneByUsername($username);
 
         $this->loginAs($admin_user, 'main');
 

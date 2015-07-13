@@ -52,7 +52,7 @@ class MailWBList implements AclEntity
     private $updatedAt;
 
     /**
-     * @var \ACS\ACSPanelUsersBundle\Entity\FosUser
+     * @var \ACS\ACSPanelUsersBundle\Entity\User
      */
     private $user;
 
@@ -235,10 +235,10 @@ class MailWBList implements AclEntity
     /**
      * Set user
      *
-     * @param \ACS\ACSPanelUsersBundle\Entity\FosUser $user
+     * @param \ACS\ACSPanelUsersBundle\Entity\User $user
      * @return MailWBList
      */
-    public function setUser(\ACS\ACSPanelUsersBundle\Entity\FosUser $user = null)
+    public function setUser(\ACS\ACSPanelUsersBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
@@ -248,7 +248,7 @@ class MailWBList implements AclEntity
     /**
      * Get user
      *
-     * @return \ACS\ACSPanelUsersBundle\Entity\FosUser
+     * @return \ACS\ACSPanelUsersBundle\Entity\User
      */
     public function getUser()
     {

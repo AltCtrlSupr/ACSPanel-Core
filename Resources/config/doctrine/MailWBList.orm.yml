@@ -40,7 +40,7 @@ ACS\ACSPanelBundle\Entity\MailWBList:
                 - versioned
         enabled:
             type: boolean
-            nullable: true 
+            nullable: true
             gedmo:
                 - versioned
         createdAt:
@@ -52,7 +52,7 @@ ACS\ACSPanelBundle\Entity\MailWBList:
             column: updated_at
     manyToOne:
         user:
-            targetEntity: \ACS\ACSPanelUsersBundle\Entity\FosUser
+            targetEntity: \ACS\ACSPanelUsersBundle\Entity\User
             cascade: {  }
             inversedBy: null
             joinTable: null

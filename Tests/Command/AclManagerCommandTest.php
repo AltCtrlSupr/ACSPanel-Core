@@ -28,13 +28,13 @@ class ListCommandTest extends KernelTestCase
             )
         );
 
-        // This should add FosUser only for admins
+        // This should add User only for admins
         $this->assertRegExp('/Added/', $commandTester->getDisplay());
 
-        // Tests for FosUser entity
+        // Tests for User entity
         $commandTester->execute(
             array(
-                'entity' => '\ACS\ACSPanelUsersBundle\Entity\FosUser'
+                'entity' => '\ACS\ACSPanelUsersBundle\Entity\User'
             )
         );
         $this->assertRegExp('/Added/', $commandTester->getDisplay());

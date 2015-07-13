@@ -45,7 +45,7 @@ class UserToStringTransformer implements DataTransformerInterface
         }
 
         $user = $this->om
-            ->getRepository('ACSACSPanelBundle:FosUser')
+            ->getRepository('ACSACSPanelBundle:User')
             ->findOneBy(array('id' => $number))
         ;
 

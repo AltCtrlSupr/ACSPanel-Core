@@ -91,7 +91,7 @@ class RegisterHostingType extends AbstractType {
             'default_webserver' => '127.0.0.1',
             'container' => null,
             'em' => null,
-            'data_class' => 'ACS\ACSPanelUsersBundle\Entity\FosUser', // should point to your user entity
+            'data_class' => 'ACS\ACSPanelUsersBundle\Entity\User', // should point to your user entity
         ));
     }
 

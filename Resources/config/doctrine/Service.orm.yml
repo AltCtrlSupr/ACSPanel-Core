@@ -1,6 +1,6 @@
 ACS\ACSPanelBundle\Entity\Service:
     type: entity
-    table: service 
+    table: service
     repositoryClass: ACS\ACSPanelBundle\Model\ServiceRepository
     gedmo:
         loggable: {}
@@ -62,7 +62,7 @@ ACS\ACSPanelBundle\Entity\Service:
 
     manyToOne:
         user:
-            targetEntity: \ACS\ACSPanelUsersBundle\Entity\FosUser
+            targetEntity: \ACS\ACSPanelUsersBundle\Entity\User
             cascade: {  }
             mappedBy: group
             inversedBy: null
@@ -73,7 +73,7 @@ ACS\ACSPanelBundle\Entity\Service:
             joinColumn:
                 onDelete: CASCADE
         server:
-            targetEntity: Server 
+            targetEntity: Server
             cascade: {  }
             inversedBy: services
             joinTable: null

@@ -41,7 +41,7 @@ class Server
     private $updatedAt;
 
     /**
-     * @var \ACS\ACSPanelBundle\Entity\FosUser
+     * @var \ACS\ACSPanelBundle\Entity\User
      */
     private $user;
 
@@ -184,10 +184,10 @@ class Server
     /**
      * Set user
      *
-     * @param \ACS\ACSPanelBundle\Entity\FosUser $user
+     * @param \ACS\ACSPanelBundle\Entity\User $user
      * @return Server
      */
-    public function setUser(\ACS\ACSPanelBundle\Entity\FosUser $user = null)
+    public function setUser(\ACS\ACSPanelBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
@@ -197,7 +197,7 @@ class Server
     /**
      * Get user
      *
-     * @return \ACS\ACSPanelBundle\Entity\FosUser
+     * @return \ACS\ACSPanelBundle\Entity\User
      */
     public function getUser()
     {

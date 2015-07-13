@@ -32,8 +32,8 @@ class AclManagerCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
         // Adding master permissions to superadmins
-        $superadmins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\FosUser')->getSuperadminUsers();
-        $admins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\FosUser')->getAdminUsers();
+        $superadmins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\User')->getSuperadminUsers();
+        $admins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\User')->getAdminUsers();
 
         $entities = $em->getRepository($entity)->findAll();
 

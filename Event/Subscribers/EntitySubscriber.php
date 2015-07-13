@@ -53,8 +53,8 @@ class EntitySubscriber implements EventSubscriber
 
         $em = $args->getEntityManager();
         // Adding master permissions to superadmins
-        $superadmins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\FosUser')->getSuperadminUsers();
-        $admins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\FosUser')->getAdminUsers();
+        $superadmins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\User')->getSuperadminUsers();
+        $admins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\User')->getAdminUsers();
 
 		$aclManager = $this->container->get('problematic.acl_manager');
 
@@ -163,8 +163,8 @@ class EntitySubscriber implements EventSubscriber
         $em = $args->getEntityManager();
 
         // Adding master permissions to superadmins
-        $superadmins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\FosUser')->getSuperadminUsers();
-        $admins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\FosUser')->getAdminUsers();
+        $superadmins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\User')->getSuperadminUsers();
+        $admins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\User')->getAdminUsers();
 
 
 		$aclManager = $this->container->get('problematic.acl_manager');

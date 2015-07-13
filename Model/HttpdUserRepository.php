@@ -7,11 +7,11 @@
 namespace ACS\ACSPanelBundle\Model;
 
 use ACS\ACSPanelUsersBundle\Doctrine\AclEntityRepository;
-use ACS\ACSPanelUsersBundle\Entity\FosUser;
+use ACS\ACSPanelUsersBundle\Entity\User;
 
 class HttpdUserRepository extends AclEntityRepository
 {
-    public function findByUser(FosUser $user)
+    public function findByUser(User $user)
     {
         $query = $this->_em->createQuery('SELECT u FROM ACS\ACSPanelBundle\Entity\HttpdUser u INNER JOIN u.httpd_host h INNER JOIN h.domain d WHERE d.user = ?1')->setParameter(1, $user->getId());
         return $query->getResult();

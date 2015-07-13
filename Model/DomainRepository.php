@@ -6,7 +6,7 @@
  */
 namespace ACS\ACSPanelBundle\Model;
 
-use ACS\ACSPanelUsersBundle\Entity\FosUser;
+use ACS\ACSPanelUsersBundle\Entity\User;
 use ACS\ACSPanelUsersBundle\Doctrine\AclEntityRepository;
 
 class DomainRepository extends AclEntityRepository
@@ -22,7 +22,7 @@ class DomainRepository extends AclEntityRepository
     /**
      * @deprecated
      */
-    public function findByUser(FosUser $user)
+    public function findByUser(User $user)
     {
         $query = $this->_em->createQuery('SELECT d FROM ACS\ACSPanelBundle\Entity\Domain d WHERE d.user = ?1')->setParameter(1, $user->getId());
         return $query->getResult();

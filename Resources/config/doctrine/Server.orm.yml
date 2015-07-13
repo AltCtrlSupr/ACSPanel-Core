@@ -43,7 +43,7 @@ ACS\ACSPanelBundle\Entity\Server:
             #cascade: [ "persist" ]
     manyToOne:
         user:
-            targetEntity: \ACS\ACSPanelUsersBundle\Entity\FosUser
+            targetEntity: \ACS\ACSPanelUsersBundle\Entity\User
             cascade: {  }
             mappedBy: group
             inversedBy: null

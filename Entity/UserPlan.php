@@ -23,7 +23,7 @@ class UserPlan implements AclEntity
     private $uplans;
 
     /**
-     * @var \ACS\ACSPanelUsersBundle\Entity\FosUser
+     * @var \ACS\ACSPanelUsersBundle\Entity\User
      */
     private $puser;
 
@@ -77,10 +77,10 @@ class UserPlan implements AclEntity
     /**
      * Set puser
      *
-     * @param \ACS\ACSPanelBundle\Entity\FosUser $puser
+     * @param \ACS\ACSPanelBundle\Entity\User $puser
      * @return UserPlan
      */
-    public function setPuser(\ACS\ACSPanelUsersBundle\Entity\FosUser $puser = null)
+    public function setPuser(\ACS\ACSPanelUsersBundle\Entity\User $puser = null)
     {
         $this->puser = $puser;
 
@@ -90,7 +90,7 @@ class UserPlan implements AclEntity
     /**
      * Get puser
      *
-     * @return \ACS\ACSPanelBundle\Entity\FosUser
+     * @return \ACS\ACSPanelBundle\Entity\User
      */
     public function getPuser()
     {
@@ -99,6 +99,6 @@ class UserPlan implements AclEntity
 
     public function getOwners()
     {
-        return $this->getUser();
+        return $this->getPuser();
     }
 }
