@@ -8,10 +8,10 @@ class MailLogRcvdControllerTest extends CommonTestCase
 {
     public function testMailRcvdIndex()
     {
-		$client = $this->createSuperadminClient();
+        $client = $this->createSuperadminClient();
 
-		$crawler = $client->request('GET', '/maillogrcvd');
-		$this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
+        $crawler = $client->request('GET', '/maillogrcvd');
+        $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
 
     }
 }

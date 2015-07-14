@@ -6,13 +6,13 @@
  */
 namespace ACS\ACSPanelBundle\Model;
 
-use ACS\ACSPanelUsersBundle\Entity\FosUser;
+use ACS\ACSPanelUsersBundle\Entity\User;
 
 use ACS\ACSPanelUsersBundle\Doctrine\AclEntityRepository;
 
 class DnsRecordRepository extends AclEntityRepository
 {
-    public function findByUser(FosUser $user)
+    public function findByUser(User $user)
     {
         $query = $this->_em->createQuery('SELECT rec FROM ACS\ACSPanelBundle\Entity\DnsRecord rec INNER JOIN rec.dns_domain d WHERE d.user = ?1')->setParameter(1, $user->getId());
         return $query->getResult();
@@ -23,6 +23,21 @@ class DnsRecordRepository extends AclEntityRepository
         $query = $this->_em->createQuery('SELECT rec FROM ACS\ACSPanelBundle\Entity\DnsRecord rec INNER JOIN rec.dns_domain dns INNER JOIN dns.domain d WHERE d.user IN (?1)')->setParameter(1, $user);
         return $query->getResult();
     }
+
+    public function findOneDynamic($user, $hostname)
+    {
+        $query = $this->_em->createQueryBuilder('r')
+            ->select('r')
+            ->where('r.name = ?1')
+            ->from('ACS\ACSPanelBundle\Entity\DnsRecord', 'r')
+            ->setParameter(1, $hostname)
+            ->getQuery();
+
+        $entity = $this->getAclFilter()->apply($query, ['EDIT'], $user, 'r')->getResult();
+
+        return $entity[0];
+    }
+
 }
 
 ?>

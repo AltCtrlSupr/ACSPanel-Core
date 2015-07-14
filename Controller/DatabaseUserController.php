@@ -3,7 +3,9 @@
 namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 use ACS\ACSPanelBundle\Entity\DatabaseUser;
 use ACS\ACSPanelBundle\Form\DatabaseUserType;
@@ -12,8 +14,9 @@ use ACS\ACSPanelBundle\Form\DatabaseUserType;
  *
  * DatabaseUser controller.
  *
+ * @Rest\RouteResource("DatabaseUser")
  */
-class DatabaseUserController extends Controller
+class DatabaseUserController extends FOSRestController
 {
     /**
      * Finds and displays a DatabaseUser entity.

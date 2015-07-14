@@ -8,11 +8,11 @@ class ServiceControllerTest extends CommonTestCase
 {
     public function testServiceIndex()
     {
-		$client = $this->createSuperadminClient();
+        $client = $this->createSuperadminClient();
 
-		// Loading form
-		$crawler = $client->request('GET', '/service');
-		$this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
+        // Loading form
+        $crawler = $client->request('GET', '/service');
+        $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
 
     }
 }

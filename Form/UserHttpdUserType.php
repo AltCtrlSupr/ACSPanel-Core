@@ -14,7 +14,11 @@ class UserHttpdUserType extends ContainerAwareType
     {
         $container = $this->container;
 
-        $user_httpd_hosts = $this->container->get('httpdhost_repository')->getUserViewable($this->container->get('security.context')->getToken()->getUser());
+        $user_httpd_hosts = $this
+            ->container
+            ->get('httpdhost_repository')
+            ->getUserViewable($this->container->get('security.context')->getToken()->getUser())
+        ;
 
         $builder
             ->add('name')
@@ -22,7 +26,9 @@ class UserHttpdUserType extends ContainerAwareType
             ->add('protected_dir',null, array('required' => false))
             ->add('httpd_host', 'entity', array(
                 'class' => 'ACSACSPanelBundle:HttpdHost',
-                'choices' => $user_httpd_hosts
+                'choices' => $user_httpd_hosts,
+                // 'empty_value' => 'messages.select.httpdhost',
+                'required' => true
             ))
         ;
     }

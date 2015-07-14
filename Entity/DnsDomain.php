@@ -1,6 +1,5 @@
 <?php
 
-
 namespace ACS\ACSPanelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -76,6 +75,11 @@ class DnsDomain implements AclEntity
      * @var \ACS\ACSPanelBundle\Entity\Service
      */
     private $service;
+
+    /**
+     * @var boolean $enabled
+     */
+    private $public;
 
     /**
      * Constructor
@@ -358,7 +362,6 @@ class DnsDomain implements AclEntity
         return $this->dnsrecords;
     }
 
-
     /**
      * Set service
      *
@@ -391,7 +394,6 @@ class DnsDomain implements AclEntity
 		    $this->createdAt = new \DateTime();
 	    }
     }
-
 
     /**
      * @ORM\PreUpdate
@@ -436,4 +438,27 @@ class DnsDomain implements AclEntity
         return $this->getDomain()->getOwners();
     }
 
+
+    /**
+     * Set public
+     *
+     * @param boolean $public
+     * @return Domain
+     */
+    public function setPublic($public)
+    {
+        $this->public = $public;
+
+        return $this;
+    }
+
+    /**
+     * Get public
+     *
+     * @return boolean
+     */
+    public function getPublic()
+    {
+        return $this->public;
+    }
 }

@@ -8,10 +8,10 @@ class IpAddressControllerTest extends CommonTestCase
 {
     public function testIpAddressIndex()
     {
-		$client = $this->createSuperadminClient();
+        $client = $this->createSuperadminClient();
 
-		$crawler = $client->request('GET', '/ipaddress');
-		$this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
+        $crawler = $client->request('GET', '/ipaddress');
+        $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
 
     }
 }

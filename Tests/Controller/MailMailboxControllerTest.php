@@ -8,10 +8,10 @@ class MailMailboxControllerTest extends CommonTestCase
 {
     public function testMailMailboxIndex()
     {
-		$client = $this->createSuperadminClient();
+        $client = $this->createSuperadminClient();
 
-		$crawler = $client->request('GET', '/mailmailbox');
-		$this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
+        $crawler = $client->request('GET', '/mailmailbox');
+        $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
 
     }
 }

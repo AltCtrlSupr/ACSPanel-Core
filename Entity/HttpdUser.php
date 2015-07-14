@@ -7,6 +7,7 @@ use Monolog\Logger;
 use Doctrine\ORM\Mapping as ORM;
 
 use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ACS\ACSPanelBundle\Entity\HttpdUser
@@ -60,6 +61,7 @@ class HttpdUser implements AclEntity
 
     /**
      * @var ACS\ACSPanelBundle\Entity\HttpdHost
+     * @Assert\NotBlank()
      */
     private $httpd_host;
 

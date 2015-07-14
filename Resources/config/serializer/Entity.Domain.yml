@@ -1,0 +1,19 @@
+ACS\ACSPanelBundle\Entity\Domain:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+        domain:
+            expose: true
+        enabled:
+            exclude: true
+        is_httpd_alias:
+            expose: true
+        is_dns_alias:
+            expose: true
+        is_mail_alias:
+            expose: true
+        createdAt:
+            expose: true
+        updatedAt:
+            expose: true

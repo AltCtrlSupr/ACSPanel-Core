@@ -22,7 +22,7 @@ ACS\ACSPanelBundle\Entity\IpAddress:
                 - versioned
         enabled:
             type: boolean
-            nullable: true 
+            nullable: true
             gedmo:
                 - versioned
         createdAt:
@@ -40,7 +40,7 @@ ACS\ACSPanelBundle\Entity\IpAddress:
               on: update
     manyToOne:
         user:
-            targetEntity: \ACS\ACSPanelUsersBundle\Entity\FosUser
+            targetEntity: \ACS\ACSPanelUsersBundle\Entity\User
             cascade: {  }
             mappedBy: group
             inversedBy: null

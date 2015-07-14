@@ -18,8 +18,8 @@ class DBRepository extends AclEntityRepository
 
     public function getUserViewable($user)
     {
-		$entities_raw = $this->_em->createQuery('SELECT db FROM ACS\ACSPanelBundle\Entity\DB db');
-		$entities = $this->getAclFilter()->apply($entities_raw, ['VIEW'], $user, 'db')->getResult();
+        $entities_raw = $this->_em->createQuery('SELECT db FROM ACS\ACSPanelBundle\Entity\DB db');
+        $entities = $this->getAclFilter()->apply($entities_raw, ['VIEW'], $user, 'db')->getResult();
 
         return $entities;
     }

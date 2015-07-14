@@ -1,10 +1,11 @@
 <?php
 
-
 namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 use ACS\ACSPanelBundle\Entity\Service;
 use ACS\ACSPanelBundle\Entity\PanelSetting;
@@ -14,12 +15,14 @@ use ACS\ACSPanelBundle\Form\ServiceType;
 /**
  * Service controller.
  *
+ * @Rest\RouteResource("Service")
  */
-class ServiceController extends Controller
+class ServiceController extends FOSRestController
 {
     /**
      * Lists all Service entities.
      *
+     * @Rest\View(templateVar="search_action")
      */
     public function indexAction()
     {
@@ -27,9 +30,9 @@ class ServiceController extends Controller
 
         $entities = $this->get('service_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
-        return $this->render('ACSACSPanelBundle:Service:index.html.twig', array(
-            'entities' => $entities,
-        ));
+        return array(
+            'entities' => $entities
+        );
     }
 
     /**

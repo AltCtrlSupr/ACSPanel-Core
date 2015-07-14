@@ -7,6 +7,7 @@ use Monolog\Logger;
 use Doctrine\ORM\Mapping as ORM;
 
 use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ACS\ACSPanelBundle\Entity\MailDomain
@@ -20,6 +21,7 @@ class MailDomain implements AclEntity
 
     /**
      * @var string $domain
+     * @Assert\NotBlank()
      */
     private $domain;
 
@@ -74,12 +76,13 @@ class MailDomain implements AclEntity
     private $updatedAt;
 
     /**
-     * @var ACS\ACSPanelUsersBundle\Entity\FosUser
+     * @var ACS\ACSPanelUsersBundle\Entity\User
      */
     private $user;
 
     /**
      * @var \ACS\ACSPanelBundle\Entity\Service
+     * @Assert\NotBlank()
      */
     private $service;
 
@@ -350,10 +353,10 @@ class MailDomain implements AclEntity
     /**
      * Set user
      *
-     * @param ACS\ACSPanelUsersBundle\Entity\FosUser $user
+     * @param ACS\ACSPanelUsersBundle\Entity\User $user
      * @return MailDomain
      */
-    public function setUser(\ACS\ACSPanelUsersBundle\Entity\FosUser $user = null)
+    public function setUser(\ACS\ACSPanelUsersBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
@@ -363,7 +366,7 @@ class MailDomain implements AclEntity
     /**
      * Get user
      *
-     * @return ACS\ACSPanelUsersBundle\Entity\FosUser
+     * @return ACS\ACSPanelUsersBundle\Entity\User
      */
     public function getUser()
     {

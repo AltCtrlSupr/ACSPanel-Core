@@ -2,7 +2,7 @@
 namespace ACS\ACSPanelBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-use ACS\ACSPanelUsersBundle\Entity\FosUser;
+use ACS\ACSPanelUsersBundle\Entity\User;
 
 class FilterUserEvent extends Event
 {
@@ -19,7 +19,7 @@ class FilterUserEvent extends Event
         $this->users = $users;
     }
 
-    public function setUser(FosUser $user)
+    public function setUser(User $user)
     {
         $this->user = $user;
     }

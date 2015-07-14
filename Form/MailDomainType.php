@@ -2,22 +2,16 @@
 
 namespace ACS\ACSPanelBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
+use ACS\ACSPanelBundle\Form\Base\ContainerAwareType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 
-class MailDomainType extends AbstractType
+class MailDomainType extends ContainerAwareType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        // TODO: Do the addition of fields with suscriber
-        global $kernel;
-
-        if ('AppCache' == get_class($kernel)) {
-            $kernel = $kernel->getKernel();
-        }
-        $security = $kernel->getContainer()->get('security.context');
+        $security = $this->container->get('security.context');
         $user = $security->getToken()->getUser();
         $child_ids = $user->getIdChildIds();
         $superadmin = false;

@@ -4,7 +4,10 @@
 namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use ACS\ACSPanelBundle\Controller\Base\CommonController;
 
 use ACS\ACSPanelBundle\Entity\MailMailbox;
 use ACS\ACSPanelBundle\Form\MailMailboxType;
@@ -12,9 +15,16 @@ use ACS\ACSPanelBundle\Form\MailMailboxType;
 /**
  * MailMailbox controller.
  *
+ * @Rest\RouteResource("Mailbox")
  */
-class MailMailboxController extends Controller
+class MailMailboxController extends CommonController
 {
+    public function __construct()
+    {
+        $this->setEntityRepository('ACSACSPanelBundle:MailMailbox');
+        $this->setEntityRouteBase('mailmailbox');
+    }
+
     /**
      * Lists all MailMailbox entities.
      *
@@ -37,17 +47,7 @@ class MailMailboxController extends Controller
      */
     public function showAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ACSACSPanelBundle:MailMailbox')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find MailMailbox entity.');
-        }
-
-        if (!$entity->userCanSee($this->get('security.context'))) {
-            throw new \Exception('You cannot edit this entity!');
-        }
+        $entity = $this->getEntity($id);
 
         $deleteForm = $this->createDeleteForm($id);
 
@@ -57,14 +57,14 @@ class MailMailboxController extends Controller
             'delete_form' => $deleteForm->createView(),        ));
     }
 
-	 public function showWidgetAction($maildomain_id)
-	 {
-	 	$em = $this->getDoctrine()->getManager();
-		$entities = $em->getRepository('ACSACSPanelBundle:MailMailbox')->findBy(array('mail_domain' => $maildomain_id));
-		return $this->render('ACSACSPanelBundle:MailMailbox:show_widget.html.twig', array(
-			'entities' => $entities,
-		));
-	 }
+     public function showWidgetAction($maildomain_id)
+     {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('ACSACSPanelBundle:MailMailbox')->findBy(array('mail_domain' => $maildomain_id));
+        return $this->render('ACSACSPanelBundle:MailMailbox:show_widget.html.twig', array(
+            'entities' => $entities,
+        ));
+     }
 
     /**
      * Displays a form to create a new MailMailbox entity.
@@ -72,7 +72,6 @@ class MailMailboxController extends Controller
      */
     public function newAction($maildomain_id = '')
     {
-
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
         if (!$user->canUseResource('MailMailbox',$em)) {
@@ -215,14 +214,6 @@ class MailMailboxController extends Controller
         return $this->redirect($this->generateUrl('mailmailbox'));
     }
 
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
-    }
-
 
     public function setenabledAction(Request $request, $id)
     {
@@ -270,6 +261,4 @@ class MailMailboxController extends Controller
         ));
 
     }
-
-
 }

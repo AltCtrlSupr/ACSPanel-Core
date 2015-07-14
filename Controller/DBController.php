@@ -3,7 +3,9 @@
 namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 use ACS\ACSPanelBundle\Entity\DB;
 use ACS\ACSPanelBundle\Entity\DatabaseUser;
@@ -12,8 +14,9 @@ use ACS\ACSPanelBundle\Form\DBType;
 /**
  * DB controller.
  *
+ * @Rest\RouteResource("DB")
  */
-class DBController extends Controller
+class DBController extends FOSRestController
 {
     /**
      * Lists all DB entities.

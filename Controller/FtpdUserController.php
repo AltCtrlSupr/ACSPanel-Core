@@ -4,7 +4,9 @@
 namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 use ACS\ACSPanelBundle\Entity\FtpdUser;
 use ACS\ACSPanelBundle\Form\FtpdUserType;
@@ -12,8 +14,9 @@ use ACS\ACSPanelBundle\Form\FtpdUserType;
 /**
  * FtpdUser controller.
  *
+ * @Rest\RouteResource("FtpdUser")
  */
-class FtpdUserController extends Controller
+class FtpdUserController extends FOSRestController
 {
     /**
      * Lists all FtpdUser entities.

@@ -6,13 +6,13 @@
  */
 namespace ACS\ACSPanelBundle\Model;
 
-use ACS\ACSPanelUsersBundle\Entity\FosUser;
+use ACS\ACSPanelUsersBundle\Entity\User;
 
 use ACS\ACSPanelUsersBundle\Doctrine\AclEntityRepository;
 
 class MailAliasRepository extends AclEntityRepository
 {
-    public function findByUser(FosUser $user)
+    public function findByUser(User $user)
     {
         $query = $this->_em->createQuery('SELECT a FROM ACS\ACSPanelBundle\Entity\MailAlias a INNER JOIN a.mail_domain md INNER JOIN md.domain d WHERE d.user = ?1')->setParameter(1, $user->getId());
         return $query->getResult();

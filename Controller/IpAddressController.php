@@ -4,7 +4,9 @@
 namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 use ACS\ACSPanelBundle\Entity\IpAddress;
 use ACS\ACSPanelBundle\Form\IpAddressType;
@@ -12,12 +14,14 @@ use ACS\ACSPanelBundle\Form\IpAddressType;
 /**
  * IpAddress controller.
  *
+ * @Rest\RouteResource("IpAddress")
  */
-class IpAddressController extends Controller
+class IpAddressController extends FOSRestController
 {
     /**
      * Lists all IpAddress entities.
      *
+     * @Rest\View(templateVar="search_action")
      */
     public function indexAction()
     {
@@ -25,9 +29,9 @@ class IpAddressController extends Controller
 
         $entities = $this->get('ipaddress_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
-        return $this->render('ACSACSPanelBundle:IpAddress:index.html.twig', array(
-            'entities' => $entities,
-        ));
+        return array(
+            'entities' => $entities
+        );
     }
 
     /**

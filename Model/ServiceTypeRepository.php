@@ -62,8 +62,8 @@ class ServiceTypeRepository extends AclEntityRepository
 
     public function getUserViewable($user)
     {
-		$entities_raw = $this->_em->createQuery('SELECT st FROM ACS\ACSPanelBundle\Entity\ServiceType st');
-		$entities = $this->getAclFilter()->apply($entities_raw, ['VIEW'], $user, 'st')->getResult();
+        $entities_raw = $this->_em->createQuery('SELECT st FROM ACS\ACSPanelBundle\Entity\ServiceType st');
+        $entities = $this->getAclFilter()->apply($entities_raw, ['VIEW'], $user, 'st')->getResult();
 
         return $entities;
     }

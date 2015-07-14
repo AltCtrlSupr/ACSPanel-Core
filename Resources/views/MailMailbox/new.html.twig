@@ -5,7 +5,6 @@
 <div class="form_box">
     <form action="{{ path('mailmailbox_create') }}" method="post" {{ form_enctype(form) }}>
         <span class="label label-important">{{ form_errors(form) }}</span>
-        {#{{ form_widget(form) }}#}
         {{ form_label(form.name) }}
         {{ form_widget(form.name) }}
         {{ form_label(form.username) }}
@@ -15,7 +14,7 @@
         {{ form_widget(form.password) }}
         {{ form_rest(form) }}
         <p>
-            <button class="btn" type="submit">Create</button>
+            <button class="btn btn-success" type="submit">Create</button>
         </p>
     </form>
 </div>

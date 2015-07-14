@@ -4,32 +4,34 @@
 namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 use ACS\ACSPanelBundle\Entity\HttpdUser;
 use ACS\ACSPanelBundle\Form\UserHttpdUserType;
 
 /**
  * HttpdUser controller.
- * @todo: Check if it's necessary to mark webserver to restart
  *
+ * @Rest\RouteResource("HttpdUser")
  */
-class HttpdUserController extends Controller
-
+class HttpdUserController extends FOSRestController
 {
     /**
      * Lists all HttpdUser entities.
      *
+     * @Rest\View()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $this->get('httpduser_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
-        
-        return $this->render('ACSACSPanelBundle:HttpdUser:index.html.twig', array(
-            'entities' => $entities,
-        ));
+
+        return array(
+            'entities' => $entities
+        );
     }
 
     /**
@@ -92,12 +94,9 @@ class HttpdUserController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-				$entity->setEnabled(true);
+            $entity->setEnabled(true);
             $em->persist($entity);
             $em->flush();
-
-            // Mark webserver to restart
-            //$this->get('server.actions')->setWebserverToReload($entity->getHttpdHost()->getService()->getServer());
 
             return $this->redirect($this->generateUrl('httpduser_show', array('id' => $entity->getId())));
         }

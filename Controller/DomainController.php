@@ -3,7 +3,10 @@
 namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use ACS\ACSPanelBundle\Controller\Base\CommonController;
 
 use ACS\ACSPanelBundle\Entity\Domain;
 use ACS\ACSPanelBundle\Entity\DnsDomain;
@@ -15,12 +18,25 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 /**
  * Domain controller.
  *
+ * @Rest\RouteResource("Domain")
  */
-class DomainController extends Controller
+class DomainController extends CommonController
 {
+    public function __construct()
+    {
+        $this->setEntityRepository('ACSACSPanelBundle:Domain');
+        $this->setEntityRouteBase('domain');
+    }
+
     /**
      * Lists all Domain entities.
      *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Returns all the domains owned by current user",
+     * )
+     *
+     * @Rest\View(templateVar="entities")
      */
     public function indexAction()
     {
@@ -29,21 +45,36 @@ class DomainController extends Controller
         // IF is admin can see all the hosts, if is user only their ones...
         $entities = $this->get('domain_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
-        return $this->render('ACSACSPanelBundle:Domain:index.html.twig', array(
-            'entities' => $entities,
-            'search_action' => 'domain_search',
-        ));
+        $view = $this->view($entities, 200)
+            ->setTemplateData(array('search_action' => 'domain_search'))
+        ;
+
+        return $view;
     }
 
     /**
-     * Finds and displays a LogItem search results.
+     * Finds and displays a Domain search results.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Returns the domains owned by current user filtered by search term",
+     *  requirements={
+     *      {
+     *          "name"="term",
+     *          "dataType"="string",
+     *          "requirement"="\w+",
+     *          "description"="The search term to filter"
+     *      }
+     *  },
+     * )
+     *
+     * @Rest\View(template="ACSACSPanelBundle:Domain:index.html.twig", templateVar="entities")
+     * @Rest\Get("/domains/{term}/search")
      */
-    public function searchAction(Request $request)
+    public function searchAction($term)
     {
         $em = $this->getDoctrine()->getManager();
         $rep = $em->getRepository('ACSACSPanelBundle:Domain');
-
-        $term = $request->request->get('term');
 
         $query = $rep->createQueryBuilder('d')
             ->where('d.id = ?1')
@@ -53,52 +84,64 @@ class DomainController extends Controller
             ->getQuery()
         ;
 
+        $template_vars = array(
+            'search_action' => 'domain_search',
+            'term' => $term,
+        );
+
         $entities = $query->execute();
 
-        return $this->render('ACSACSPanelBundle:Domain:index.html.twig', array(
-            'entities' => $entities,
-            'term' => $term,
-            'search_action' => 'domain_search',
-        ));
+        $view = $this->view($entities, 200)
+            ->setTemplateData($template_vars)
+        ;
 
+        return $view;
     }
 
     /**
      * Finds and displays a Domain entity.
      *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Return the domain for the passed id",
+     * )
+     *
+     * @Rest\Get("/domains/{id}/show")
+     * @Rest\View(templateVar="entity")
      */
     public function showAction($id)
     {
+        $entity = $this->getEntity($id);
+
         $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ACSACSPanelBundle:Domain')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Domain entity.');
-        }
-
         $dnsdomains = $em->getRepository('ACSACSPanelBundle:DnsDomain')->findByDomain($entity);
         $maildomains = $em->getRepository('ACSACSPanelBundle:MailDomain')->findByDomain($entity);
+        $delete_form = $this->createDeleteForm($id);
 
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('ACSACSPanelBundle:Domain:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+        $template_data = array(
             'dnsdomains' => $dnsdomains,
             'maildomains' => $maildomains,
-        ));
+            'delete_form' => $delete_form->createView()
+        );
+
+        $view = $this->view($entity, 200)
+            ->setTemplateData($template_data)
+        ;
+
+        return $view;
     }
 
     /**
      * Displays a form to create a new Domain entity.
      *
+     * @Rest\View(templateVar="entity")
      */
     public function newAction()
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
-        if (!$user->canUseResource('Domain',$em)) {
+
+        if (!$user->canUseResource('Domain', $em)) {
             return $this->render('ACSACSPanelBundle:Error:resources.html.twig', array(
                 'entity' => 'Domain'
             ));
@@ -107,15 +150,23 @@ class DomainController extends Controller
         $entity = new Domain();
         $form   = $this->createForm(new DomainType($this->container), $entity);
 
-        return $this->render('ACSACSPanelBundle:Domain:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
+        $view = $this->view($entity, 200)
+            ->setTemplateData(array('form' => $form->createView()))
+        ;
+
+        return $view;
     }
 
     /**
      * Creates a new Domain entity.
      *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Creates new domain",
+     * )
+     *
+     * @Rest\Post("/domains/create")
+     * @Rest\View(template="ACSACSPanelBundle:Domain:new.html.twig", templateVar="entity")
      */
     public function createAction(Request $request)
     {
@@ -134,143 +185,112 @@ class DomainController extends Controller
             $em->flush();
 
             if($form['add_dns_domain']->getData()){
-                $dnsdomain = new DnsDomain();
-                $dnsdomain->setDomain($entity);
-                $dnsdomain->setType('master');
-                $dnsdomain->setEnabled(true);
-                $dnstypes = $em->getRepository('ACSACSPanelBundle:ServiceType')->getDNSServiceTypesIds();
-                // TODO: Change somehow to get a default DNS server
-                $dnsservice = $em->getRepository('ACSACSPanelBundle:Service')->findByType($dnstypes);
-
-                if (count($dnsservice)) {
-                    $dnsdomain->setService($dnsservice[0]);
-                }
-
-                $this->container->get('event_dispatcher')->dispatch(DnsEvents::DNS_AFTER_DOMAIN_ADD, new FilterDnsEvent($dnsdomain, $em));
-
-                $em->persist($dnsdomain);
-                $em->flush();
+                $this->__handleDnsCreation($entity);
             }
 
-            return $this->redirect($this->generateUrl('domain_show', array('id' => $entity->getId())));
+            // It only works with 201 code
+            $view = $this->routeRedirectView('domain_show', array('id' => $entity->getId()), 201);
+            return $this->handleView($view);
         }
 
-        return $this->render('ACSACSPanelBundle:Domain:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
+        $view = $this->view($entity, 200)
+            ->setTemplateData(array('form' => $form->createView()))
+        ;
+
+        return $view;
+    }
+
+    private function __handleDnsCreation($entity)
+    {
+        $dnsdomain = new DnsDomain();
+        $dnsdomain->setDomain($entity);
+        $dnsdomain->setType('master');
+        $dnsdomain->setEnabled(true);
+
+        $em = $this->getDoctrine()->getManager();
+        $dnstypes = $em->getRepository('ACSACSPanelBundle:ServiceType')->getDNSServiceTypesIds();
+        // TODO: Change somehow to get a default DNS server
+        $dnsservice = $em->getRepository('ACSACSPanelBundle:Service')->findByType($dnstypes);
+
+        if (count($dnsservice)) {
+            $dnsdomain->setService($dnsservice[0]);
+        }
+
+        $this->container->get('event_dispatcher')->dispatch(DnsEvents::DNS_AFTER_DOMAIN_ADD, new FilterDnsEvent($dnsdomain, $em));
+
+        $em->persist($dnsdomain);
+        $em->flush();
     }
 
     /**
      * Displays a form to edit an existing Domain entity.
      *
+     * @Rest\View()
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ACSACSPanelBundle:Domain')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Domain entity.');
-        }
+        $entity = $this->getEntity($id);
 
         $editForm = $this->createForm(new DomainType($this->container), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('ACSACSPanelBundle:Domain:edit.html.twig', array(
+        return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        ));
+        );
     }
 
     /**
      * Edits an existing Domain entity.
      *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Edits domain identified by id",
+     * )
+     *
+     * @Rest\View()
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ACSACSPanelBundle:Domain')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Domain entity.');
-        }
+        $entity = $this->getEntity($id);
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new DomainType($this->container), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
             return $this->redirect($this->generateUrl('domain_edit', array('id' => $id)));
         }
 
-        return $this->render('ACSACSPanelBundle:Domain:edit.html.twig', array(
+        return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Deletes a Domain entity.
-     *
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('ACSACSPanelBundle:Domain')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Domain entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('domain'));
-    }
-
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
+        );
     }
 
     public function setaliasAction(Request $request, $id, $type)
     {
-       $em = $this->getDoctrine()->getManager();
-       $entity = $em->getRepository('ACSACSPanelBundle:Domain')->find($id);
-
-       if (!$entity) {
-         throw $this->createNotFoundException('Unable to find Domain entity.');
-       }
+        $entity = $this->getEntity($id);
 
        switch($type){
-       case 'dns':
-         $entity->setIsDnsAlias(!$entity->getIsDnsAlias());
-         break;
-       case 'httpd':
-         $entity->setIsHttpdAlias(!$entity->getIsHttpdAlias());
-         break;
-       case 'mail':
-         $entity->setIsMailAlias(!$entity->getIsMailAlias());
-         break;
-       default:
-         throw $this->createException('Type not valid');
-         break;
+           case 'dns':
+             $entity->setIsDnsAlias(!$entity->getIsDnsAlias());
+             break;
+           case 'httpd':
+             $entity->setIsHttpdAlias(!$entity->getIsHttpdAlias());
+             break;
+           case 'mail':
+             $entity->setIsMailAlias(!$entity->getIsMailAlias());
+             break;
+           default:
+             throw $this->createException('Type not valid');
+             break;
        }
 
        $em->persist($entity);
@@ -281,17 +301,14 @@ class DomainController extends Controller
 
     public function setenabledAction(Request $request, $id)
     {
-      $em = $this->getDoctrine()->getManager();
-      $entity = $em->getRepository('ACSACSPanelBundle:Domain')->find($id);
+        $entity = $this->getEntity($id);
 
-      if (!$entity) {
-        throw $this->createNotFoundException('Unable to find Domain entity.');
-      }
+        $entity->setEnabled(!$entity->getEnabled());
+        $em->persist($entity);
+        $em->flush();
 
-      $entity->setEnabled(!$entity->getEnabled());
-      $em->persist($entity);
-      $em->flush();
-
-      return $this->redirect($this->generateUrl('domain'));
+        return $this->redirect($this->generateUrl('domain'));
     }
+
+
 }

@@ -29,6 +29,7 @@ class DnsDomainType extends ContainerAwareType
             ))
             ->add('master')
             ->add('service')
+            ->add('public')
         ;
     }
 

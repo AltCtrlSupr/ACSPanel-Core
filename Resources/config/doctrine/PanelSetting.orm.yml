@@ -18,7 +18,7 @@ ACS\ACSPanelBundle\Entity\PanelSetting:
 
     manyToOne:
         user:
-            targetEntity: \ACS\ACSPanelUsersBundle\Entity\FosUser
+            targetEntity: \ACS\ACSPanelUsersBundle\Entity\User
             inversedBy: settings
             joinTable: null
             orderBy: null

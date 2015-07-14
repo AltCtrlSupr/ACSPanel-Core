@@ -8,49 +8,51 @@
 
 {% block body %}
 
-<table class="records_list table table-striped table-bordered datatable">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Username</th>
-            <th>Password</th>
-            <th>Createdat</th>
-            <th>Updatedat</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td data-title="id"><a href="{{ path('databaseuser_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td data-title="Username">{{ entity.username }}</td>
-            <td data-title="Password">{{ entity.password }}</td>
-            <td data-title="Created at">{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-            <td data-title="Updated at">{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-            <td data-title="Actions">
-                    <div class="dropdown">
-                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                            {% trans %}Actions{% endtrans %}
-                            <span class="caret"></span>
-                        </a>
-                    <ul class="dropdown-menu" role="menu">
-                    <li>
-                        <a href="{{ path('databaseuser_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('databaseuser_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-            </div>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+<div class="box box-primary box-body">
+    <table class="records_list table table-striped table-bordered datatable">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Createdat</th>
+                <th>Updatedat</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td data-title="id"><a href="{{ path('databaseuser_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td data-title="Username">{{ entity.username }}</td>
+                <td data-title="Password">{{ entity.password }}</td>
+                <td data-title="Created at">{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td data-title="Updated at">{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td data-title="Actions">
+                        <div class="dropdown">
+                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                                {% trans %}Actions{% endtrans %}
+                                <span class="caret"></span>
+                            </a>
+                        <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="{{ path('databaseuser_show', { 'id': entity.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('databaseuser_edit', { 'id': entity.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 <ul>
     <li>
-        <a href="{{ path('databaseuser_new') }}">
+        <a class="btn btn-primary" href="{{ path('databaseuser_new') }}">
             Create a new entry
         </a>
     </li>

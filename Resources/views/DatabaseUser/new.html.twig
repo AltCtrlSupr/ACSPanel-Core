@@ -7,14 +7,14 @@
         <span class="label label-important">{{ form_errors(form) }}</span>
         {{ form_widget(form) }}
         <p>
-            <button class="btn" type="submit">Create</button>
+            <button class="btn btn-success"  type="submit">Create</button>
         </p>
     </form>
 </div>
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('databaseuser') }}">
+        <a class="btn btn-primary"  href="{{ path('databaseuser') }}">
             Back to the list
         </a>
     </li>

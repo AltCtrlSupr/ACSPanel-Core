@@ -21,23 +21,23 @@ ACS\ACSPanelBundle\Entity\Domain:
                 - versioned
         enabled:
             type: boolean
-            nullable: true 
+            nullable: true
             gedmo:
                 - versioned
         is_httpd_alias:
             type: boolean
-            nullable: true 
+            nullable: true
             gedmo:
                 - versioned
         # To avoid repeat records when multiple domains point same place
         is_dns_alias:
             type: boolean
-            nullable: true 
+            nullable: true
             gedmo:
                 - versioned
         is_mail_alias:
             type: boolean
-            nullable: true 
+            nullable: true
             gedmo:
                 - versioned
         createdAt:
@@ -49,7 +49,7 @@ ACS\ACSPanelBundle\Entity\Domain:
             column: updated_at
     manyToOne:
         user:
-            targetEntity: \ACS\ACSPanelUsersBundle\Entity\FosUser
+            targetEntity: \ACS\ACSPanelUsersBundle\Entity\User
             cascade: {  }
             inversedBy: domains
             joinTable: null

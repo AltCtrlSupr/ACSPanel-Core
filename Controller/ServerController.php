@@ -4,7 +4,9 @@
 namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 use ACS\ACSPanelBundle\Entity\Server;
 use ACS\ACSPanelBundle\Form\ServerType;
@@ -12,12 +14,14 @@ use ACS\ACSPanelBundle\Form\ServerType;
 /**
  * Server controller.
  *
+ * @Rest\RouteResource("Server")
  */
-class ServerController extends Controller
+class ServerController extends FOSRestController
 {
     /**
      * Lists all Server entities.
      *
+     * @Rest\View(templateVar="search_action")
      */
     public function indexAction()
     {
@@ -25,9 +29,9 @@ class ServerController extends Controller
 
         $entities = $this->get('server_repository')->getUserViewable($this->get('security.context')->getToken()->getUser());
 
-        return $this->render('ACSACSPanelBundle:Server:index.html.twig', array(
-            'entities' => $entities,
-        ));
+        return array(
+            'entities' => $entities
+        );
     }
 
     /**

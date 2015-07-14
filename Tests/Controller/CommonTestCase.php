@@ -19,63 +19,40 @@ abstract class CommonTestCase extends WebTestCase
     private $fixtures = [
         'ACS\ACSPanelBundle\Tests\DataFixtures\LoadUserData',
         'ACS\ACSPanelBundle\Tests\DataFixtures\LoadDomainData',
+        'ACS\ACSPanelBundle\Tests\DataFixtures\LoadDnsDomainData',
         'ACS\ACSPanelBundle\Tests\DataFixtures\LoadPlanData',
         'ACS\ACSPanelBundle\Tests\DataFixtures\LoadServiceTypeData',
     ];
 
-    public $client;
-
-    protected $_application;
-    /**
-     * @var \Doctrine\ORM\EntityManager
-     */
     private $em;
+
+    public $client;
 
     public function setUp()
     {
         $this->loadFixtures($this->fixtures);
 
-        $this->client = static::createClient();
-        $this->client->followRedirects();
-    }
+        $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
-    protected function requestWithAuth($role, $method, $uri, $parameters = array())
-    {
-        $this->client = $this->createAuthorizedClient($role);
-        return $this->client->request($method, $uri, $parameters, array(), array());
+        $this->createSuperadminClient('superadmin');
     }
 
     protected function createAuthorizedClient($username)
     {
-        $client = $this->client;
-        $container = $client->getContainer();
+        $admin_user = $this->em->getRepository('ACSACSPanelUsersBundle:User')->findOneByUsername($username);
 
-        $session = $container->get('session');
-        /** @var $userManager \FOS\UserBundle\Doctrine\UserManager */
-        $userManager = $container->get('fos_user.user_manager');
-        /** @var $loginManager \FOS\UserBundle\Security\LoginManager */
-        $loginManager = $container->get('fos_user.security.login_manager');
-        $firewallName = $container->getParameter('fos_user.firewall_name');
+        $this->loginAs($admin_user, 'main');
 
-        $user = $userManager->findUserBy(array('username' => $username));
+        $this->client = $this->makeClient(true);
 
-		if(!$user)
-			throw new \Exception('No user found');
-
-		$loginManager->loginUser($firewallName, $user);
-
-		// save the login token into the session and put it in a cookie
-		$container->get('session')->set('_security_' . $firewallName,
-		serialize($container->get('security.context')->getToken()));
-		$container->get('session')->save();
-		$this->client->getCookieJar()->set(new Cookie($session->getName(), $session->getId()));
+        $this->client->followRedirects();
 
         return $this->client;
     }
 
     public function createSuperadminClient()
     {
-        $this->client = $this->createAuthorizedClient('superadmin','1234');
+        $this->client = $this->createAuthorizedClient('superadmin');
         return $this->client;
     }
 }

@@ -8,10 +8,10 @@ class MailAliasControllerTest extends CommonTestCase
 {
     public function testMailAliasIndex()
     {
-		$client = $this->createSuperadminClient();
+        $client = $this->createSuperadminClient();
 
-		$crawler = $client->request('GET', '/mailalias');
-		$this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
+        $crawler = $client->request('GET', '/mailalias');
+        $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
 
     }
 }

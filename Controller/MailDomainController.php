@@ -1,10 +1,11 @@
 <?php
 
-
 namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 use ACS\ACSPanelBundle\Entity\DnsRecord;
 use ACS\ACSPanelBundle\Entity\MailDomain;
@@ -19,8 +20,9 @@ use ACS\ACSPanelBundle\Event\DnsEvents;
 /**
  * MailDomain controller.
  *
+ * @Rest\RouteResource("MailDomain")
  */
-class MailDomainController extends Controller
+class MailDomainController extends FOSRestController
 {
     /**
      * Lists all MailDomain entities.
@@ -79,7 +81,7 @@ class MailDomainController extends Controller
         }
 
         $entity = new MailDomain();
-        $form   = $this->createForm(new MailDomainType(), $entity);
+        $form   = $this->createForm(new MailDomainType($this->container), $entity);
 
         return $this->render('ACSACSPanelBundle:MailDomain:new.html.twig', array(
             'entity' => $entity,
@@ -94,7 +96,7 @@ class MailDomainController extends Controller
     public function createAction(Request $request)
     {
         $entity  = new MailDomain();
-        $form = $this->createForm(new MailDomainType(), $entity);
+        $form = $this->createForm(new MailDomainType($this->container), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -149,7 +151,7 @@ class MailDomainController extends Controller
             throw $this->createNotFoundException('Unable to find MailDomain entity.');
         }
 
-        $editForm = $this->createForm(new MailDomainType(), $entity);
+        $editForm = $this->createForm(new MailDomainType($this->container), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ACSACSPanelBundle:MailDomain:edit.html.twig', array(
@@ -174,7 +176,7 @@ class MailDomainController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new MailDomainType(), $entity);
+        $editForm = $this->createForm(new MailDomainType($this->container), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
