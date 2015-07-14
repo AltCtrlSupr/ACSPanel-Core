@@ -9,20 +9,22 @@
 
 {% block body %}
 
-<div class="form_box">
-    <form action="{{ path('domain_create') }}" method="post" {{ form_enctype(form) }} class="form">
-        <span class="label label-important">{{ form_errors(form) }}</span>
-            {{ form_row(form.domain) }}
-            {{ form_row(form.parent_domain) }}
-            {{ form_widget(form.is_httpd_alias) }}
-            {{ form_widget(form.is_dns_alias) }}
-            {{ form_widget(form.is_mail_alias) }}
-            {{ form_widget(form.add_dns_domain) }}
-        <p>
-            <button class="btn btn-success" type="submit">Create</button>
-        </p>
-        {{ form_rest(form) }}
-    </form>
+<div class="box box-body">
+    <div class="form_box">
+        <form action="{{ path('domain_create') }}" method="post" {{ form_enctype(form) }} class="form">
+            <span class="label label-important">{{ form_errors(form) }}</span>
+                {{ form_row(form.domain) }}
+                {{ form_row(form.parent_domain) }}
+                {{ form_widget(form.is_httpd_alias) }}
+                {{ form_widget(form.is_dns_alias) }}
+                {{ form_widget(form.is_mail_alias) }}
+                {{ form_widget(form.add_dns_domain) }}
+                {{ form_rest(form) }}
+            <p>
+                <button class="btn btn-success" type="submit">Create</button>
+            </p>
+        </form>
+    </div>
 </div>
 
 <ul class="record_actions">

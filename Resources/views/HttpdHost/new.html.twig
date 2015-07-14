@@ -9,6 +9,7 @@
 
 {% block body %}
 
+<div class="box">
     <form class="form" action="{{ path('httpdhost_create') }}" method="post" {{ form_enctype(form) }}>
         <div class="form_box row-fluid">
             <div class="col-md-6">
@@ -33,11 +34,12 @@
             </div>
         </div>
         <div class="container">
-            <p>
+            <p class="col-md-12">
                 <button class="btn btn-success" type="submit">{% trans %}httpdhost.button.create{% endtrans %}</button>
             </p>
         </div>
     </form>
+</div>
 
 <ul class="record_actions">
     <li>
