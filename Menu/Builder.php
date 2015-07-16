@@ -11,15 +11,15 @@ use ACS\ACSPanelBundle\Event\MenuEvents;
 class Builder extends ContainerAware
 {
 	private function createRootMenu($factory)
-	{
-		$menu = $factory->createItem('root', array(
-			'childrenAttributes' => array(
-				'class' => 'sidebar-menu',
-			),
-		));
+    {
+        $menu = $factory->createItem('root', array(
+            'childrenAttributes' => array(
+                'class' => 'sidebar-menu',
+            ),
+        ));
 
-		return $menu;
-	}
+        return $menu;
+    }
 
     /**
      * Builds the superadmin menu
@@ -29,7 +29,7 @@ class Builder extends ContainerAware
      */
     public function superadminMenu(FactoryInterface $factory, array $options)
     {
-		$menu = $this->createRootMenu($factory);
+        $menu = $this->createRootMenu($factory);
 
         $this->container->get('event_dispatcher')->dispatch(MenuEvents::ADMIN_BEFORE_ITEMS , new FilterMenuEvent($menu));
 
@@ -39,7 +39,7 @@ class Builder extends ContainerAware
 
     public function userMenu(FactoryInterface $factory, array $options)
     {
-		$menu = $this->createRootMenu($factory);
+        $menu = $this->createRootMenu($factory);
 
         $this->container->get('event_dispatcher')->dispatch(MenuEvents::USER_BEFORE_ITEMS , new FilterMenuEvent($menu));
 
@@ -50,7 +50,7 @@ class Builder extends ContainerAware
 
     public function resellerMenu(FactoryInterface $factory, array $options)
     {
-		$menu = $this->createRootMenu($factory);
+        $menu = $this->createRootMenu($factory);
 
         $this->container->get('event_dispatcher')->dispatch(MenuEvents::RESELLER_BEFORE_ITEMS , new FilterMenuEvent($menu));
 

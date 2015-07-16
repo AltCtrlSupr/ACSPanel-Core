@@ -284,7 +284,6 @@ class DB implements AclEntity
 
     }
 
-
     public function getOwners()
     {
         return $this->getUser();
