@@ -5,6 +5,8 @@ FOS\UserBundle\Model\User:
             expose: true
         password:
             exclude: true
+        password_changed_at:
+            exclude: true
         email_canonical:
             exclude: true
         salt:
