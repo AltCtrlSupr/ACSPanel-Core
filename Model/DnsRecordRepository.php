@@ -35,9 +35,12 @@ class DnsRecordRepository extends AclEntityRepository
 
         $entity = $this->getAclFilter()->apply($query, ['EDIT'], $user, 'r')->getResult();
 
+        if (!count($entity)) {
+            return null;
+        }
+
         return $entity[0];
     }
 
 }
 
-?>
