@@ -31,7 +31,7 @@ class DynamicDnsController extends FOSRestController
         $hostname = $request->get('hostname');
 
         if (!$new_ip) {
-            $new_ip = $request->server->get('REMOTE_ADDR');
+            $new_ip = $this->__getIpFromRequest($request);
         }
 
         $record = $this->__getRecordToUpdate($hostname);
@@ -52,6 +52,12 @@ class DynamicDnsController extends FOSRestController
         }
 
         throw $this->createNotFoundException('You need to provide the required parameters');
+    }
+
+    private function __getIpFromRequest(Request $request)
+    {
+        $new_ip = $request->getClientIp();
+        return $new_ip;
     }
 
     /**

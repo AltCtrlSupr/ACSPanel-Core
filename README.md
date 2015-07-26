@@ -14,7 +14,7 @@ Features:
   - Plan system: ACSPanel works with custom Plans, you can create your different Plans to manage your resources.
   - Logged actions: Each change in the database is logged in database. You can know what did anyone and also check the changes and do rollback to the entity (Comming soon...). Thanks to [StofDoctrineExtensionsBundle][16] and [DoctrineExtensions][17]
   - Themeable. Thanks to [LiipThemeBundle][18], (GUI Designers needed)
-  - Mobile front-end (Comming soon...): 
+  - Mobile front-end (Comming soon...):
   - Wordpress farm: See [PanelWordpressBundle][19]
   - Multilanguage: Each user can select the prefered language. (Translators needed)
 
@@ -37,8 +37,8 @@ following options.
 
 ### Download from GIT repository
 
-To install ACSPanel from git repository, you have to clone the project with 
-the next command and execute the following commands 
+To install ACSPanel from git repository, you have to clone the project with
+the next command and execute the following commands
 
     cd /server_root_directory/
 
@@ -89,7 +89,7 @@ Then you are ready to create the acspanel basic schema executing the next comman
     php app/console doctrine:schema:create
 
 Preparing ACL tables
-   
+
     php app/console init:acl
 
 You can load some basic fixtures doing next, like basic groups and admin to start using the panel:
@@ -175,6 +175,22 @@ Create a file in /etc/cron.d/ folder with the next contents:
 Change the route to your script location
 
 
+API
+---
+
+Dynamic DNS API call
+--------------------
+
+ACSPanel comes with RESTful API, at the moment only some calls are supported.
+
+There's a ineteresting API call to update DNS record and be able to have a Dynamic DNS, like
+services as DynDNS or noip.
+
+You should send GET request to the next URL with the hostname parameter at least, if
+you not provide myip this is deduced from the request of the machine calling the endpoint.
+
+    http://username:password@panel.url/nic/update?hostname=yourhostname&myip=ipaddress
+
 
 What's inside?
 ---------------
@@ -254,8 +270,8 @@ Enjoy!
 [13]: http://jmsyst.com/bundles/JMSSecurityExtraBundle/master
 [14]: http://jmsyst.com/bundles/JMSDiExtraBundle/master
 [15]: http://symfony.com/doc/2.1/bundles/SensioGeneratorBundle/index.html
-[16]: https://github.com/stof/StofDoctrineExtensionsBundle 
-[17]: https://github.com/l3pp4rd/DoctrineExtensions 
+[16]: https://github.com/stof/StofDoctrineExtensionsBundle
+[17]: https://github.com/l3pp4rd/DoctrineExtensions
 [18]: https://github.com/liip/LiipThemeBundle
 [19]: https://github.com/AltCtrlSupr/PanelWordpressBundle
 [20]: https://github.com/AltCtrlSupr/acspanel-deb/

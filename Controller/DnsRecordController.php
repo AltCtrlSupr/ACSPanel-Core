@@ -20,8 +20,6 @@ use ACS\ACSPanelBundle\Event\DnsEvents;
 /**
  * DnsRecord controller.
  *
- * @todo determine if is still needed
- *
  * @Rest\RouteResource("DnsRecord")
  */
 class DnsRecordController extends FOSRestController
