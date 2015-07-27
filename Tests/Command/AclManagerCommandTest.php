@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use ACS\ACSPanelBundle\Command\AclManagerCommand;
 
 
-class ListCommandTest extends KernelTestCase
+class AclManagerCommandTest extends KernelTestCase
 {
     public function testExecute()
     {
