@@ -1,6 +1,4 @@
 <?php
-
-
 namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -12,6 +10,7 @@ use ACS\ACSPanelBundle\Form\LogItemVersionsType;
 /**
  * LogItem controller.
  *
+ * @author Genar <genar@acs.li>
  */
 class LogItemController extends Controller
 {

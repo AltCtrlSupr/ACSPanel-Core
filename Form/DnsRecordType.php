@@ -18,10 +18,11 @@ class DnsRecordType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $security = $this->container->get('security.context');
-        $user = $security->getToken()->getUser();
-        $child_ids = $user->getIdChildIds();
+        $security   = $this->container->get('security.context');
+        $user       = $security->getToken()->getUser();
+        $child_ids  = $user->getIdChildIds();
         $superadmin = false;
+
         if($security->isGranted('ROLE_SUPER_ADMIN'))
             $superadmin = true;
 
@@ -75,6 +76,6 @@ class DnsRecordType extends AbstractType
 
     public function getName()
     {
-        return 'acs_acspanelbundle_dnsrecordtype';
+        return 'dnsrecordtype';
     }
 }

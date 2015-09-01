@@ -5,6 +5,7 @@ namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
@@ -24,7 +25,6 @@ use ACS\ACSPanelBundle\Event\DnsEvents;
  */
 class DnsRecordController extends FOSRestController
 {
-
     /**
      * Finds and displays a DnsRecord entity.
      *
@@ -79,8 +79,14 @@ class DnsRecordController extends FOSRestController
     }
 
     /**
-     * Creates a new DnsRecord entity.
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Creates new DNS Record",
+     * )
      *
+     * @Rest\Post("/dnsrecords/create")
+     * @Rest\View("ACSACSPanelBundle:DnsRecord:new.html.twig", templateVar="entity")
+
      */
     public function createAction(Request $request)
     {
@@ -95,13 +101,11 @@ class DnsRecordController extends FOSRestController
 
             $this->container->get('event_dispatcher')->dispatch(DnsEvents::DNS_AFTER_RECORD_ADD, new FilterDnsEvent($entity,$em));
 
-            return $this->redirect($this->generateUrl('dnsdomain_show', array('id' => $entity->getDnsDomain()->getId())));
+            $view = $this->routeRedirectView('dnsdomain_show', array('id' => $entity->getDnsDomain()->getId()), 201);
+            return $this->handleView($view);
         }
 
-        return $this->render('ACSACSPanelBundle:DnsRecord:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
+        return $form;
     }
 
     /**
