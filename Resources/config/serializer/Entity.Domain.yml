@@ -6,7 +6,7 @@ ACS\ACSPanelBundle\Entity\Domain:
         domain:
             expose: true
         enabled:
-            exclude: true
+            expose: true
         is_httpd_alias:
             expose: true
         is_dns_alias:
@@ -17,3 +17,5 @@ ACS\ACSPanelBundle\Entity\Domain:
             expose: true
         updatedAt:
             expose: true
+        dnsdomain:
+            exclude: true

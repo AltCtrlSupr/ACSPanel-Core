@@ -1,0 +1,9 @@
+ACS\ACSPanelBundle\Entity\DnsDomain:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+        domain:
+            exclude: true
+        name:
+            expose: true

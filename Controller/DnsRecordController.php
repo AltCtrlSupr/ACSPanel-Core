@@ -101,7 +101,7 @@ class DnsRecordController extends FOSRestController
 
             $this->container->get('event_dispatcher')->dispatch(DnsEvents::DNS_AFTER_RECORD_ADD, new FilterDnsEvent($entity,$em));
 
-            $view = $this->routeRedirectView('dnsdomain_show', array('id' => $entity->getDnsDomain()->getId()), 201);
+            $view = $this->routeRedirectView('dnsrecord_show', array('id' => $entity->getId()), 201);
             return $this->handleView($view);
         }
 
