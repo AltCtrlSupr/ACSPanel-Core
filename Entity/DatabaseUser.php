@@ -6,6 +6,7 @@ namespace ACS\ACSPanelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * DatabaseUser
@@ -38,17 +39,14 @@ class DatabaseUser implements AclEntity
     private $updatedAt;
 
     /**
-     * @var \ACS\ACSPanelBundle\Entity\Database
-     */
-    private $database;
-
-    /**
      * @var \ACS\ACSPanelUsersBundle\Entity\User
      */
     private $user;
 
     /**
      * @var \ACS\ACSPanelBundle\Entity\DB
+     *
+     * @Assert\NotBlank()
      */
     private $db;
 

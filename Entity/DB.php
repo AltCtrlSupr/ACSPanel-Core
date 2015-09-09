@@ -5,9 +5,10 @@ namespace ACS\ACSPanelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use ACS\ACSPanelBundle\Model\Entity\AclEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * DB
+ * ACS\ACSPanelBundle\Entity\DB
  */
 class DB implements AclEntity
 {
@@ -38,6 +39,8 @@ class DB implements AclEntity
 
     /**
      * @var \ACS\ACSPanelBundle\Entity\Service
+     *
+     * @Assert\NotBlank()
      */
     private $service;
 
@@ -280,7 +283,6 @@ class DB implements AclEntity
         return false;
 
     }
-
 
     public function getOwners()
     {

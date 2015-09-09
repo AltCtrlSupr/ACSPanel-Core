@@ -115,8 +115,6 @@ class DnsDomainController extends CommonController
     }
 
     /**
-     * Creates a new DnsDomain entity.
-     *
      * @ApiDoc(
      *  resource=true,
      *  description="Creates new DNS Domain",

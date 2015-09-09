@@ -1,7 +1,9 @@
-FOS\UserBundle\Model\User:
+ACS\ACSPanelBundle\Entity\DnsDomain:
     exclusion_policy: ALL
     properties:
         id:
             expose: true
-        password:
+        domain:
             exclude: true
+        name:
+            expose: true

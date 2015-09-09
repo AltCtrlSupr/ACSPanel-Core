@@ -28,7 +28,7 @@ class UserToStringTransformer implements DataTransformerInterface
      */
     public function transform($user)
     {
-      return $user;
+        return $user;
     }
 
     /**
@@ -45,7 +45,7 @@ class UserToStringTransformer implements DataTransformerInterface
         }
 
         $user = $this->om
-            ->getRepository('ACSACSPanelBundle:User')
+            ->getRepository('ACSACSPanelUsersBundle:User')
             ->findOneBy(array('id' => $number))
         ;
 

@@ -37,7 +37,7 @@ class DBType extends AbstractType
                     }
                 )
             )
-            ->add('database_users', 'collection', array(
+            ->add('database_users', 'bootstrap_collection', array(
                 'type' => new DatabaseUserType(),
                 'allow_add' => true,
                 'allow_delete' => true,

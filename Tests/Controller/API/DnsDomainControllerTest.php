@@ -10,7 +10,7 @@ class DnsDomainControllerTest extends CommonApiTestCase
 
         // DNS Domain index
         $crawler = $client->request('GET', '/api/dnsdomains/index.json');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         // Check if the respense contents are json
         $this->assertJson($client);
 
