@@ -9,6 +9,11 @@
 
 {% block body %}
 
+{% embed "ACSACSPanelBundle:Common:action_links.html.twig" with {'entity_name': 'database', 'new': true} %}
+    {% block new_link_text %}db.button.addnew{% endblock %}
+    {% block new_link %}{{ path('db_new') }}{% endblock %}
+{% endembed %}
+
 <div class="box box-primary box-body">
     <table class="records_list table table-striped table-bordered datatable">
         <thead>
@@ -53,11 +58,9 @@
     </table>
 </div>
 
-<ul>
-    <li>
-        <a class="btn btn-primary" href="{{ path('db_new') }}">
-            {% trans %}db.button.addnew{% endtrans %}
-        </a>
-    </li>
-</ul>
+{% embed "ACSACSPanelBundle:Common:action_links.html.twig" with {'entity_name': 'database', 'new': true} %}
+    {% block new_link_text %}db.button.addnew{% endblock %}
+    {% block new_link %}{{ path('db_new') }}{% endblock %}
+{% endembed %}
+
 {% endblock %}
