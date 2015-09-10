@@ -8,6 +8,10 @@
 
 {% block body %}
 
+{% embed "ACSACSPanelBundle:Common:action_links.html.twig" with {'entity_name': 'service', 'new': true} %}
+    {% block new_link %}{{ path('service_new') }}{% endblock %}
+{% endembed %}
+
 <div class="box box-primary box-body">
     <table class="records_list table table-striped table-bordered datatable">
         <thead>
@@ -52,8 +56,8 @@
     </table>
 </div>
 
-<a class="btn btn-primary" href="{{ path('service_new') }}">
-    {% trans %}Create a new entry{% endtrans %}
-</a>
+{% embed "ACSACSPanelBundle:Common:action_links.html.twig" with {'entity_name': 'service', 'new': true} %}
+    {% block new_link %}{{ path('service_new') }}{% endblock %}
+{% endembed %}
 
 {% endblock %}

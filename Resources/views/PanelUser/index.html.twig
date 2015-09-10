@@ -13,6 +13,10 @@
 {% endblock %}
 
 {% block body %}
+{% embed "ACSACSPanelBundle:Common:action_links.html.twig" with {'entity_name': 'user', 'new': true} %}
+    {% block new_link %}{{ path('users_new') }}{% endblock %}
+    {% block new_link_text %}user.button.add{% endblock %}
+{% endembed %}
 
 <div class="box box-primary box-body">
     <table class="records_list table table-striped table-bordered datatable">
@@ -85,12 +89,9 @@
     </table>
 </div>
 
-<ul>
-    <li>
-        <a class="btn btn-primary"  href="{{ path('users_new') }}">
-            {% trans %}user.button.add{% endtrans %}
-        </a>
-    </li>
-</ul>
+{% embed "ACSACSPanelBundle:Common:action_links.html.twig" with {'entity_name': 'user', 'new': true} %}
+    {% block new_link %}{{ path('users_new') }}{% endblock %}
+    {% block new_link_text %}user.button.add{% endblock %}
+{% endembed %}
 
 {% endblock %}
