@@ -168,6 +168,14 @@ services:
         calls:
             - [ setAclFilter, ['@problematic.acl.orm.filter'] ]
 
+    logitem_repository:
+        class: ACS\ACSPanelBundle\Model\LogItemRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: ['Gedmo\Loggable\Entity\LogEntry']
+        calls:
+            - [ setAclFilter, ['@problematic.acl.orm.filter'] ]
+
     server_repository:
         class: ACS\ACSPanelBundle\Model\ServerRepository
         factory_service: doctrine
@@ -263,3 +271,8 @@ services:
         arguments: ['ACSACSPanelBundle:Service']
         calls:
             - [ setAclFilter, ['@problematic.acl.orm.filter'] ]
+
+    service_manager:
+        class: ACS\ACSPanelBundle\Model\ServiceManager
+        calls:
+            - [ setAclManager, ['@problematic.acl_manager'] ]

@@ -56,7 +56,7 @@ class EntitySubscriber implements EventSubscriber
         $superadmins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\User')->getSuperadminUsers();
         $admins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\User')->getAdminUsers();
 
-		$aclManager = $this->container->get('problematic.acl_manager');
+        $aclManager = $this->container->get('problematic.acl_manager');
 
         if ($entity instanceOf \Gedmo\Loggable\Entity\LogEntry) {
             $user = array();
@@ -83,9 +83,9 @@ class EntitySubscriber implements EventSubscriber
             }
         }
 
-		foreach ($superadmins as $superadmin) {
-			$aclManager->deleteAclFor($entity);
-		}
+        foreach ($superadmins as $superadmin) {
+            $aclManager->deleteAclFor($entity);
+        }
     }
 
     public function prePersist(LifecycleEventArgs $args)
@@ -144,7 +144,6 @@ class EntitySubscriber implements EventSubscriber
         if ($entity instanceof Service){
             $this->setUserValue($entity);
         }
-
     }
 
     public function postRemove(LifecycleEventArgs $args)
@@ -167,7 +166,7 @@ class EntitySubscriber implements EventSubscriber
         $admins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\User')->getAdminUsers();
 
 
-		$aclManager = $this->container->get('problematic.acl_manager');
+        $aclManager = $this->container->get('problematic.acl_manager');
 
         if ($entity instanceOf \Gedmo\Loggable\Entity\LogEntry) {
             $user = array();
@@ -194,9 +193,9 @@ class EntitySubscriber implements EventSubscriber
             }
         }
 
-		foreach ($superadmins as $superadmin) {
-			$aclManager->addObjectPermission($entity, MaskBuilder::MASK_MASTER, $superadmin);
-		}
+        foreach ($superadmins as $superadmin) {
+            $aclManager->addObjectPermission($entity, MaskBuilder::MASK_MASTER, $superadmin);
+        }
 
     }
 
@@ -407,24 +406,22 @@ class EntitySubscriber implements EventSubscriber
 
 	public function addUserOwnerPermission($user, $entity)
 	{
-		$aclManager = $this->container->get('problematic.acl_manager');
+        $aclManager = $this->container->get('problematic.acl_manager');
 
-		if ($parent = $user->getParentUser()) {
-			$aclManager->addObjectPermission($entity, MaskBuilder::MASK_MASTER, $parent);
+        if ($parent = $user->getParentUser()) {
+            $aclManager->addObjectPermission($entity, MaskBuilder::MASK_MASTER, $parent);
         }
 
-		$aclManager->addObjectPermission($entity, MaskBuilder::MASK_OWNER, $user);
+        $aclManager->addObjectPermission($entity, MaskBuilder::MASK_OWNER, $user);
 	}
 
-	public function removeUserOwnerPermission($user, $entity)
-	{
-		$aclManager = $this->container->get('problematic.acl_manager');
+    public function removeUserOwnerPermission($user, $entity)
+    {
+        $aclManager = $this->container->get('problematic.acl_manager');
 
-		if($parent = $user->getParentUser())
-			$aclManager->revokePermission($entity, MaskBuilder::MASK_MASTER, $parent);
+        if($parent = $user->getParentUser())
+            $aclManager->revokePermission($entity, MaskBuilder::MASK_MASTER, $parent);
 
-		$aclManager->revokePermission($entity, MaskBuilder::MASK_OWNER, $user);
-	}
-
-
+        $aclManager->revokePermission($entity, MaskBuilder::MASK_OWNER, $user);
+    }
 }
