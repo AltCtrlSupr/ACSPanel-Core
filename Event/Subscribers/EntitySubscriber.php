@@ -25,11 +25,6 @@ class EntitySubscriber implements EventSubscriber
 
     protected $container;
 
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
-
     public function getSubscribedEvents()
     {
         return array(
@@ -40,6 +35,11 @@ class EntitySubscriber implements EventSubscriber
             'preRemove',
             'postRemove',
         );
+    }
+
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
     }
 
     public function preRemove(LifecycleEventArgs $args)
@@ -111,7 +111,8 @@ class EntitySubscriber implements EventSubscriber
         if ($entity instanceof FtpdUser){
             $this->setUserValue($entity);
             $usertools = $this->container->get('acs.user.tools');
-            $this->setUid($usertools->getAvailableUid());
+            $entity->setUid($usertools->getAvailableUid());
+            $entity->setGid($usertools->getAvailableGid());
         }
 
         if ($entity instanceof HttpdUser){
@@ -214,7 +215,7 @@ class EntitySubscriber implements EventSubscriber
         }
         if ($entity instanceof HttpdHost){
             $this->setUpdatedAtValue($entity);
-		}
+        }
     }
 
     public function postUpdate(LifecycleEventArgs $args)
@@ -348,9 +349,9 @@ class EntitySubscriber implements EventSubscriber
         $user = $service->getToken()->getUser();
         if (!$entity->getProtectedDir()) {
             return $entity->setProtectedDir($settings->getSystemSetting('home_base') . $user->getUsername() . '/web/' . $entity->getHttpdHost()->getDomain()->getDomain() . '/httpdocs');
-        } else {
-            return $entity;
         }
+
+        return $entity;
     }
 
     public function removeDatabase($entity)
@@ -358,12 +359,16 @@ class EntitySubscriber implements EventSubscriber
         $admin_user = '';
         $admin_password = '';
         $settings = $entity->getService()->getSettings();
+
         foreach ($settings as $setting){
-            if($setting->getSettingKey() == 'admin_user')
+            if($setting->getSettingKey() == 'admin_user') {
                 $admin_user = $setting->getValue();
-            if($setting->getSettingKey() == 'admin_password')
+            }
+            if($setting->getSettingKey() == 'admin_password') {
                 $admin_password = $setting->getValue();
+            }
         }
+
         $server_ip = $entity->getService()->getIp();
 
         $config = new \Doctrine\DBAL\Configuration();
@@ -390,7 +395,6 @@ class EntitySubscriber implements EventSubscriber
         $conn->executeQuery($sql);
 
         return $entity;
-
     }
 
     public function setUserValue($entity)

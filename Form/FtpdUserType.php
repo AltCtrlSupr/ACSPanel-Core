@@ -18,21 +18,27 @@ class FtpdUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $service = $this->container->get('security.context');
+        $user = $service->getToken()->getUser();
 
         $builder
             ->add('userName')
-            ->add('password')
+            ->add('password', 'password')
             ->add('dir','text',array(
-                'label' => 'Directory name (it will be in "'.$service->getToken()->getUser()->getHomedir().'/")',
-		'required' => false,
+                'label' => 'Directory name (it will be under "' . $user->getHomedir() . '/")',
+                'required' => false,
             ))
             ->add('enabled')
             ->add('quota')
             ->add('service')
         ;
 
+        $allowed_users = $user->getChildUsers();
+        $allowed_users->add($user);
         if($service->isGranted('ROLE_ADMIN'))
-            $builder->add('user');
+            $builder->add('user', null, array(
+                'choices' => $allowed_users
+            )
+        );
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

@@ -2,7 +2,6 @@ parameters:
     duplicate.host.class: ACS\ACSPanelBundle\Validator\Constraints\DuplicateHostValidator
     db.username.validator.class: ACS\ACSPanelBundle\Validator\Constraints\VariableLimitedLengthValidator
     domain.tools.class: ACS\ACSPanelBundle\Modules\Domain
-    user.tools.class: ACS\ACSPanelBundle\Modules\UserTools
     entity_subscriber.class: ACS\ACSPanelBundle\Event\Subscribers\EntitySubscriber
     acspanel_core.menu_listener.class: ACS\ACSPanelBundle\Event\MenuItemListListener
 
@@ -26,13 +25,6 @@ services:
         class: %domain.tools.class%
         tags:
             - {name: domain.tools, alias: domain.tools}
-
-    # User checking tools
-    acs.user.tools:
-        class: %user.tools.class%
-        arguments: ['@doctrine.orm.entity_manager', '@service_container']
-        tags:
-            - {name: acs.user.tools, alias: acs.user.tools}
 
     # Server actions
     server.actions:
