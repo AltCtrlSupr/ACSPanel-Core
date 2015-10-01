@@ -111,7 +111,8 @@ class EntitySubscriber implements EventSubscriber
         if ($entity instanceof FtpdUser){
             $this->setUserValue($entity);
             $usertools = $this->container->get('acs.user.tools');
-            $this->setUid($usertools->getAvailableUid());
+            $entity->setUid($usertools->getAvailableUid());
+            $entity->setGid($usertools->getAvailableGid());
         }
 
         if ($entity instanceof HttpdUser){

@@ -11,21 +11,22 @@ class DynamicDnsControllerTest extends CommonApiTestCase
         // DynDNS like call
         // http://username:password@members.dyndns.org/nic/update?hostname=yourhostname&myip=ipaddress
         $crawler = $client->request('GET', '/nic/update?hostname=1domain.tld&myip=8.8.8.8');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         // Check if the respense contents are json
         $this->assertJson($client);
 
         $crawler = $client->request('GET', '/nic/update?hostname=1domain.tld');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         // Check if the respense contents are json
         $this->assertJson($client);
 
+        // Check if I can update ndomain not owned by me
         $crawler = $client->request('GET', '/nic/update?hostname=notmine.tld');
-        $this->assertEquals(500, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(404, $client->getResponse()->getStatusCode());
 
         // Not really API but related with dynamic dns
         $crawler = $client->request('GET', '/dyndns/new');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $form = $crawler->selectButton('Create')->form(array(
             'acs_acspanelbundle_dnsrecordtype[subdomain]' => 'test',
@@ -37,7 +38,5 @@ class DynamicDnsControllerTest extends CommonApiTestCase
 
         // Should we receive 200 code
         $this->assertTrue(200 === $client->getResponse()->getStatusCode());
-
     }
 }
-
