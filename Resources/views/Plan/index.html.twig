@@ -68,12 +68,8 @@
     </table>
 </div>
 
-<ul>
-    <li>
-        <a class="btn btn-primary"  href="{{ path('plans_new') }}">
-            {%trans%}Create a new entry{%endtrans%}
-        </a>
-    </li>
-</ul>
+{% embed "ACSACSPanelBundle:Common:action_links.html.twig" with {'entity_name': 'plan', 'new': true} %}
+    {% block new_link %}{{ path('plans_new') }}{% endblock %}
+{% endembed %}
 
 {%endblock %}

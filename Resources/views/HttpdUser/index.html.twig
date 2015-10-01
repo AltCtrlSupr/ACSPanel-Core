@@ -8,6 +8,10 @@
 
 {% block body %}
 
+{% embed "ACSACSPanelBundle:Common:action_links.html.twig" with {'entity_name': 'database', 'new': true} %}
+    {% block new_link %}{{ path('httpduser_new') }}{% endblock %}
+{% endembed %}
+
 <div class="box box-primary box-body">
     <table class="records_list table table-striped table-bordered datatable">
         <thead>
@@ -56,12 +60,8 @@
     </table>
 </div>
 
-<ul>
-    <li>
-        <a class="btn btn-primary"  href="{{ path('httpduser_new') }}">
-            {% trans %}Create a new entry{% endtrans %}
-        </a>
-    </li>
-</ul>
+{% embed "ACSACSPanelBundle:Common:action_links.html.twig" with {'entity_name': 'database', 'new': true} %}
+    {% block new_link %}{{ path('httpduser_new') }}{% endblock %}
+{% endembed %}
 
 {% endblock %}

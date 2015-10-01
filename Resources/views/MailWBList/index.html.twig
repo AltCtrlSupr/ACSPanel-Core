@@ -2,6 +2,9 @@
 {% block page_title %} - {% trans %}MailWBList list{% endtrans %}{% endblock %}
 {% block body %}
 
+{% embed "ACSACSPanelBundle:Common:action_links.html.twig" with {'entity_name': 'mailbw', 'new': true} %}
+    {% block new_link %}{{ path('mailwblist_new') }}{% endblock %}
+{% endembed %}
 
 <div class="box box-primary box-body">
     <table class="records_list table table-striped table-bordered datatable">
@@ -55,7 +58,7 @@
     </table>
 </div>
 
-<a class="btn btn-primary"  href="{{ path('mailwblist_new') }}">
-    Create a new entry
-</a>
+{% embed "ACSACSPanelBundle:Common:action_links.html.twig" with {'entity_name': 'mailbw', 'new': true} %}
+    {% block new_link %}{{ path('mailwblist_new') }}{% endblock %}
+{% endembed %}
 {% endblock %}

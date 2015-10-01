@@ -25,11 +25,6 @@ class EntitySubscriber implements EventSubscriber
 
     protected $container;
 
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
-
     public function getSubscribedEvents()
     {
         return array(
@@ -40,6 +35,11 @@ class EntitySubscriber implements EventSubscriber
             'preRemove',
             'postRemove',
         );
+    }
+
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
     }
 
     public function preRemove(LifecycleEventArgs $args)
@@ -56,7 +56,7 @@ class EntitySubscriber implements EventSubscriber
         $superadmins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\User')->getSuperadminUsers();
         $admins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\User')->getAdminUsers();
 
-		$aclManager = $this->container->get('problematic.acl_manager');
+        $aclManager = $this->container->get('problematic.acl_manager');
 
         if ($entity instanceOf \Gedmo\Loggable\Entity\LogEntry) {
             $user = array();
@@ -83,9 +83,9 @@ class EntitySubscriber implements EventSubscriber
             }
         }
 
-		foreach ($superadmins as $superadmin) {
-			$aclManager->deleteAclFor($entity);
-		}
+        foreach ($superadmins as $superadmin) {
+            $aclManager->deleteAclFor($entity);
+        }
     }
 
     public function prePersist(LifecycleEventArgs $args)
@@ -145,7 +145,6 @@ class EntitySubscriber implements EventSubscriber
         if ($entity instanceof Service){
             $this->setUserValue($entity);
         }
-
     }
 
     public function postRemove(LifecycleEventArgs $args)
@@ -168,7 +167,7 @@ class EntitySubscriber implements EventSubscriber
         $admins = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\User')->getAdminUsers();
 
 
-		$aclManager = $this->container->get('problematic.acl_manager');
+        $aclManager = $this->container->get('problematic.acl_manager');
 
         if ($entity instanceOf \Gedmo\Loggable\Entity\LogEntry) {
             $user = array();
@@ -195,9 +194,9 @@ class EntitySubscriber implements EventSubscriber
             }
         }
 
-		foreach ($superadmins as $superadmin) {
-			$aclManager->addObjectPermission($entity, MaskBuilder::MASK_MASTER, $superadmin);
-		}
+        foreach ($superadmins as $superadmin) {
+            $aclManager->addObjectPermission($entity, MaskBuilder::MASK_MASTER, $superadmin);
+        }
 
     }
 
@@ -216,7 +215,7 @@ class EntitySubscriber implements EventSubscriber
         }
         if ($entity instanceof HttpdHost){
             $this->setUpdatedAtValue($entity);
-		}
+        }
     }
 
     public function postUpdate(LifecycleEventArgs $args)
@@ -350,9 +349,9 @@ class EntitySubscriber implements EventSubscriber
         $user = $service->getToken()->getUser();
         if (!$entity->getProtectedDir()) {
             return $entity->setProtectedDir($settings->getSystemSetting('home_base') . $user->getUsername() . '/web/' . $entity->getHttpdHost()->getDomain()->getDomain() . '/httpdocs');
-        } else {
-            return $entity;
         }
+
+        return $entity;
     }
 
     public function removeDatabase($entity)
@@ -360,12 +359,16 @@ class EntitySubscriber implements EventSubscriber
         $admin_user = '';
         $admin_password = '';
         $settings = $entity->getService()->getSettings();
+
         foreach ($settings as $setting){
-            if($setting->getSettingKey() == 'admin_user')
+            if($setting->getSettingKey() == 'admin_user') {
                 $admin_user = $setting->getValue();
-            if($setting->getSettingKey() == 'admin_password')
+            }
+            if($setting->getSettingKey() == 'admin_password') {
                 $admin_password = $setting->getValue();
+            }
         }
+
         $server_ip = $entity->getService()->getIp();
 
         $config = new \Doctrine\DBAL\Configuration();
@@ -392,7 +395,6 @@ class EntitySubscriber implements EventSubscriber
         $conn->executeQuery($sql);
 
         return $entity;
-
     }
 
     public function setUserValue($entity)
@@ -408,24 +410,22 @@ class EntitySubscriber implements EventSubscriber
 
 	public function addUserOwnerPermission($user, $entity)
 	{
-		$aclManager = $this->container->get('problematic.acl_manager');
+        $aclManager = $this->container->get('problematic.acl_manager');
 
-		if ($parent = $user->getParentUser()) {
-			$aclManager->addObjectPermission($entity, MaskBuilder::MASK_MASTER, $parent);
+        if ($parent = $user->getParentUser()) {
+            $aclManager->addObjectPermission($entity, MaskBuilder::MASK_MASTER, $parent);
         }
 
-		$aclManager->addObjectPermission($entity, MaskBuilder::MASK_OWNER, $user);
+        $aclManager->addObjectPermission($entity, MaskBuilder::MASK_OWNER, $user);
 	}
 
-	public function removeUserOwnerPermission($user, $entity)
-	{
-		$aclManager = $this->container->get('problematic.acl_manager');
+    public function removeUserOwnerPermission($user, $entity)
+    {
+        $aclManager = $this->container->get('problematic.acl_manager');
 
-		if($parent = $user->getParentUser())
-			$aclManager->revokePermission($entity, MaskBuilder::MASK_MASTER, $parent);
+        if($parent = $user->getParentUser())
+            $aclManager->revokePermission($entity, MaskBuilder::MASK_MASTER, $parent);
 
-		$aclManager->revokePermission($entity, MaskBuilder::MASK_OWNER, $user);
-	}
-
-
+        $aclManager->revokePermission($entity, MaskBuilder::MASK_OWNER, $user);
+    }
 }

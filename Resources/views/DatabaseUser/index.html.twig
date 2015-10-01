@@ -50,11 +50,8 @@
     </table>
 </div>
 
-<ul>
-    <li>
-        <a class="btn btn-primary" href="{{ path('databaseuser_new') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+{% embed "ACSACSPanelBundle:Common:action_links.html.twig" with {'entity_name': 'database', 'new': true} %}
+    {% block new_link %}{{ path('databaseuser_new') }}{% endblock %}
+{% endembed %}
+
 {% endblock %}
