@@ -13,9 +13,12 @@ class LoadServiceData implements FixtureInterface
         // Ftpdservice types
         $ftpdservice = new Service();
         $ftpdservice->setName('Ftpd Testing Service');
-
         $manager->persist($ftpdservice);
+
+        $webservice = new Service();
+        $webservice->setName('web.acs.li');
+        $manager->persist($webservice);
+
         $manager->flush();
     }
 }
-

@@ -65,20 +65,20 @@ class AclManagerCommand extends ContainerAwareCommand
         }
     }
 
-	public function addUserOwnerPermission($user, $entity)
-	{
-		$aclManager = $this->getContainer()->get('problematic.acl_manager');
+    public function addUserOwnerPermission($user, $entity)
+    {
+        $aclManager = $this->getContainer()->get('problematic.acl_manager');
 
         $parent = '';
 
         if ($parent = $user->getParentUser()) {
-			$aclManager->addObjectPermission($entity, MaskBuilder::MASK_MASTER, $parent);
+            $aclManager->addObjectPermission($entity, MaskBuilder::MASK_MASTER, $parent);
             $parent = ' and ' . $parent;
         }
 
-		$aclManager->addObjectPermission($entity, MaskBuilder::MASK_OWNER, $user);
+        $aclManager->addObjectPermission($entity, MaskBuilder::MASK_OWNER, $user);
 
         return "Added ". $entity ." (" . get_class($entity) . ") Acls for " . $user . $parent;
 
-	}
+    }
 }

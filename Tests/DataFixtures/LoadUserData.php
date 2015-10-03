@@ -46,7 +46,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
 
         $userAdmin = $usermanager->createUser();
         $userAdmin->setUsername('admin');
-        $userAdmin->setEmail('instructor@admin');
+        $userAdmin->setEmail('admin@admin');
         $userAdmin->setEnabled(true);
         $userAdmin->setPlainPassword('1234');
         $userAdmin->addRole('ROLE_ADMIN');
@@ -56,8 +56,8 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $this->addReference('user-admin',$userAdmin);
 
         $userReseller = $usermanager->createUser();
-        $userReseller->setUsername('center1');
-        $userReseller->setEmail('center1@admin');
+        $userReseller->setUsername('reseller');
+        $userReseller->setEmail('reseller@admin');
         $userReseller->setEnabled(true);
         $userReseller->setPlainPassword('1234');
         $userReseller->addRole('ROLE_RESELLER');
