@@ -6,14 +6,14 @@ class ServerControllerTest extends CommonApiTestCase
 {
     public function testServerScenario()
     {
-		$client = $this->createSuperadminClient();
+        $client = $this->createSuperadminClient();
 
-		$crawler = $this->client->request('GET', '/api/servers/index.json');
+        $crawler = $this->client->request('GET', '/api/servers/index.json');
 
-		$this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         // Check if the respense contents are json
-        $this->assertJson($client);
+        $this->assertJsonResponse($client);
     }
 }
 

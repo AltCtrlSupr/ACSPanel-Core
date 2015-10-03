@@ -384,6 +384,7 @@ class DnsDomain implements AclEntity
     {
         return $this->service;
     }
+
     /**
      * @ORM\PrePersist
      */
@@ -437,7 +438,6 @@ class DnsDomain implements AclEntity
     {
         return $this->getDomain()->getOwners();
     }
-
 
     /**
      * Set public

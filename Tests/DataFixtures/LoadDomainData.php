@@ -34,5 +34,3 @@ class LoadDomainData extends AbstractFixture implements OrderedFixtureInterface
         return 2;
     }
 }
-
-

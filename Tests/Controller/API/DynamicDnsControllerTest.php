@@ -13,12 +13,12 @@ class DynamicDnsControllerTest extends CommonApiTestCase
         $crawler = $client->request('GET', '/nic/update?hostname=1domain.tld&myip=8.8.8.8');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         // Check if the respense contents are json
-        $this->assertJson($client);
+        $this->assertJsonResponse($client);
 
         $crawler = $client->request('GET', '/nic/update?hostname=1domain.tld');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         // Check if the respense contents are json
-        $this->assertJson($client);
+        $this->assertJsonResponse($client);
 
         // Check if I can update ndomain not owned by me
         $crawler = $client->request('GET', '/nic/update?hostname=notmine.tld');

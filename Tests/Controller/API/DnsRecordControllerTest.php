@@ -24,7 +24,6 @@ class DnsRecordControllerTest extends CommonApiTestCase
 
         $this->assertEquals(201, $client->getResponse()->getStatusCode());
         // Check if the respense contents are json
-        $this->assertJson($client);
+        $this->assertJsonResponse($client);
     }
 }
-

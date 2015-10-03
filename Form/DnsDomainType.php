@@ -42,6 +42,6 @@ class DnsDomainType extends ContainerAwareType
 
     public function getName()
     {
-        return 'acs_acspanelbundle_pdnsdomaintype';
+        return 'dnsdomaintype';
     }
 }
