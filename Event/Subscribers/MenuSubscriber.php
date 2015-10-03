@@ -76,7 +76,7 @@ class MenuSubscriber implements EventSubscriberInterface
     public function adminItems(FilterMenuEvent $menu_filter)
     {
         $menu = $menu_filter->getMenu();
-        $menu->addChild('menu.admin.main', array('route' => null, 'childrenAttributes' => array('class' => 'treeview-menu')));
+        $menu->addChild('menu.admin.main', array('route' => null, 'childrenAttributes' => array('class' => 'treeview-menu'), 'extras' => array('icon' => 'fa-lock')));
         $menu['menu.admin.main']->addChild('menu.admin.groups', array( 'route' => 'groups', 'extras' => array('icon' => 'fa-group')));
         $menu['menu.admin.main']->addChild('menu.admin.plans', array( 'route' => 'plans'));
         $menu['menu.admin.main']->addChild('menu.admin.servers.main', array( 'route' => null, 'childrenAttributes' => array('class' => 'treeview-menu')));
@@ -90,7 +90,7 @@ class MenuSubscriber implements EventSubscriberInterface
     public function domainItems(FilterMenuEvent $menu_filter)
     {
         $menu = $menu_filter->getMenu();
-        $menu->addChild('menu.domain.main', array( 'route' => 'domain'));
+        $menu->addChild('menu.domain.main', array( 'route' => 'domain',  'extras' => array('icon' => 'fa-bookmark')));
     }
 
     public function httpdItems(FilterMenuEvent $menu_filter)
@@ -105,7 +105,7 @@ class MenuSubscriber implements EventSubscriberInterface
     public function dnsItems(FilterMenuEvent $menu_filter)
     {
         $menu = $menu_filter->getMenu();
-        $menu->addChild('menu.dns.main', array( 'route' => null, 'childrenAttributes' => array('class' => 'treeview-menu')));
+        $menu->addChild('menu.dns.main', array( 'route' => null, 'childrenAttributes' => array('class' => 'treeview-menu'), 'extras' => array('icon' => 'fa-search')));
         $menu['menu.dns.main']->addChild('menu.dns.domains', array( 'route' => 'dnsdomain'));
     }
 
