@@ -113,6 +113,11 @@ class EntitySubscriber implements EventSubscriber
             $usertools = $this->container->get('acs.user.tools');
             $entity->setUid($usertools->getAvailableUid());
             $entity->setGid($usertools->getAvailableGid());
+
+            // Fixing integrity constraint null
+            if (!$entity->getDir()) {
+                $entity->setDir('');
+            }
         }
 
         if ($entity instanceof HttpdUser){
