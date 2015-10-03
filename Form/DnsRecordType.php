@@ -23,8 +23,9 @@ class DnsRecordType extends AbstractType
         $child_ids  = $user->getIdChildIds();
         $superadmin = false;
 
-        if($security->isGranted('ROLE_SUPER_ADMIN'))
+        if($security->isGranted('ROLE_SUPER_ADMIN')) {
             $superadmin = true;
+        }
 
         $builder
             ->add('dns_domain','entity',array(
@@ -34,7 +35,7 @@ class DnsRecordType extends AbstractType
                 'query_builder' => function(EntityRepository $er) use ($child_ids, $superadmin){
                     $query = $er->createQueryBuilder('dd')
                         ->select('dd')
-			->innerJoin('dd.domain','d');
+                        ->innerJoin('dd.domain','d');
                         if(!$superadmin){
                             $query->andWhere('d.user IN (?1)')
                             ->setParameter('1', $child_ids);

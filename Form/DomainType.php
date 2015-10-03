@@ -21,9 +21,11 @@ class DomainType extends AbstractType
         $security = $this->container->get('security.context');
         $user = $security->getToken()->getUser();
         $child_ids = $user->getIdChildIds();
+
         $superadmin = false;
-        if($security->isGranted('ROLE_SUPER_ADMIN'))
+        if($security->isGranted('ROLE_SUPER_ADMIN')) {
             $superadmin = true;
+        }
 
         $builder
             ->add('domain', null, array('label' => 'domain.form.domain'))
@@ -52,8 +54,10 @@ class DomainType extends AbstractType
                 'label' => 'domain.form.adddnsdomain'
             ))
         ;
-        if($security->isGranted('ROLE_ADMIN'))
+
+        if ($security->isGranted('ROLE_ADMIN')) {
             $builder->add('user', null, array('label' => 'domain.form.user'));
+        }
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

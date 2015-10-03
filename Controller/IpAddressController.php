@@ -66,7 +66,7 @@ class IpAddressController extends FOSRestController
     public function newAction()
     {
         $entity = new IpAddress();
-        $form   = $this->createForm(new IpAddressType(), $entity);
+        $form   = $this->createForm(new IpAddressType($this->container), $entity);
 
         return $this->render('ACSACSPanelBundle:IpAddress:new.html.twig', array(
             'entity' => $entity,
@@ -81,7 +81,7 @@ class IpAddressController extends FOSRestController
     public function createAction(Request $request)
     {
         $entity  = new IpAddress();
-        $form = $this->createForm(new IpAddressType(), $entity);
+        $form = $this->createForm(new IpAddressType($this->container), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -113,7 +113,7 @@ class IpAddressController extends FOSRestController
             throw $this->createNotFoundException('Unable to find IpAddress entity.');
         }
 
-        $editForm = $this->createForm(new IpAddressType(), $entity);
+        $editForm = $this->createForm(new IpAddressType($this->container), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ACSACSPanelBundle:IpAddress:edit.html.twig', array(
@@ -138,7 +138,7 @@ class IpAddressController extends FOSRestController
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new IpAddressType(), $entity);
+        $editForm = $this->createForm(new IpAddressType($this->container), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {

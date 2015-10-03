@@ -34,6 +34,7 @@ class FtpdUserType extends AbstractType
 
         $allowed_users = $user->getChildUsers();
         $allowed_users->add($user);
+
         if($service->isGranted('ROLE_ADMIN'))
             $builder->add('user', null, array(
                 'choices' => $allowed_users
