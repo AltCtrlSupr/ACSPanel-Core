@@ -3,12 +3,11 @@ namespace ACS\ACSPanelBundle\Tests\Command;
 
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 use ACS\ACSPanelBundle\Command\AclManagerCommand;
+use ACS\ACSPanelBundle\Tests\Controller\CommonTestCase;
 
-
-class AclManagerCommandTest extends KernelTestCase
+class AclManagerCommandTest extends CommonTestCase
 {
     public function testExecute()
     {

@@ -2,7 +2,7 @@
 /**
  * ServiceRepository
  *
- * @author genar
+ * @author Genar
  */
 namespace ACS\ACSPanelBundle\Model;
 

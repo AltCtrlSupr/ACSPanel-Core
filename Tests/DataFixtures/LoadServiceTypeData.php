@@ -2,11 +2,12 @@
 namespace ACS\ACSPanelBundle\Tests\DataFixtures;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\DataFixtures\FixtureInterface;
 use ACS\ACSPanelBundle\Entity\ServiceType;
 use ACS\ACSPanelBundle\Entity\FieldType;
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
-class LoadServiceTypeData implements FixtureInterface
+class LoadServiceTypeData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
@@ -81,6 +82,7 @@ class LoadServiceTypeData implements FixtureInterface
         $proftp->setName('ProFTPd');
         $proftp->setParentType($ftp_type);
         $manager->persist($proftp);
+        $this->addReference('proftpd',$proftp);
         $manager->flush();
 
         // Mail types
@@ -101,5 +103,9 @@ class LoadServiceTypeData implements FixtureInterface
         $manager->persist($postfix_type);
         $manager->flush();
     }
-}
 
+    public function getOrder()
+    {
+        return 1;
+    }
+}
