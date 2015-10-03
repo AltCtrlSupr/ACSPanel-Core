@@ -1,6 +1,6 @@
 <?php
 /**
- * HttpdAliasRepository
+ * DomainRepository
  *
  * @author Genar Trias Ortiz <genar@acs.li>
  */

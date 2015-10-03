@@ -35,14 +35,13 @@ class UserServiceCommand extends ContainerAwareCommand
         $service_name = $input->getArgument('service');
         $username = $input->getArgument('username');
 
-        $aclManager = $this->getContainer()->get('problematic.acl_manager');
+        $serviceManager = $this->getContainer()->get('service_manager');
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
         $service = $em->getRepository('\ACS\ACSPanelBundle\Entity\Service')->findOneBy(array('name' => $service_name));
         $user = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\User')->findOneBy(array('username' => $username));
 
-        if ($service && $user) {
-            $aclManager->addObjectPermission($service, MaskBuilder::MASK_VIEW, $user);
+        if ($serviceManager->attachToUser($service, $user)) {
             $output->writeln("Added " . $service . " (Service) Acls for " . $user);
         }
     }

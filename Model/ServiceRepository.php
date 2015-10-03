@@ -1,6 +1,6 @@
 <?php
 /**
- * ServiceTypeRepository
+ * ServiceRepository
  *
  * @author genar
  */
@@ -27,6 +27,20 @@ class ServiceRepository extends AclEntityRepository
     public function getDNSServices($user)
     {
         $query = $this->_em->createQuery('SELECT s,st FROM ACS\ACSPanelBundle\Entity\Service s INNER JOIN s.type st LEFT JOIN st.parent_type pst WHERE st.name = ?1 OR pst.name = ?1 OR pst.name = ?2')->setParameter(1, 'DNS')->setParameter(2, 'DNS');
+
+        return $this->getAclFilter()->apply($query, ['VIEW'], $user, 's')->getResult();
+    }
+
+    public function getFTPServices($user)
+    {
+        $query = $this->_em->createQuery('SELECT s,st FROM ACS\ACSPanelBundle\Entity\Service s INNER JOIN s.type st LEFT JOIN st.parent_type pst WHERE st.name = ?1 OR pst.name = ?1 OR pst.name = ?2')->setParameter(1, 'FTP')->setParameter(2, 'FTP');
+
+        return $this->getAclFilter()->apply($query, ['VIEW'], $user, 's')->getResult();
+    }
+
+    public function getMailServices($user)
+    {
+        $query = $this->_em->createQuery('SELECT s,st FROM ACS\ACSPanelBundle\Entity\Service s INNER JOIN s.type st LEFT JOIN st.parent_type pst WHERE st.name = ?1 OR pst.name = ?1 OR pst.name = ?2')->setParameter(1, 'Mail')->setParameter(2, 'SMTP');
 
         return $this->getAclFilter()->apply($query, ['VIEW'], $user, 's')->getResult();
     }

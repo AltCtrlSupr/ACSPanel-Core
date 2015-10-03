@@ -19,6 +19,7 @@ class FtpdUserType extends AbstractType
     {
         $service = $this->container->get('security.context');
         $user = $service->getToken()->getUser();
+        $user_services = $this->container->get('service_repository')->getFTPServices($user);
 
         $builder
             ->add('userName')
@@ -29,7 +30,9 @@ class FtpdUserType extends AbstractType
             ))
             ->add('enabled')
             ->add('quota')
-            ->add('service')
+            ->add('service', null, array(
+                'choices' => $user_services
+            ))
         ;
 
         $allowed_users = $user->getChildUsers();

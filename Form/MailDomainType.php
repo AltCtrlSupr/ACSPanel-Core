@@ -14,9 +14,12 @@ class MailDomainType extends ContainerAwareType
         $security = $this->container->get('security.context');
         $user = $security->getToken()->getUser();
         $child_ids = $user->getIdChildIds();
+        $user_services = $this->container->get('service_repository')->getMailServices($user);
+
         $superadmin = false;
-        if($security->isGranted('ROLE_SUPER_ADMIN'))
+        if($security->isGranted('ROLE_SUPER_ADMIN')) {
             $superadmin = true;
+        }
 
 
         $builder
@@ -42,23 +45,8 @@ class MailDomainType extends ContainerAwareType
             ->add('backupmx', null, array('label' => 'maildomain.form.backupmx'))
             ->add('service', null, array(
                 'label' => 'maildomain.form.service',
-                'query_builder' => function(EntityRepository $er) use ($superadmin){
-                    $query = $er->createQueryBuilder('s')
-                        ->select('s')
-                        ->innerJoin('s.type','t')
-                        ->where('t.name LIKE ?1')
-                        ->OrWhere('t.name LIKE ?2')
-                        ->setParameter('1','%smtp%')
-                        ->setParameter('2','%SMTP%');
-                        // TODO: Check te best way to do this
-                        /*if(!$superadmin){
-                            $query->andWhere('s.user IN (?3)')
-                            ->setParameter('3', $child_ids);
-                        }*/
-                        return $query;
-                    }
-                )
-             )
+                'choices' => $user_services
+            ))
             ->add('add_dns_record','checkbox',array(
                 'mapped' => false,
                 'required' => false,

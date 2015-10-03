@@ -37,7 +37,7 @@ class DomainType extends AbstractType
                     $query = $er->createQueryBuilder('d')
                         ->select('d')
                         ->where('d.is_httpd_alias != 1 OR d.is_httpd_alias IS NULL');
-                        if(!$superadmin){
+                        if (!$superadmin) {
                             $query->andWhere('d.user IN (?1)')
                             ->setParameter('1', $child_ids);
                         }

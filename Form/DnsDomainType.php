@@ -14,6 +14,7 @@ class DnsDomainType extends ContainerAwareType
         $security = $this->container->get('security.context');
         $user = $security->getToken()->getUser();
         $user_domains = $this->container->get('domain_repository')->getUserViewable($user);
+        $user_services = $this->container->get('service_repository')->getDNSServices($user);
 
         $builder
             ->add('domain','entity',array(
@@ -28,7 +29,9 @@ class DnsDomainType extends ContainerAwareType
                 )
             ))
             ->add('master')
-            ->add('service')
+            ->add('service', null, array(
+                'choices' => $user_services
+            ))
             ->add('public')
         ;
     }

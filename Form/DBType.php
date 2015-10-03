@@ -19,24 +19,17 @@ class DBType extends AbstractType
     {
         $container = $this->container;
         $em = $container->get('doctrine.orm.entity_manager');
-        $service = $container->get('security.context');
+        $security = $container->get('security.context');
 
-        $db_services = $em->getRepository('ACS\ACSPanelBundle\Entity\ServiceType')->getDbServiceTypesIds();
+        $user = $security->getToken()->getUser();
+        $user_services = $this->container->get('service_repository')->getDBServices($user);
 
         $builder
             ->add('name')
             ->add('description')
-            ->add('service', 'entity', array(
-                'class' => 'ACS\ACSPanelBundle\Entity\Service',
-                'query_builder' => function(EntityRepository $er) use ($db_services){
-                    $query = $er->createQueryBuilder('s')
-                        ->select('s')
-                        ->innerJoin('s.type','st','WITH','st.id IN (?1)')
-                        ->setParameter('1', $db_services);
-                        return $query;
-                    }
-                )
-            )
+            ->add('service', null, array(
+                'choices' => $user_services
+            ))
             ->add('database_users', 'bootstrap_collection', array(
                 'type' => new DatabaseUserType(),
                 'allow_add' => true,

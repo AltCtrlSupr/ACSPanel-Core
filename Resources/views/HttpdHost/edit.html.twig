@@ -10,11 +10,11 @@
                 <span class="label label-important">{{ form_errors(form) }}</span>
                 {{ form_row(form.domain) }}
                 {{ form_row(form.configuration) }}
-                <div class="control-group"><div class="controls">{{ form_widget(form.cgi) }}{{ form_label(form.cgi, null, {'label_attr': {'class':'checkbox inline'}})}}</div></div>
-                <div class="control-group"><div class="controls">{{ form_widget(form.ssi) }}{{ form_label(form.ssi, null, {'label_attr': {'class':'checkbox inline'}})}}</div></div>
-                <div class="control-group"><div class="controls">{{ form_widget(form.php) }}{{ form_label(form.php, null, {'label_attr': {'class':'checkbox inline'}})}}</div></div>
-                <div class="control-group"><div class="controls">{{ form_widget(form.add_www_alias) }}{{ form_label(form.add_www_alias, null, {'label_attr': {'class':'checkbox inline'}})}}</div></div>
-                <div class="control-group"><div class="controls">{{ form_widget(form.add_dns_record) }}{{ form_label(form.add_dns_record, null, {'label_attr': {'class':'checkbox inline'}})}}</div></div>
+                <div class="control-group"><div class="controls">{{ form_widget(form.cgi) }}</div></div>
+                <div class="control-group"><div class="controls">{{ form_widget(form.ssi) }}</div></div>
+                <div class="control-group"><div class="controls">{{ form_widget(form.php) }}</div></div>
+                <div class="control-group"><div class="controls">{{ form_widget(form.add_www_alias) }}</div></div>
+                <div class="control-group"><div class="controls">{{ form_widget(form.add_dns_record) }}</div></div>
                 {{ form_row(form.service) }}
                 {{ form_row(form.proxy_service) }}
             </div>
