@@ -22,6 +22,7 @@ abstract class CommonTestCase extends WebTestCase
         'ACS\ACSPanelBundle\Tests\DataFixtures\LoadDnsDomainData',
         'ACS\ACSPanelBundle\Tests\DataFixtures\LoadPlanData',
         'ACS\ACSPanelBundle\Tests\DataFixtures\LoadServiceTypeData',
+        'ACS\ACSPanelBundle\Tests\DataFixtures\LoadServerData',
         'ACS\ACSPanelBundle\Tests\DataFixtures\LoadServiceData',
         'ACS\ACSPanelBundle\Tests\DataFixtures\LoadDBData',
     ];

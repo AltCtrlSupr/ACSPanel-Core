@@ -38,6 +38,7 @@ class LoadServiceData extends AbstractFixture implements OrderedFixtureInterface
         $ftpdservice = new Service();
         $ftpdservice->setName('Ftpd Testing Service');
         $ftpdservice->setType($this->getReference('ftpd-service-type'));
+        $ftpdservice->setServer($this->getReference('server-1'));
         $manager->persist($ftpdservice);
 
         $reseller = $this->getReference('user-reseller');
@@ -53,6 +54,7 @@ class LoadServiceData extends AbstractFixture implements OrderedFixtureInterface
 
         $webservice = new Service();
         $webservice->setName('web.acs.li');
+        $webservice->setServer($this->getReference('server-1'));
         $manager->persist($webservice);
 
         $manager->flush();

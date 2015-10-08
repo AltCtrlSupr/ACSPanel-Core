@@ -17,8 +17,6 @@ class FtpdUserControllerTest extends CommonTestCase
         $crawler = $client->request('GET', '/ftpduser/new');
         $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
 
-        ldd($crawler->html());
-
         $form = $crawler->selectbutton('Create')->form(array(
             'acs_acspanelbundle_ftpdusertype[userName]' => 'newftpduser',
             'acs_acspanelbundle_ftpdusertype[password]' => '1234',
