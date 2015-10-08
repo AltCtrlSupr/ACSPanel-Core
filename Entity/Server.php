@@ -57,7 +57,6 @@ class Server implements AclEntity
      */
     private $services;
 
-
     /**
      * Get id
      *

@@ -149,6 +149,11 @@ class EntitySubscriber implements EventSubscriber
         }
         if ($entity instanceof Service){
             $this->setUserValue($entity);
+            if (!$entity->getIp()) {
+                if ($entity->getServer()) {
+                    $entity->setIp($entity->getServer()->getIp());
+                }
+            }
         }
     }
 

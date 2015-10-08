@@ -281,7 +281,6 @@ class Service implements AclEntity
 	    $this->updatedAt = new \DateTime();
     }
 
-
 	public function __toString()
 	{
 		return $this->name;
@@ -579,7 +578,6 @@ class Service implements AclEntity
         return false;
 
     }
-
 
     public function getOwners()
     {

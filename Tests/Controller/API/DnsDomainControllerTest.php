@@ -24,7 +24,7 @@ class DnsDomainControllerTest extends CommonApiTestCase
         // DNS Domain create with body
         $crawler = $client->request('POST', '/api/dnsdomains/create.json', array(
             'dnsdomaintype' => array(
-                'domain' => 1,
+                'domain' => 15,
                 'type' => 'MASTER',
             )
         ));
