@@ -44,5 +44,3 @@ class LoadDnsDomainData extends AbstractFixture implements OrderedFixtureInterfa
         return 3;
     }
 }
-
-

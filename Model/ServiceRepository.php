@@ -33,7 +33,7 @@ class ServiceRepository extends AclEntityRepository
 
     public function getFTPServices($user)
     {
-        $query = $this->_em->createQuery('SELECT s,st FROM ACS\ACSPanelBundle\Entity\Service s INNER JOIN s.type st LEFT JOIN st.parent_type pst WHERE st.name = ?1 OR pst.name = ?1 OR pst.name = ?2')->setParameter(1, 'FTP')->setParameter(2, 'FTP');
+        $query = $this->_em->createQuery('SELECT s,st FROM ACS\ACSPanelBundle\Entity\Service s INNER JOIN s.type st LEFT JOIN st.parent_type pst WHERE st.name = ?1 OR pst.name = ?1 OR pst.name = ?2')->setParameter(1, 'FTP')->setParameter(2, 'ftp');
 
         return $this->getAclFilter()->apply($query, ['VIEW'], $user, 's')->getResult();
     }

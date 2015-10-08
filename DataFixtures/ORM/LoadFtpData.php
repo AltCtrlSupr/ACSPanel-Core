@@ -10,5 +10,3 @@ class LoadFtpData implements FixtureInterface
     {
     }
 }
-
-

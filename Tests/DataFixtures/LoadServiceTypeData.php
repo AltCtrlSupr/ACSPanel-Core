@@ -2,13 +2,25 @@
 namespace ACS\ACSPanelBundle\Tests\DataFixtures;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use ACS\ACSPanelBundle\Entity\ServiceType;
 use ACS\ACSPanelBundle\Entity\FieldType;
-use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 
 class LoadServiceTypeData extends AbstractFixture implements OrderedFixtureInterface
 {
+    /**
+     * {@inheritDoc}
+     */
+    public function getOrder()
+    {
+        return 2;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function load(ObjectManager $manager)
     {
         // Database types
@@ -71,6 +83,7 @@ class LoadServiceTypeData extends AbstractFixture implements OrderedFixtureInter
         $ftp_type->setName('FTP');
         $manager->persist($ftp_type);
         $manager->flush();
+        $this->addReference('ftpd-service-type', $ftp_type);
 
         $pureftp = new ServiceType();
         $pureftp->setName('PureFTPd');
@@ -102,10 +115,5 @@ class LoadServiceTypeData extends AbstractFixture implements OrderedFixtureInter
         $postfix_type->setParentType($mail_type);
         $manager->persist($postfix_type);
         $manager->flush();
-    }
-
-    public function getOrder()
-    {
-        return 1;
     }
 }

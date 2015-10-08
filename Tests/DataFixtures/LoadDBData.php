@@ -33,5 +33,3 @@ class LoadDBData extends AbstractFixture implements OrderedFixtureInterface
         return 2;
     }
 }
-
-

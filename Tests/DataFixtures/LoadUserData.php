@@ -12,7 +12,6 @@ use ACS\ACSPanelUsersBundle\Entity\User;
 
 class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
-
     /**
      * @var ContainerInterface
      */
@@ -84,4 +83,3 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         return 1;
     }
 }
-

@@ -2,7 +2,6 @@
 namespace ACS\ACSPanelBundle\Tests\DataFixtures;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -10,22 +9,8 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
 use ACS\ACSPanelBundle\Entity\Plan;
 
-class LoadPlanData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
+class LoadPlanData extends AbstractFixture implements OrderedFixtureInterface
 {
-
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -46,5 +31,3 @@ class LoadPlanData extends AbstractFixture implements OrderedFixtureInterface, C
         return 1;
     }
 }
-
-
