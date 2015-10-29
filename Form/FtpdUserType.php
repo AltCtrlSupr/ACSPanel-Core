@@ -5,6 +5,8 @@ namespace ACS\ACSPanelBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
 
 class FtpdUserType extends AbstractType
 {
@@ -23,7 +25,11 @@ class FtpdUserType extends AbstractType
 
         $builder
             ->add('userName')
-            ->add('password', 'password')
+            ->add('plain_password', 'password', array(
+                'required' => true,
+                'mapped' => false,
+                'label' => 'common.password'
+            ))
             ->add('dir','text',array(
                 'label' => 'Directory name (it will be under "' . $user->getHomedir() . '/")',
                 'required' => false,
@@ -43,6 +49,16 @@ class FtpdUserType extends AbstractType
                 'choices' => $allowed_users
             )
         );
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            if ($event->getData()->getId()) {
+                $event->getForm()->add('plain_password', 'password', array(
+                    'required' => false,
+                    'mapped' => false,
+                    'label' => 'common.password'
+                ));
+            }
+        });
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

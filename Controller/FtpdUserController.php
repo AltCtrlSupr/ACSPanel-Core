@@ -1,6 +1,5 @@
 <?php
 
-
 namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -96,6 +95,11 @@ class FtpdUserController extends FOSRestController
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            if ($form->get("plain_password")) {
+                $entity->setPassword($form->get("plain_password")->getData());
+            }
+
             $em->persist($entity);
             $em->flush();
 
