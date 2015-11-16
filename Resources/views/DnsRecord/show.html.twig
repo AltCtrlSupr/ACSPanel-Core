@@ -2,42 +2,44 @@
 {% block page_title %} - {% trans %}DnsRecord{% endtrans %}{% endblock %}
 {% block body %}
 
-<table class="record_properties table">
-    <tbody>
-        <tr>
-            <th>{%trans%}Name{%endtrans%}</th>
-            <td>{{ entity.name }}</td>
-        </tr>
-        <tr>
-            <th>{%trans%}Parent DNS Domain{%endtrans%}</th>
-            <td>{{ entity.dnsdomain.domain }}</td>
-        </tr>
-        <tr>
-            <th>{%trans%}Type{%endtrans%}</th>
-            <td>{{ entity.type }}</td>
-        </tr>
-        <tr>
-            <th>{%trans%}Content{%endtrans%}</th>
-            <td>{{ entity.content }}</td>
-        </tr>
-        <tr>
-            <th>{%trans%}Ttl{%endtrans%}</th>
-            <td>{{ entity.ttl }}</td>
-        </tr>
-        <tr>
-            <th>{%trans%}Prio{%endtrans%}</th>
-            <td>{{ entity.prio }}</td>
-        </tr>
-        <tr>
-            <th>{%trans%}Createdat{%endtrans%}</th>
-            <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
-        </tr>
-        <tr>
-            <th>{%trans%}Updatedat{%endtrans%}</th>
-            <td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
-        </tr>
-    </tbody>
-</table>
+<div class="box box-primary box-body">
+    <table class="record_properties table">
+        <tbody>
+            <tr>
+                <th>{%trans%}Name{%endtrans%}</th>
+                <td>{{ entity.name }}</td>
+            </tr>
+            <tr>
+                <th>{%trans%}Parent DNS Domain{%endtrans%}</th>
+                <td>{{ entity.dnsdomain.domain }}</td>
+            </tr>
+            <tr>
+                <th>{%trans%}Type{%endtrans%}</th>
+                <td>{{ entity.type }}</td>
+            </tr>
+            <tr>
+                <th>{%trans%}Content{%endtrans%}</th>
+                <td>{{ entity.content }}</td>
+            </tr>
+            <tr>
+                <th>{%trans%}Ttl{%endtrans%}</th>
+                <td>{{ entity.ttl }}</td>
+            </tr>
+            <tr>
+                <th>{%trans%}Prio{%endtrans%}</th>
+                <td>{{ entity.prio }}</td>
+            </tr>
+            <tr>
+                <th>{%trans%}Createdat{%endtrans%}</th>
+                <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>{%trans%}Updatedat{%endtrans%}</th>
+                <td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 <ul class="record_actions">
     <li>

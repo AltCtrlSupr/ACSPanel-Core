@@ -2,30 +2,32 @@
 {% block page_title %} - {% trans %}user_group.show.title{% endtrans %}{% endblock %}
 {% block body %}
 
-<table class="record_properties table">
-    <tbody>
-        <tr>
-            <th>{% trans %}Name{% endtrans %}</th>
-            <td>{{ entity.name }}</td>
-            <td>{% trans %}common.users{% endtrans %}</td>
-        </tr>
-        <tr>
-            <th>{% trans %}Roles{% endtrans %}</th>
-            <td>
-                {% for role in entity.roles %}
-                    {{ role }}
-                {% endfor %}
-            </td>
-            <td>
-                <ul>
-                {% for user in entity.users %}
-                    <li>{{ user }}</li>
-                {% endfor %}
-                </ul>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div class="box box-primary box-body">
+    <table class="record_properties table">
+        <tbody>
+            <tr>
+                <th>{% trans %}Name{% endtrans %}</th>
+                <td>{{ entity.name }}</td>
+                <td>{% trans %}common.users{% endtrans %}</td>
+            </tr>
+            <tr>
+                <th>{% trans %}Roles{% endtrans %}</th>
+                <td>
+                    {% for role in entity.roles %}
+                        {{ role }}
+                    {% endfor %}
+                </td>
+                <td>
+                    <ul>
+                    {% for user in entity.users %}
+                        <li>{{ user }}</li>
+                    {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 <ul class="record_actions">
     <li>
