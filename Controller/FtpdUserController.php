@@ -155,6 +155,10 @@ class FtpdUserController extends FOSRestController
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
+            if ($editForm->get('plain_password')->getData() !== null) {
+                $entity->setPassword($editForm->get('plain_password')->getData());
+            }
+
             $em->persist($entity);
             $em->flush();
 
