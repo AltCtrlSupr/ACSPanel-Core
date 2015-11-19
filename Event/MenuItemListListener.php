@@ -1,9 +1,6 @@
 <?php
 namespace ACS\ACSPanelBundle\Event;
 
-// ...
-
-//use Ilimit\DomainCheckBundle\Model\MenuItemModel;
 use Knp\Menu\Renderer\ListRenderer;
 use Avanzu\AdminThemeBundle\Model\MenuItemModel;
 use Avanzu\AdminThemeBundle\Event\SidebarMenuEvent;
@@ -13,29 +10,21 @@ class MenuItemListListener {
 
     private $menu_provider;
 
-    public function onSetupMenu(SidebarMenuEvent $event) {
-
+    public function onSetupMenu(SidebarMenuEvent $event)
+    {
         $request = $event->getRequest();
 
         foreach ($this->getMenu($request) as $item) {
             $event->addItem($item);
         }
-
     }
 
-    protected function getMenu(Request $request) {
+    protected function getMenu(Request $request)
+    {
         // retrieve your menuItem models/entities here
         $menuItems = array();
 
         $earg      = array();
-
-	//ldd($this->menu_builder);
-	//$superadminMenu = $this->menu_builder->superadminMenu();
-	//ldd($superadminMenu);
-	//
-	//
-
-	//ldd($this->menu_provider->get('root'));
 
         $menuItems[] = new MenuItemModel('domain_index','Dominis', 'domain', $earg, 'fa fa-dashboard');
         $menuItems[] = new MenuItemModel('csv_upload','Importar CSV', 'httpdhost', $earg, 'fa fa-dashboard');
@@ -44,13 +33,12 @@ class MenuItemListListener {
         return $this->activateByRoute($request->get('_route'), $menuItems);
     }
 
-    protected function activateByRoute($route, $items) {
-
-        foreach($items as $item) {
+    protected function activateByRoute($route, $items)
+    {
+        foreach ($items as $item) {
             if($item->hasChildren()) {
                 $this->activateByRoute($route, $item->getChildren());
-            }
-            else {
+            } else {
                 if($item->getRoute() == $route) {
                     $item->setIsActive(true);
                 }
@@ -65,4 +53,3 @@ class MenuItemListListener {
 	    $this->menu_provider = $provider;
     }
 }
-

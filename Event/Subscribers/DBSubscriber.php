@@ -12,7 +12,6 @@ use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 
 class DBSubscriber implements EventSubscriber
 {
-
     protected $container;
 
     public function getSubscribedEvents()
