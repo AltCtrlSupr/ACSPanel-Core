@@ -3,6 +3,7 @@ parameters:
     db.username.validator.class: ACS\ACSPanelBundle\Validator\Constraints\VariableLimitedLengthValidator
     domain.tools.class: ACS\ACSPanelBundle\Modules\Domain
     entity_subscriber.class: ACS\ACSPanelBundle\Event\Subscribers\EntitySubscriber
+    db_entity_subscriber.class: ACS\ACSPanelBundle\Event\Subscribers\DBSubscriber
     acspanel_core.menu_listener.class: ACS\ACSPanelBundle\Event\MenuItemListListener
 
 services:
@@ -77,6 +78,16 @@ services:
     # Entity subscribers
     entity_subscriber:
         class: %entity_subscriber.class%
+        arguments: ['@service_container']
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: preRemove }
+
+    db_entity_subscriber:
+        class: %db_entity_subscriber.class%
         arguments: ['@service_container']
         tags:
             - { name: doctrine.event_listener, event: prePersist }
