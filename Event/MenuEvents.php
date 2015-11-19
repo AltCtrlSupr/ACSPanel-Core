@@ -62,6 +62,4 @@ final class MenuEvents
      * @var string
      */
     const USER_AFTER_ITEMS = 'menu.user.after.items';
-
-
 }
