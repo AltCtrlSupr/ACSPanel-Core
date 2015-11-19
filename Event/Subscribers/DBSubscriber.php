@@ -110,35 +110,7 @@ class DBSubscriber implements EventSubscriber
 
     private function createUserInDatabase($entity)
     {
-        $admin_user = '';
-        $admin_password = '';
-
-        if (!$entity->getDb()->getService()) {
-            return;
-        }
-        $settings = $entity->getDb()->getService()->getSettings();
-
-        foreach ($settings as $setting) {
-            if($setting->getSettingKey() == 'admin_user') {
-                $admin_user = $setting->getValue();
-            }
-            if($setting->getSettingKey() == 'admin_password') {
-                $admin_password = $setting->getValue();
-            }
-        }
-        $server_ip = $entity->getDb()->getService()->getIp();
-
-
-        $config = new \Doctrine\DBAL\Configuration();
-
-        $connectionParams = array(
-            'user' => $admin_user,
-            'password' => $admin_password,
-            'host' => $server_ip,
-            'driver' => 'pdo_mysql',
-        );
-
-        $conn = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
+        $conn = $this->getConnection($entity->getDb());
 
         $sql = "CREATE USER '".$entity->getUsername()."'@'%' IDENTIFIED BY '".$entity->getPassword()."'";
         $conn->executeQuery($sql);
@@ -150,31 +122,8 @@ class DBSubscriber implements EventSubscriber
 
     public function removeUserInDatabase($entity)
     {
-        $admin_user = '';
-        $admin_password = '';
-        $settings = $entity->getDb()->getService()->getSettings();
+        $conn = $this->getConnection($entity->getDb());
 
-        foreach ($settings as $setting){
-            if ($setting->getSettingKey() == 'admin_user') {
-                $admin_user = $setting->getValue();
-            }
-            if ($setting->getSettingKey() == 'admin_password') {
-                $admin_password = $setting->getValue();
-            }
-        }
-
-        $server_ip = $entity->getDb()->getService()->getIp();
-
-        $config = new \Doctrine\DBAL\Configuration();
-        //..
-        $connectionParams = array(
-            'user' => $admin_user,
-            'password' => $admin_password,
-            'host' => $server_ip,
-            'driver' => 'pdo_mysql',
-        );
-
-        $conn = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
         $sql = "DROP USER '".$entity->getUsername()."'@'%';";
 
         $conn->executeQuery($sql);
@@ -195,33 +144,7 @@ class DBSubscriber implements EventSubscriber
 
     public function createDatabase($entity)
     {
-        $admin_user = '';
-        $admin_password = '';
-
-        $settings = array();
-        if(!$entity->getService())
-            return;
-
-        $settings = $entity->getService()->getSettings();
-
-        foreach ($settings as $setting){
-            if($setting->getSettingKey() == 'admin_user')
-                $admin_user = $setting->getValue();
-            if($setting->getSettingKey() == 'admin_password')
-                $admin_password = $setting->getValue();
-        }
-
-        $server_ip = $entity->getService()->getIp();
-
-        $config = new \Doctrine\DBAL\Configuration();
-        //..
-        $connectionParams = array(
-            'user' => $admin_user,
-            'password' => $admin_password,
-            'host' => $server_ip,
-            'driver' => 'pdo_mysql',
-        );
-        $conn = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
+        $conn = $this->getConnection($entity);
 
         $sql = "CREATE DATABASE IF NOT EXISTS ".$entity->getName()." DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
         $conn->executeQuery($sql);
@@ -245,30 +168,7 @@ class DBSubscriber implements EventSubscriber
 
     public function removeDatabase($entity)
     {
-        $admin_user = '';
-        $admin_password = '';
-        $settings = $entity->getService()->getSettings();
-
-        foreach ($settings as $setting){
-            if($setting->getSettingKey() == 'admin_user') {
-                $admin_user = $setting->getValue();
-            }
-            if($setting->getSettingKey() == 'admin_password') {
-                $admin_password = $setting->getValue();
-            }
-        }
-
-        $server_ip = $entity->getService()->getIp();
-
-        $config = new \Doctrine\DBAL\Configuration();
-
-        $connectionParams = array(
-            'user' => $admin_user,
-            'password' => $admin_password,
-            'host' => $server_ip,
-            'driver' => 'pdo_mysql',
-        );
-        $conn = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
+        $conn = $this->getConnection($entity);
 
         $users = $entity->getDatabaseUsers();
         if (count($users)) {
@@ -298,5 +198,35 @@ class DBSubscriber implements EventSubscriber
 
         $user = $service->getToken()->getUser();
         return $entity->setUser($user);
+    }
+
+    private function getConnection($entity)
+    {
+        $settings = $entity->getService()->getSettings();
+        $admin_user = '';
+        $admin_password = '';
+
+        foreach ($settings as $setting){
+            if($setting->getSettingKey() == 'admin_user') {
+                $admin_user = $setting->getValue();
+            }
+            if($setting->getSettingKey() == 'admin_password') {
+                $admin_password = $setting->getValue();
+            }
+        }
+
+        $server_ip = $entity->getService()->getIp();
+
+        $config = new \Doctrine\DBAL\Configuration();
+
+        $connectionParams = array(
+            'user' => $admin_user,
+            'password' => $admin_password,
+            'host' => $server_ip,
+            'driver' => 'pdo_mysql',
+        );
+        $conn = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
+
+        return $conn;
     }
 }
