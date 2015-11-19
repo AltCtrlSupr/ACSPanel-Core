@@ -46,7 +46,7 @@
     <li>
         <form action="{{ path('db_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
-            <button class="btn" type="submit">{% trans %}db.button.delete{% endtrans %}</button>
+            <button class="btn" type="submit" onclick="if(!confirm('{% trans %}Are you sure?{% endtrans %}')) { return false; }">{% trans %}db.button.delete{% endtrans %}</button>
         </form>
     </li>
 </ul>
