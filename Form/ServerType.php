@@ -8,22 +8,25 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ServerType extends AbstractType
 {
-    private $_security;
+    private $container;
 
-    public function __construct($security)
+    public function __construct($container)
     {
-        $this->_security = $security;
+        $this->container = $container;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('hostname')
-            ->add('ip', new IpAddressType(),array('label' => false))
+            ->add('ip', new IpAddressType($this->container), array('label' => false))
             ->add('description')
         ;
-        if($this->_security->isGranted('ROLE_ADMIN'))
+
+        $security = $this->container->get('security.context');
+        if ($security->isGranted('ROLE_ADMIN')) {
             $builder->add('user');
+        }
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

@@ -1,8 +1,9 @@
 {% extends '::base.html.twig' %}
 {% block page_title %} - {% trans %}Domain list{% endtrans %}{% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
-        <script type="text/javascript" src="{{ asset('bundles/acsacspanel/js/jquery.highlight-4.closure.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/acsacspanel/js/jquery.highlight-4.closure.js')}}"></script>
 {% endblock %}
 
 {% block breadcumb  %}

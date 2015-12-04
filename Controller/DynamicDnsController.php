@@ -31,10 +31,10 @@ class DynamicDnsController extends FOSRestController
         $hostname = $request->get('hostname');
 
         if (!$new_ip) {
-            $new_ip = $this->__getIpFromRequest($request);
+            $new_ip = $this->getIpFromRequest($request);
         }
 
-        $record = $this->__getRecordToUpdate($hostname);
+        $record = $this->getRecordToUpdate($hostname);
 
         if ($record && $new_ip && $hostname) {
             $record->setContent($new_ip);
@@ -46,7 +46,8 @@ class DynamicDnsController extends FOSRestController
             $this->container->get('event_dispatcher')->dispatch(DnsEvents::DNS_AFTER_RECORD_UPDATE, new FilterDnsEvent($record, $em));
 
             $view = $this->view([], 200)
-                ->setFormat('json');
+                ->setFormat('json')
+            ;
 
             return $view;
         }
@@ -54,7 +55,7 @@ class DynamicDnsController extends FOSRestController
         throw $this->createNotFoundException('You need to provide the required parameters');
     }
 
-    private function __getIpFromRequest(Request $request)
+    private function getIpFromRequest(Request $request)
     {
         $new_ip = $request->getClientIp();
         return $new_ip;
@@ -129,13 +130,13 @@ class DynamicDnsController extends FOSRestController
      */
     public function showAction($name)
     {
-        $record = $this->__getRecordToUpdate($name);
+        $record = $this->getRecordToUpdate($name);
         $view = $this->view($record, 200);
 
         return $view;
     }
 
-    private function __getRecordToUpdate($hostname)
+    private function getRecordToUpdate($hostname)
     {
         $em = $this->getDoctrine()->getManager();
 

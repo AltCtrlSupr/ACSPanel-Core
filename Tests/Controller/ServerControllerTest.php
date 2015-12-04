@@ -12,7 +12,9 @@ class serverControllerTest extends CommonTestCase
 
         // Loading form
         $crawler = $client->request('GET', '/server');
-        $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
+        $crawler = $client->request('GET', '/server/1/edit');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

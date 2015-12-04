@@ -16,13 +16,13 @@ class IpAddressType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $security = $container->get('security.context');
+        $security = $this->container->get('security.context');
 
         $builder
             ->add('ip')
         ;
 
-        if($security->isGranted('ROLE_ADMIN')) {
+        if ($security->isGranted('ROLE_ADMIN')) {
             $builder->add('user');
         }
     }

@@ -145,6 +145,10 @@ class DBSubscriber implements EventSubscriber
     {
         $conn = $this->getConnection($entity);
 
+        if (!$conn) {
+            return;
+        }
+
         $sql = "CREATE DATABASE IF NOT EXISTS ".$entity->getName()." DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
         $conn->executeQuery($sql);
 
@@ -201,6 +205,10 @@ class DBSubscriber implements EventSubscriber
 
     private function getConnection($entity)
     {
+        if (!$entity->getService()) {
+            return;
+        }
+
         $settings = $entity->getService()->getSettings();
         $admin_user = '';
         $admin_password = '';

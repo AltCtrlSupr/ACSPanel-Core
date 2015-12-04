@@ -1,6 +1,5 @@
 <?php
 
-
 namespace ACS\ACSPanelBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -66,7 +65,7 @@ class ServerController extends FOSRestController
     public function newAction()
     {
         $entity = new Server();
-        $form   = $this->createForm(new ServerType($this->get('security.context')), $entity);
+        $form   = $this->createForm(new ServerType($this->container), $entity);
 
         return $this->render('ACSACSPanelBundle:Server:new.html.twig', array(
             'entity' => $entity,
@@ -81,7 +80,7 @@ class ServerController extends FOSRestController
     public function createAction(Request $request)
     {
         $entity  = new Server();
-        $form = $this->createForm(new ServerType($this->get('security.context')), $entity);
+        $form = $this->createForm(new ServerType($this->container), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -113,7 +112,7 @@ class ServerController extends FOSRestController
             throw $this->createNotFoundException('Unable to find Server entity.');
         }
 
-        $editForm = $this->createForm(new ServerType($this->get('security.context')), $entity);
+        $editForm = $this->createForm(new ServerType($this->container), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ACSACSPanelBundle:Server:edit.html.twig', array(
@@ -138,7 +137,7 @@ class ServerController extends FOSRestController
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new ServerType($this->get('security.context')), $entity);
+        $editForm = $this->createForm(new ServerType($this->container), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {

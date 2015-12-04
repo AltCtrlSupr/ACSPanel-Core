@@ -122,16 +122,16 @@
     </div>
 </div>
 
-        <div class="record_actions btn-group">
-            <form action="{{ path('domain_delete', { 'id': entity.id }) }}" method="post">
-                <a class="btn btn-info" href="{{ path('domain') }}">
-                    {% trans %}Back to the list{% endtrans %}
-                </a>
-                <a class="btn btn-warning" href="{{ path('domain_edit', { 'id': entity.id }) }}">
-                    {% trans %}Edit{% endtrans %}
-                </a>
-                <button class="btn btn-danger" type="submit" onclick="if(!confirm('{% trans %}Are you sure?{% endtrans %}')) { return false; }">{% trans %}Delete{% endtrans %}</button>
-                {{ form_widget(delete_form) }}
-            </form>
-        </div>
+<div class="record_actions btn-group">
+    <form action="{{ path('domain_delete', { 'id': entity.id }) }}" method="post">
+        <a class="btn btn-info" href="{{ path('domain') }}">
+            {% trans %}Back to the list{% endtrans %}
+        </a>
+        <a class="btn btn-warning" href="{{ path('domain_edit', { 'id': entity.id }) }}">
+            {% trans %}Edit{% endtrans %}
+        </a>
+        <button class="btn btn-danger" type="submit" onclick="if(!confirm('{% trans %}Are you sure?{% endtrans %}')) { return false; }">{% trans %}Delete{% endtrans %}</button>
+        {{ form_widget(delete_form) }}
+    </form>
+</div>
 {% endblock %}
