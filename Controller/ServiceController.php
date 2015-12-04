@@ -67,7 +67,7 @@ class ServiceController extends FOSRestController
     public function newAction()
     {
         $entity = new Service();
-        $form   = $this->createForm(new ServiceType(), $entity);
+        $form   = $this->createForm(new ServiceType($this->container), $entity);
 
         return $this->render('ACSACSPanelBundle:Service:new.html.twig', array(
             'entity' => $entity,
@@ -82,7 +82,7 @@ class ServiceController extends FOSRestController
     public function createAction(Request $request)
     {
         $entity  = new Service();
-        $form = $this->createForm(new ServiceType(), $entity);
+        $form = $this->createForm(new ServiceType($this->container), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -144,7 +144,7 @@ class ServiceController extends FOSRestController
             throw $this->createNotFoundException('Unable to find Service entity.');
         }
 
-        $editForm = $this->createForm(new ServiceType(), $entity);
+        $editForm = $this->createForm(new ServiceType($this->container), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ACSACSPanelBundle:Service:edit.html.twig', array(
@@ -169,7 +169,7 @@ class ServiceController extends FOSRestController
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new ServiceType(), $entity);
+        $editForm = $this->createForm(new ServiceType($this->container), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {

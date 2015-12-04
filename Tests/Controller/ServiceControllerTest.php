@@ -14,5 +14,7 @@ class ServiceControllerTest extends CommonTestCase
         $crawler = $client->request('GET', '/service');
         $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
 
+        $crawler = $client->request('GET', '/service/new');
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 }

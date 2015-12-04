@@ -210,6 +210,7 @@ class DBSubscriber implements EventSubscriber
         }
 
         $settings = $entity->getService()->getSettings();
+
         $admin_user = '';
         $admin_password = '';
 

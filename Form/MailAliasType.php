@@ -15,7 +15,6 @@ class MailAliasType extends AbstractType
         $this->container = $container;
     }
 
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $container = $this->container;
@@ -23,8 +22,10 @@ class MailAliasType extends AbstractType
         $user = $security->getToken()->getUser();
         $child_ids = $user->getIdChildIds();
         $superadmin = false;
-        if($security->isGranted('ROLE_SUPER_ADMIN'))
+
+        if ($security->isGranted('ROLE_SUPER_ADMIN')) {
             $superadmin = true;
+        }
 
 
         $builder
