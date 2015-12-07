@@ -1,4 +1,5 @@
 <?php
+
 namespace ACS\ACSPanelBundle\Entity;
 
 use ACS\ACSPanelSettingsBundle\Entity\ConfigSetting as BaseSetting;
@@ -9,7 +10,6 @@ use ACS\ACSPanelBundle\Model\Entity\AclEntity;
 
 /**
  * PanelSetting
- * @todo Move to settingsbundle
  */
 class PanelSetting extends BaseSetting implements AclEntity
 {
@@ -150,7 +150,6 @@ class PanelSetting extends BaseSetting implements AclEntity
         }
     }
 
-
     /**
      * Set service
      *
@@ -185,5 +184,10 @@ class PanelSetting extends BaseSetting implements AclEntity
     public function getOwners()
     {
         return $this->getUser();
+    }
+
+    public function __toString()
+    {
+        return $this->getSettingKey();
     }
 }

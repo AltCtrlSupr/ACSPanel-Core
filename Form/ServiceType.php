@@ -5,6 +5,9 @@ namespace ACS\ACSPanelBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
+use ACS\ACSPanelSettingsBundle\Form\EntitySettingType;
 
 class ServiceType extends AbstractType
 {
@@ -24,6 +27,7 @@ class ServiceType extends AbstractType
             ->add('ip')
             ->add('server', null, array('required' => true))
             ->add('type')
+            ->add('settings', new EntitySettingType())
         ;
 
         if ($service->isGranted('ROLE_ADMIN')) {
