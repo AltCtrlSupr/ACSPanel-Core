@@ -17,6 +17,13 @@ class DomainTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('example.com', $result);
     }
 
+    public function testGetSmallAliasDomain()
+    {
+        $domain = new Domain('b.acs.li');
+        $result = $domain->get_reg_domain();
+        $this->assertEquals('acs.li', $result);
+    }
+
     public function testGetRegDomain()
     {
         $domain = new Domain('example.com');

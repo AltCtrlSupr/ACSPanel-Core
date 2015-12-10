@@ -8,6 +8,8 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use ACS\ACSPanelSettingsBundle\Form\EntitySettingType;
+use ACS\ACSPanelSettingsBundle\Event\SettingsEvents;
+use ACS\ACSPanelSettingsBundle\Event\FilterUserFieldsEvent;
 
 class ServiceType extends AbstractType
 {
@@ -21,13 +23,20 @@ class ServiceType extends AbstractType
     {
         $service = $this->container->get('security.context');
 
+        $user_fields = array();
+
+        $this->container->get('event_dispatcher')->dispatch(SettingsEvents::BEFORE_LOAD_USERFIELDS, new FilterUserFieldsEvent($user_fields, $this->container));
+
+        array_merge($user_fields, $user_fields = $this->container->getParameter("acs_settings.user_fields"));
 
         $builder
             ->add('name')
             ->add('ip')
             ->add('server', null, array('required' => true))
             ->add('type')
-            ->add('settings', new EntitySettingType())
+            ->add('settings', 'collection', array(
+                'type' =>  new EntitySettingType($this->container, $user_fields)
+            ))
         ;
 
         if ($service->isGranted('ROLE_ADMIN')) {

@@ -53,7 +53,7 @@ class Domain
     private $domain      = NULL;
     private $etld        = NULL;
 
-    private static $re_valid_dom  = '/^([a-z0-9][a-z0-9-]*[a-z0-9]\.){2,}$/';
+    private static $re_valid_dom  = '/^([a-z0-9-]*[a-z0-9]\.){2,}$/';
     private static $re_valid_ip   = '/^([0-9]{1,3}\.){3}[0-9]{1,3}$/';
     private static $etld_data     = array();
 
