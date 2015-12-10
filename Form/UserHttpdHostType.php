@@ -17,7 +17,7 @@ class UserHttpdHostType extends HttpdHostType
 
         $security = $container->get('security.context');
 
-        $user_domains = $container->get('domain_repository')->getUserViewable($user);
+        $user_domains = $container->get('domain_repository')->getNotHttpdAttachedUserViewable($user);
         $web_services = $container->get('service_repository')->getWebServices($user);
         $webproxy_services = $container->get('service_repository')->getWebproxyServices($user);
 

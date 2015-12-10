@@ -20,6 +20,18 @@ class DomainRepository extends AclEntityRepository
     }
 
     /**
+     * Get all the domains without any httpdhost attached
+     */
+    public function getNotHttpdAttachedUserViewable($user)
+    {
+        $entities_raw = $this->_em->createQuery('SELECT d FROM ACS\ACSPanelBundle\Entity\Domain d LEFT JOIN d.httpd_host h WHERE h.id IS NULL');
+
+        $entities = $this->getAclFilter()->apply($entities_raw, ['VIEW'], $user, 'd')->getResult();
+
+        return $entities;
+    }
+
+    /**
      * @deprecated
      */
     public function findByUser(User $user)
@@ -36,7 +48,6 @@ class DomainRepository extends AclEntityRepository
         $query = $this->_em->createQuery('SELECT d FROM ACS\ACSPanelBundle\Entity\Domain d WHERE d.user IN (?1)')->setParameter(1, $ids);
         return $query->getResult();
     }
-
 
     /**
      * Return the domains that are aliases
@@ -65,4 +76,3 @@ class DomainRepository extends AclEntityRepository
         return $query->getResult();
     }
 }
-
