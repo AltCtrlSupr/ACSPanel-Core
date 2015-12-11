@@ -46,7 +46,6 @@ class DBSubscriber implements EventSubscriber
         } else {
             $user = $entity->getOwners();
         }
-
     }
 
     public function prePersist(LifecycleEventArgs $args)
