@@ -22,22 +22,31 @@ class ServiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $service = $this->container->get('security.context');
+        $settingsmanager = $this->container->get('acs.setting_manager');
 
-        $user_fields = array();
-
-        $this->container->get('event_dispatcher')->dispatch(SettingsEvents::BEFORE_LOAD_USERFIELDS, new FilterUserFieldsEvent($user_fields, $this->container));
-
-        array_merge($user_fields, $user_fields = $this->container->getParameter("acs_settings.user_fields"));
+        $fields = $settingsmanager->loadObjectSettingsDefaults($service->getToken()->getUser());
 
         $builder
             ->add('name')
             ->add('ip')
             ->add('server', null, array('required' => true))
-            ->add('type')
-            ->add('settings', 'collection', array(
-                'type' =>  new EntitySettingType($this->container, $user_fields)
-            ))
         ;
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $service = $event->getData();
+            $form = $event->getForm();
+
+            // check if the Product object is "new"
+            // If no data is passed to the form, the data is "null".
+            // This should be considered a new "Product"
+            if (!$service || null === $service->getId()) {
+                $form->add('type');
+            }
+        });
+
+        $builder->add('settings', 'collection', array(
+            'type' =>  new EntitySettingType($this->container, $fields)
+        ));
 
         if ($service->isGranted('ROLE_ADMIN')) {
             $builder->add('user');
