@@ -13,5 +13,7 @@ class MailAliasControllerTest extends CommonTestCase
         $crawler = $client->request('GET', '/mailalias');
         $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
 
+        $crawler = $client->request('GET', '/mailalias/new');
+        $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
     }
 }
