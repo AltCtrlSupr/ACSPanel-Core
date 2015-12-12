@@ -41,10 +41,7 @@ class ServiceType extends AbstractType
                 $form->add('type');
             } else {
                 $settingsmanager = $this->container->get('acs.setting_manager');
-
-                $fields = $settingsmanager->loadObjectSettingsDefaults(
-                    $container->get('security.context')->getToken()->getUser()
-                );
+                $fields = $settingsmanager->getObjectSettingsPrototype($service->getId());
 
                 $form->add('settings', 'collection', array(
                     'type' =>  new EntitySettingType($container, $fields)

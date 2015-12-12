@@ -35,8 +35,11 @@ class DBSubscriber implements EventSubscriber
     {
         $entity = $args->getEntity();
 
-        if ($entity instanceof DatabaseUser){
+        if ($entity instanceof DB){
             $this->removeDatabase($entity);
+        }
+        if ($entity instanceof DatabaseUser){
+            $this->removeUserInDatabase($entity);
         }
 
         $aclManager = $this->container->get('problematic.acl_manager');
@@ -61,6 +64,7 @@ class DBSubscriber implements EventSubscriber
         if ($entity instanceof DatabaseUser){
             $this->setCreatedAtValue($entity);
             $this->setUserValue($entity);
+            $this->createUserInDatabase($entity);
         }
     }
 
