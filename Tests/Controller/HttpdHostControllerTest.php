@@ -21,7 +21,7 @@ class HttpdHostControllerTest extends CommonTestCase
         $crawler = $this->client->request('GET', '/httpdhost/new');
         $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
 
-        // Form should accept empty protected dir
+        // Form to create new httpdhost
         $form = $crawler->selectButton('Create')->form(array(
             'acs_acspanelbundle_httpdhosttype[domain]' => 1,
             // 'acs_acspanelbundle_httpdhosttype[service]' => 1,
@@ -30,5 +30,6 @@ class HttpdHostControllerTest extends CommonTestCase
         $form['acs_acspanelbundle_httpdhosttype[add_www_alias]']->tick();
         $crawler = $this->client->submit($form);
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+
 	}
 }

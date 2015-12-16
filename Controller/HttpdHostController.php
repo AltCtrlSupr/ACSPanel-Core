@@ -88,9 +88,7 @@ class HttpdHostController extends FOSRestController
             'term' => $term,
             'entities' => $entities,
         ));
-
     }
-
 
     /**
      * Displays a form to create a new HttpdHost entity.
@@ -136,41 +134,43 @@ class HttpdHostController extends FOSRestController
             $this->addDnsRegister($entity->getDomain()->getName());
 
             // If is required we create www. alias
-            if($form['add_www_alias']->getData()){
-                $wwwalias = new \ACS\ACSPanelBundle\Entity\Domain();
-                $wwwalias->setDomain('www.'.$entity->getDomain()->getDomain());
-                // TODO: check set enabled isn't working
-                $wwwalias->setEnabled($entity->getEnabled());
-                $wwwalias->setParentDomain($entity->getDomain());
-                 $wwwalias->setIsHttpdAlias(true);
-                $em->persist($wwwalias);
-                // We create A type DNS record automatically
-                // Check if the domain exists in the dns_domains table
-                $this->addDnsRegister($wwwalias->getDomain(), true);
+            if ($form['add_www_alias']->getData()) {
+                $domain_exists = $this->dnsAliasOrDomainExists('www.'.$entity->getDomain()->getDomain());
+
+                if (!$domain_exists) {
+                    $wwwalias = new \ACS\ACSPanelBundle\Entity\Domain();
+                    $wwwalias->setDomain('www.'.$entity->getDomain()->getDomain());
+                    $wwwalias->setEnabled($entity->getEnabled());
+                    $wwwalias->setParentDomain($entity->getDomain());
+                    $wwwalias->setIsHttpdAlias(true);
+                    $em->persist($wwwalias);
+                    // We create A type DNS record automatically
+                    // Check if the domain exists in the dns_domains table
+                    $this->addDnsRegister($wwwalias->getDomain(), true);
+                }
             }
 
             // Add the dns record if user requested
-            if($form['add_dns_record']->getData()){
+            if ($form['add_dns_record']->getData()) {
                 $dnsrecord = new DnsRecord();
                 $dnsdomain = $em->getRepository('ACSACSPanelBundle:DnsDomain')->findOneByDomain($entity->getDomain());
                 $dnsrecord->setDnsDomain($dnsdomain);
                 $dnsrecord->setName($entity->getDomain()->getDomain());
                 $dnsrecord->setType('A');
-                if($entity->getProxyService())
+                if ($entity->getProxyService()) {
                     $dnsrecord->setContent($entity->getProxyService()->getIp()->getIp());
-                else
+                } else {
                     $dnsrecord->setContent($entity->getService()->getIp()->getIp());
+                }
                 $em->persist($dnsrecord);
 
                 $this->container->get('event_dispatcher')->dispatch(DnsEvents::DNS_AFTER_RECORD_ADD, new FilterDnsEvent($dnsrecord, $em));
             }
 
-
             $em->flush();
 
             return $this->redirect($this->generateUrl('httpdhost_show', array('id' => $entity->getId())));
         }
-
 
         return $this->render('ACSACSPanelBundle:HttpdHost:new.html.twig', array(
             'entity' => $entity,
@@ -185,21 +185,22 @@ class HttpdHostController extends FOSRestController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $names_check = array($domain_name,$this->getDomain($domain_name));
+        $names_check = array($domain_name, $this->getDomain($domain_name));
 
         $domain_exists = $this->dnsAliasOrDomainExists($names_check);
 
-        if($domain_exists){
-            foreach($domain_exists as $domain){
+        if ($domain_exists) {
+            foreach ($domain_exists as $domain) {
                 $records = $this->dnsRecordExists($names_check);
-                if($records){
-                    foreach($records as $record){
-                        if($record->getType() == 'A')
+                if ($records) {
+                    foreach ($records as $record) {
+                        if ($record->getType() == 'A') {
                             $this->get('session')->getFlashBag()->add('notice',$this->get('translator')->trans('The A record for %record% domain already exists', array('%record%' => $record->getName())));
-                        elseif($record->getType() == 'CNAME')
+                        } elseif($record->getType() == 'CNAME') {
                             $this->get('session')->getFlashBag()->add('notice',$this->get('translator')->trans('The CNAME record for %record% domain already exists', array('%record%' => $record->getName())));
+                        }
                     }
-                }else{
+                } else {
                     $dnsrecord = new \ACS\ACSPanelBundle\Entity\DnsRecord();
                     $dnsrecord->setDnsDomain($domain);
                     $dnsrecord->setName($domain_name);
@@ -216,11 +217,10 @@ class HttpdHostController extends FOSRestController
                     $em->persist($dnsrecord);
                 }
             }
-        }else{
+        } else {
             $this->get('session')->getFlashBag()->add('notice',$this->get('translator')->trans('The host %domain_name% has not DNS domain', array('%domain_name%' => $domain_name)));
         }
     }
-
 
     /**
      * Displays a form to edit an existing HttpdHost entity.
@@ -307,12 +307,11 @@ class HttpdHostController extends FOSRestController
         return $this->createFormBuilder(array('id' => $id))
             ->add('id', 'hidden')
             ->getForm()
-            ;
+        ;
     }
 
     /**
      * Check if the host has dns_domain
-     * @todo: Check for a better place to put this function
      */
     private function dnsAliasOrDomainExists($names = array())
     {
@@ -327,8 +326,11 @@ class HttpdHostController extends FOSRestController
 
         $dnsdomains = $query->execute();
 
-        if(count($dnsdomains))
+        if (count($dnsdomains)) {
             return $dnsdomains;
+        }
+
+        return false;
     }
 
     /**
@@ -337,18 +339,18 @@ class HttpdHostController extends FOSRestController
     private function dnsRecordExists($names = array())
     {
         $em = $this->getDoctrine()->getManager();
+
         // check if thereis a full or alias dns domain
         $dnsdomains = $em->getRepository('ACSACSPanelBundle:DnsRecord')->findByName($names);
-        if(count($dnsdomains))
+        if (count($dnsdomains)) {
             return $dnsdomains;
+        }
 
         return false;
     }
 
-
     /*
      * Extracts only the domain.tls from a url
-     * @todo: Check for a better place to put his
      */
     private function getDomain($url) {
         $domain_tools = new DomainModule($url);
