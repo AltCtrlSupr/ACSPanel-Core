@@ -114,12 +114,14 @@ class DBSubscriber implements EventSubscriber
     {
         $conn = $this->getConnection($entity->getDb());
 
-        $sql = "CREATE USER '".$entity->getUsername()."'@'%' IDENTIFIED BY '".$entity->getPassword()."'";
-        $conn->executeQuery($sql);
-        $sql = "GRANT ALL PRIVILEGES ON `".$entity->getDb()."`.* TO '".$entity->getUsername()."'@'%'";
-        $conn->executeQuery($sql);
-        $sql = "FLUSH PRIVILEGES";
-        $conn->executeQuery($sql);
+        if ($conn) {
+            $sql = "CREATE USER '".$entity->getUsername()."'@'%' IDENTIFIED BY '".$entity->getPassword()."'";
+            $conn->executeQuery($sql);
+            $sql = "GRANT ALL PRIVILEGES ON `".$entity->getDb()."`.* TO '".$entity->getUsername()."'@'%'";
+            $conn->executeQuery($sql);
+            $sql = "FLUSH PRIVILEGES";
+            $conn->executeQuery($sql);
+        }
     }
 
     public function removeUserInDatabase($entity)
