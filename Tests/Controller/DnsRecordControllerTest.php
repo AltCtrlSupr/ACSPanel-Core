@@ -21,4 +21,3 @@ class DnsRecordControllerTest extends CommonTestCase
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 }
-

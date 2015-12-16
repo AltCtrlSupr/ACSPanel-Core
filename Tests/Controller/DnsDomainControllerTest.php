@@ -17,4 +17,3 @@ class DnsDomainControllerTest extends CommonTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }
-

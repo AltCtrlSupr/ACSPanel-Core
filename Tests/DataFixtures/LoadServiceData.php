@@ -24,14 +24,6 @@ class LoadServiceData extends AbstractFixture implements OrderedFixtureInterface
         $this->container = $container;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getOrder()
-    {
-        return 3;
-    }
-
     public function load(ObjectManager $manager)
     {
         // Ftpdservice types
@@ -55,8 +47,17 @@ class LoadServiceData extends AbstractFixture implements OrderedFixtureInterface
         $webservice = new Service();
         $webservice->setName('web.acs.li');
         $webservice->setServer($this->getReference('server-1'));
+        $webservice->setUser($this->getReference('user-super-admin'));
         $manager->persist($webservice);
 
         $manager->flush();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getOrder()
+    {
+        return 3;
     }
 }
