@@ -279,3 +279,8 @@ services:
         class: ACS\ACSPanelBundle\Model\ServiceManager
         calls:
             - [ setAclManager, ['@problematic.acl_manager'] ]
+
+    plan_manager:
+        class: ACS\ACSPanelBundle\Model\PlanManager
+        calls:
+            - [ setEm, ['@doctrine.orm.entity_manager'] ]
