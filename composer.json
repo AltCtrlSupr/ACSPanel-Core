@@ -23,12 +23,8 @@
         "friendsofsymfony/user-bundle": "*",
         "knplabs/knp-menu-bundle": "dev-master",
         "liip/theme-bundle": "dev-master",
-        "craue/formflow-bundle": "dev-master",
-        "gregwar/form-bundle": "dev-master",
-        "knplabs/knp-paginator-bundle": "dev-master",
         "acs/acspanel-settings": "dev-master",
-        "acs/acspanel-wordpress": "dev-master",
-        "doctrine/doctrine-fixtures-bundle": "dev-master"
+        "acs/acspanel-wordpress": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
