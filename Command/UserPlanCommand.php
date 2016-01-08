@@ -32,5 +32,17 @@ class UserPlanCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $plan = $input->getArgument('plan');
+        $username = $input->getArgument('username');
+
+        $planManager = $this->getContainer()->get('plan_manager');
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+
+        $plan = $em->getRepository('\ACS\ACSPanelBundle\Entity\Plan')->findOneBy(array('id' => $plan));
+        $user = $em->getRepository('\ACS\ACSPanelUsersBundle\Entity\User')->findOneBy(array('username' => $username));
+
+        if ($planManager->attachToUser($plan, $user)) {
+            $output->writeln("Added " . $plan. " (Plan) to  " . $user);
+        }
     }
 }
