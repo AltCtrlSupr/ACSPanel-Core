@@ -18,11 +18,7 @@
     ],
     "require": {
         "php":                            ">=5.3.3",
-        "symfony/assetic-bundle": "~2.3",
         "friendsofsymfony/user-bundle":   "2.0.*@dev",
-        "friendsofsymfony/user-bundle": "*",
-        "knplabs/knp-menu-bundle": "dev-master",
-        "liip/theme-bundle": "dev-master",
         "acs/acspanel-settings": "dev-master",
         "acs/acspanel-wordpress": "dev-master"
     },
