@@ -5,6 +5,7 @@ namespace ACS\ACSPanelBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use FOS\RestBundle\Controller\FOSRestController;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
 use ACS\ACSPanelBundle\Entity\Server;
@@ -19,6 +20,11 @@ class ServerController extends FOSRestController
 {
     /**
      * Lists all Server entities.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Returns all the servers owned by current user",
+     * )
      *
      * @Rest\View(templateVar="search_action")
      */

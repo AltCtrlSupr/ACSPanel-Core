@@ -7,8 +7,12 @@ use Doctrine\ORM\Mapping as ORM;
 
 use ACS\ACSPanelBundle\Model\Entity\AclEntity;
 
+use JMS\Serializer\Annotation as JMS;
+
 /**
  * Server
+ *
+ * @JMS\ExclusionPolicy("all")
  */
 class Server implements AclEntity
 {
@@ -19,11 +23,16 @@ class Server implements AclEntity
 
     /**
      * @var string
+     *
+     * @JMS\Groups({"inventory"})
+     * @JMS\Expose
      */
     private $hostname;
 
     /**
      * @var string
+     *
+     * @JMS\Groups({"inventory"})
      */
     private $ip;
 
@@ -44,6 +53,8 @@ class Server implements AclEntity
 
     /**
      * @var \ACS\ACSPanelUsersBundle\Entity\User
+     *
+     * @JMS\Exclude()
      */
     private $user;
 

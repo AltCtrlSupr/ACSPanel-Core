@@ -284,3 +284,9 @@ services:
         class: ACS\ACSPanelBundle\Model\PlanManager
         calls:
             - [ setEm, ['@doctrine.orm.entity_manager'] ]
+
+
+    get_set_method_normalizer:
+        class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
+        tags:
+            - { name: serializer.normalizer }

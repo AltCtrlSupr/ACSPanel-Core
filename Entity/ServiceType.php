@@ -31,6 +31,12 @@ class ServiceType implements AclEntity
     private $field_types;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     * @JMS\Exclude
+     */
+    private $services;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -42,7 +48,7 @@ class ServiceType implements AclEntity
      * Return the readable name of service type
      */
 	public function __toString(){
-		return $this->getName();
+        return $this->getName();
 	}
 
     /**
@@ -76,6 +82,43 @@ class ServiceType implements AclEntity
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        $text = $this->getName();
+
+        // replace non letter or digits by -
+        $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
+
+        // trim
+        $text = trim($text, '-');
+
+        // transliterate
+        // $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+
+        // lowercase
+        $text = strtolower($text);
+
+        // remove unwanted characters
+        $text = preg_replace('~[^-\w]+~', '', $text);
+
+        if (empty($text))
+        {
+            return 'n-a';
+        }
+
+        return $text;
+    }
+
+    public function getServices()
+    {
+        return $this->services;
     }
 
     /**

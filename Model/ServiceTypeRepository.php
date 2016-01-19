@@ -67,4 +67,14 @@ class ServiceTypeRepository extends AclEntityRepository
 
         return $entities;
     }
+
+    public function getWithHosts()
+    {
+        $query = $this->_em
+            ->createQuery('SELECT st,s,server FROM ACS\ACSPanelBundle\Entity\ServiceType st INNER JOIN st.services AS s INNER JOIN s.server AS server')
+        ;
+        $result = $query->getResult();
+
+        return $result;
+    }
 }

@@ -1,7 +1,7 @@
 ACS\ACSPanelBundle\Entity\ServiceType:
     repositoryClass: ACS\ACSPanelBundle\Model\ServiceTypeRepository
     type: entity
-    table: service_type 
+    table: service_type
     gedmo:
         loggable: {}
     fields:
@@ -32,6 +32,10 @@ ACS\ACSPanelBundle\Entity\ServiceType:
         field_types:
             targetEntity: FieldType
             cascade: [ "persist" ]
-            
+    oneToMany:
+        services:
+            targetEntity: Service
+            mappedBy: type
+
     lifecycleCallbacks: {}
 

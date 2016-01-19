@@ -6,33 +6,42 @@ use Doctrine\ORM\Mapping as ORM;
 
 use ACS\ACSPanelBundle\Model\Entity\AclEntity;
 
+use JMS\Serializer\Annotation as JMS;
+
 /**
  * Service
+ *
+ * @JMS\ExclusionPolicy("all")
  */
 class Service implements AclEntity
 {
     /**
      * @var integer
+     * @JMS\Expose()
      */
     private $id;
 
     /**
      * @var string
+     * @JMS\Expose()
      */
     private $name;
 
     /**
      * @var string
+     * @JMS\Expose()
      */
     private $ip;
 
     /**
      * @var \DateTime
+     * @JMS\Expose()
      */
     private $createdAt;
 
     /**
      * @var \DateTime
+     * @JMS\Expose()
      */
     private $updatedAt;
 

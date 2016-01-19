@@ -8,6 +8,7 @@ class ApiDocTest extends CommonApiTestCase
     {
         $client = $this->createSuperadminClient();
         $crawler = $client->request('GET', '/api/doc');
+
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 }
