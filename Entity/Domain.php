@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 use ACS\ACSPanelBundle\Model\Entity\AclEntity;
 
+use JMS\Serializer\Annotation as JMS;
+
 /**
  * Domain
  */
@@ -54,21 +56,33 @@ class Domain implements AclEntity
 
     /**
      * @var \Doctrine\Common\Collections\Collection
+     *
+     * @JMS\Type("array")
+     * @JMS\Accessor(getter="getChildDomainsIds")
      */
     private $child_domains;
 
     /**
      * @var \ACS\ACSPanelUsersBundle\Entity\User
+     *
+     * @JMS\Type("integer")
+     * @JMS\Accessor(getter="getUserId")
      */
     private $user;
 
     /**
      * @var \ACS\ACSPanelBundle\Entity\Domain
+     *
+     * @JMS\Type("integer")
+     * @JMS\Accessor(getter="getParentDomainId")
      */
     private $parent_domain;
 
     /**
      * @var \ACS\ACSPanelBundle\Entity\HttpdHost
+     *
+     * @JMS\Type("integer")
+     * @JMS\Accessor(getter="getHttpdHostId")
      */
     private $httpd_host;
 
@@ -296,6 +310,23 @@ class Domain implements AclEntity
     }
 
     /**
+     * Get child_domains_ids
+     *
+     * @return array
+     */
+    public function getChildDomainsIds()
+    {
+        $ids = array();
+        foreach ($this->child_domains as $domain) {
+            $ids[] = $domain->getId();
+        }
+
+        return $ids;
+    }
+
+
+
+    /**
      * Set user
      *
      * @param \ACS\ACSPanelUsersBundle\Entity\User $user
@@ -319,6 +350,17 @@ class Domain implements AclEntity
     }
 
     /**
+     * getUserId
+     *
+     * @access public
+     * @return void
+     */
+    public function getUserId()
+    {
+        return $this->user->getId();
+    }
+
+    /**
      * Set parent_domain
      *
      * @param \ACS\ACSPanelBundle\Entity\Domain $parentDomain
@@ -339,6 +381,21 @@ class Domain implements AclEntity
     public function getParentDomain()
     {
         return $this->parent_domain;
+    }
+
+    /**
+     * getParentDomainId
+     *
+     * @access public
+     * @return void
+     */
+    public function getParentDomainId()
+    {
+        if ($this->parent_domain) {
+            return $this->parent_domain->getId();
+        }
+
+        return null;
     }
 
     public function getName()
@@ -373,6 +430,16 @@ class Domain implements AclEntity
     {
         return $this->httpd_host;
     }
+
+    public function getHttpdHostId()
+    {
+        if ($this->httpd_host) {
+            return $this->httpd_host->getId();
+        }
+
+        return null;
+    }
+
 
     public function userCanSee($security)
     {

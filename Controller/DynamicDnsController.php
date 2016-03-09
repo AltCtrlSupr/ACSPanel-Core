@@ -24,6 +24,8 @@ class DynamicDnsController extends FOSRestController
 {
     /**
      * Updates DNSRecord IP
+     *
+     * @Rest\View()
      */
     public function updateAction(Request $request)
     {
@@ -55,6 +57,13 @@ class DynamicDnsController extends FOSRestController
         throw $this->createNotFoundException('You need to provide the required parameters');
     }
 
+    /**
+     * getIpFromRequest
+     *
+     * @param Request $request
+     * @access private
+     * @return void
+     */
     private function getIpFromRequest(Request $request)
     {
         $new_ip = $request->getClientIp();
@@ -64,6 +73,7 @@ class DynamicDnsController extends FOSRestController
     /**
      * Displays a form to create a new (dynamic)DNSRecord entity.
      *
+     * @Rest\View()
      */
     public function newAction()
     {
@@ -136,6 +146,13 @@ class DynamicDnsController extends FOSRestController
         return $view;
     }
 
+    /**
+     * getRecordToUpdate
+     *
+     * @param mixed $hostname
+     * @access private
+     * @return void
+     */
     private function getRecordToUpdate($hostname)
     {
         $em = $this->getDoctrine()->getManager();
@@ -148,5 +165,4 @@ class DynamicDnsController extends FOSRestController
 
         return $entity;
     }
-
 }
