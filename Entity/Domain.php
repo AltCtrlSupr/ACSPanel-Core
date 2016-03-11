@@ -357,7 +357,11 @@ class Domain implements AclEntity
      */
     public function getUserId()
     {
-        return $this->user->getId();
+        if ($this->user) {
+            return $this->user->getId();
+        }
+
+        return null;
     }
 
     /**

@@ -131,7 +131,6 @@ class DynamicDnsController extends FOSRestController
 
     }
 
-
     /**
      * Shows your record
      *
