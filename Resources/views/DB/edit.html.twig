@@ -2,10 +2,6 @@
 {% block page_title %} - {% trans %}db.title.edit{% endtrans %}{% endblock %}
 {% block body %}
 
-{% block javascripts %}
-    {{ parent() }}
-{% endblock %}
-
 <div class="form_box">
     <form action="{{ path('db_create') }}" method="post" {{ form_enctype(edit_form) }}>
 
