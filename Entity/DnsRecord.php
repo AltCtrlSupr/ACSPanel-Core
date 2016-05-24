@@ -4,6 +4,7 @@
 namespace ACS\ACSPanelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 use ACS\ACSPanelBundle\Model\Entity\AclEntity;
 
@@ -54,6 +55,9 @@ class DnsRecord implements AclEntity
 
     /**
      * @var \ACS\ACSPanelBundle\Entity\DnsDomain
+     *
+     * @JMS\Type("string")
+     * @JMS\Accessor(getter="getDnsDomainName")
      */
     private $dns_domain;
 
@@ -303,5 +307,30 @@ class DnsRecord implements AclEntity
     public function getOwners()
     {
         return $this->getDnsDomain()->getOwners();
+    }
+
+    /**
+     * getDnsDomainName
+     *
+     * @access public
+     * @return void
+     */
+    public function getDnsDomainName()
+    {
+        return $this->getDnsDomain()->getDomain()->getDomain();
+    }
+
+    /**
+     * getDnsDomainId
+     *
+     * @access public
+     * @return void
+     *
+     * @JMS\VirtualProperty()
+     * @JMS\Type("string")
+     */
+    public function getDnsDomainId()
+    {
+        return $this->getDnsDomain()->getId();
     }
 }

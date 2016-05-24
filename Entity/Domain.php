@@ -324,8 +324,6 @@ class Domain implements AclEntity
         return $ids;
     }
 
-
-
     /**
      * Set user
      *
